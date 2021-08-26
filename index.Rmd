@@ -1,0 +1,41 @@
+--- 
+title: "Maple for Differential Equations"
+author: "Fei Ye"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+description: "This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown"
+documentclass: elegantbook
+github-repo: fyemath/maple4ode
+# logo: ''
+# cover: figs/Wintersweet.jpg
+classoption: en,12pt
+version: '1.0'
+---
+
+```{r fig_setting, include=FALSE}
+library("knitr")
+knitr::opts_chunk$set(out.width="60%", fig.align="center", fig.pos = "!H", out.extra = "")
+```
+
+```{r include=FALSE}
+file.copy('_redirects', 'book_output/_redirects', overwrite = TRUE)
+```
+
+\mainmatter
+
+\hypersetup{pageanchor=true}
+
+\captionsetup[figure]{labelformat=empty}
+\captionsetup[subfigure]{labelformat=empty}
+
+# Preface {-}
+
+This is a book written for Maple labs for differential equations.
+
+The source of this book can be found at [https://github.com/fyemath/maple4ode](https://github.com/fyemath/maple4ode).
+
+Comments and suggestions are very welcome.
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+![by-nc-sa license icon](figs/by-nc-sa.png)

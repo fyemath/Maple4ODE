@@ -1,0 +1,95 @@
+/* .theorem, 
+.lemma, 
+.corollary, 
+.proposition {
+    font-style: italic;
+} */
+
+/* add borders to theorems */
+/* 
+.theorem, 
+.lemma, 
+.corollary, 
+.proposition, 
+.definition {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+} */
+
+/* add color to theorem environments */
+/* 
+.theorem, 
+.lemma, 
+.corollary {
+    border: 1px solid rgb(115, 245, 40);
+    background-color: rgba(115, 245, 40,0.05);
+}
+
+.proposition {
+    border: 1px solid rgb(0,174,247);
+    background-color: rgba(0,174,247,0.05) ;
+}
+
+.definition {
+    border: 1px solid rgb(0,166,82);
+    background-color: rgba(0,166,82, 0.05);
+} */
+
+span.example, 
+span.exercise, 
+span.remark, 
+span.proof, 
+span.solution {
+    /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
+    font-style: normal;
+    font-weight: bold;
+}
+
+
+/* add colors to theorem names */
+
+span.theorem, 
+span.lemma, 
+span.corollary {
+    /* border: 1px solid rgb(115, 245, 40); */
+    /* background: rgb(115, 245, 40); */
+    color: rgb(65, 151, 14);
+}
+
+span.proposition {
+    /* border: 1px solid rgb(0,174,247); */
+    /* background: rgb(0,174,247); */
+    color: rgb(28, 7, 145);
+}
+
+span.definition {
+    /* border: 1px solid rgb(3, 101, 212); */
+    /* background: rgb(3, 101, 212); */
+    color: rgb(3, 101, 212);
+}
+
+span.example {
+    /* border: 1px solid rgb(6, 248, 127); */
+    color: rgb(17, 49, 233);
+    /* margin-right: 1em; */
+}
+/* add square to the end of proof and solution */
+span.exercise {
+    /* border: 1px solid rgb(6, 248, 127); */
+    color: rgb(17, 49, 233);
+    /* margin-right: 1em; */
+}
+
+span.solution {
+  /* border: 1px solid rgb(6, 248, 127); */
+  color: rgb(17, 49, 233);
+  /* margin-right: 1em; */
+}
+
+/* div.proof:last-child::after,
+div.solution:last-child::after {
+    float: right;
+    content: "\25A2";
+} */
+

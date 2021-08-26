@@ -1,0 +1,12 @@
+exm:unlabeled-div-2
+exr:unlabeled-div-4
+exm:unlabeled-div-5
+exr:unlabeled-div-7
+exr:unlabeled-div-8
+basics-in-maple
+getting-started
+basic-operators
+variables
+how-to-define-a-function
+initially-known-mathematical-functions
+plot-functions
