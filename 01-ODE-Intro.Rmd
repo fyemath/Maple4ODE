@@ -1,0 +1,130 @@
+# Introduction to Differential Equations
+
+## Basic concepts
+
+### How to define a differential equation in Maple
+
+Depending on the differentiation command, there are three ways to define a differential equation in Maple.
+
+::: {.example}
+
+Assign the differential equation $y'=2y$ to a variable `ode1` in Maple.
+
+:::
+
+::: {.solution}
+
+- Method 1: Using the `diff` command
+  
+  ```
+  ode1:=diff(y(x), x)=2*y(x)
+  ```
+
+- Method 2: Using the the prime derivative notation
+  
+  ```
+  ode1:=y'=2y
+  ```
+
+- Method 3: Using the command `D`
+  
+  ```
+  ode1:=D(y)(x)=2*y(x)
+  ```
+
+:::
+
+Among the three methods, the one using `diff` is the standard choice.
+
+::: {.exercise}
+
+Assign the differential equation $y'=y(1-0.001y)$ to a variable `ode2` in Maple.
+
+:::
+
+### How to check solutions
+
+To check a solution, you may use the `subs` command with the option `eval` to see if the left-hand side and right-hand side of the equation are the same.
+
+::: {.example}
+
+Verify that $y=ce^{2x}$ is a solution to the differential equation $y'=2y$.
+
+:::
+
+::: {.solution}
+
+You may first assign the differential equation to a variable and using the `subs` command, or combine them into one command.
+
+```
+subs[eval](y(x)=c*exp(2*x), diff(y(x), x)=2*y(x))
+```
+
+:::
+
+Note that if you have an implicit solution, then the above mentioned method does not work well. You may have to find the derivative using the `implicitdiff` command.
+
+::: {.exercise}
+
+Verify that the function $y=c_1e^x+c_2e^{-x}$ is a solution of the equation $y''=y$.
+
+:::
+
+## Direction fields
+
+In Maple, the commands `DEplot`, `dfieldplot`, and `phaseportrait` supported by the package `DETools` can be used to plot the direction field and solution curves. The basic usage is as follows
+
+```
+DEplot(differential equation, function, ranges, options)
+```
+
+Again, using the command `?DEplot`, we can find details and examples on the command. In the following, I will use `DEplot` as an example to show how they work.
+
+::: {.example}
+
+Plot the direction field for the differential equation $y'=-\frac xy$. Can you guess what is a solution to this equation?
+
+:::
+
+::: {.solution}
+
+Let's first define the differential equations and assign it to a variable `ode3`.
+
+```
+ode3:=diff(y(x), x)=-x/(y(x))
+```
+
+Now load the package `DETools` using the command `with()`.
+
+```
+with(DETools):
+```
+
+With the package loaded, we can use `DEplot` to plot the direction field for `ode3`, say in the region $-5\le x\le 5$ and $-5\le y\le 5$.
+
+```
+DEplot(ode3, y(x), x =-5..5, y =-5..5, title = " Direction Field for y'=-x/y ")
+```
+
+Note that one may change the outlook by add options, such as color and arrows. Running the following command, you will see the difference.
+
+```
+DEplot(diff(y(x), x) = -(x - 1)/(y(x) + 1), y(x), x = -5 .. 5, y = -5 .. 5, 
+title = "Direction Field for y'=2 y", color = -(x - 1)/(y(x) + 1), arrows = line)
+```
+
+The direction field suggests that solutions are circles.
+
+:::
+
+::: {.exercise}
+
+Plot the direction field for the differential equation $y'=-\frac{x-1}{y+1}$. Can you guess what is a solution to this equation?
+
+:::
+
+::: {.exercise}
+
+Plot the direction field for the differential equation $y'=-\frac{x}{2y}$. Can you guess what is a solution to this equation?
+
+:::

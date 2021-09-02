@@ -6,7 +6,8 @@ language:
 
 rmd_files: [
   "index.Rmd",
-  "00-Introduction.Rmd"
+  "00-Maple-Intro.Rmd",
+  "01-ODE-Intro.Rmd"
 ]
 
 output_dir: book_output

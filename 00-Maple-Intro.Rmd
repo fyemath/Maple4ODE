@@ -32,14 +32,18 @@ To seek help in Maple is easy, in the Math mode, type in the keywords after the 
 - For example, typing in `?solve` and pressing **ENTER** will open the following window.
     ![Example of using the question mark to get quick help in Maple](figs/Maple-QuickHelp.png){width=50%}
 
-::: {.remark}  
+::: {.rmdnote}  
 
 1. Using the **ENTER** key, the result will appear in the next line.
 
 2. To get the result in the SAME line, you may use **ALT+ENTER**.
 :::
 
-## Basic Operators
+In the coming sections, some basics of Maple will be introduced. Another good place to start learning maple is the [Maple Quick Reference Card](https://www.maplesoft.com/support/help/Maple/view.aspx?path=worksheet/help/usingquickreference&cid=36).
+
+## Operators, Variables, and Delimiters
+
+### Basic Operators
 
 Use the command `?operators`, you may find descriptions of arithmetic operators in Maple.
 
@@ -57,7 +61,7 @@ In the case of a number multiplied by a variable, the multiplication symbol may 
 
 Among all operators in Maple, we will frequently use the assignment operator `:=`. You will see examples in the next section.
 
-## Variables
+### Variables
 
 Variables in Maple can be defined using combinations of letters, digits, and underscores, but not beginning with a digit. For example, we frequently use letters as well as letters followed by a number as variable names. Words connected by underscores are also frequently used as variable names.
 
@@ -98,7 +102,19 @@ Define a variable, assign a number to it, then clear the value assigned to it.
 
 :::
 
-## Statement Separator
+### Delimiters
+
+In Maple, commands or functions obey the function notation: `FunctionName()`. Note that there should be no space between the command/function and the parentheses `()`. For example, `unassign(f)` is valid but `unassign (f)` is not.
+
+Square brackets `[,]` can be used to enclose a list of ordered objects. They can also be used for subscripts. For example, you may define a order list `v` and use `v[1]` to get the first value. Square brackets sometime are also used for options of commands.
+
+Curly brackets `{,}` are used to enclose sets of objects whose order is unimportant.
+
+Triangle brackets `<,>` or `<|>` can be used to create column or row vectors, or matrices.
+
+Examples of usage of above mentioned delimiters can be found in later sections.
+
+### Statement Separator
 
 In Maple you may use the semicolon (`;`) and the colon (`:`) to end a statement.
 
@@ -124,7 +140,9 @@ Define a variable and assign a value to it without display the result. Add the v
 
 :::
 
-## How to define a function
+## Functions and Evaluation
+
+### How to define a function
 
 A function is an assignment, for a given input $x$, we assignment an output $y$ under a certain rule. Maple takes this idea to define functions.
 
@@ -134,17 +152,15 @@ function name:= independent variable -> function rule
 
 Here `:=` means "defined/assigned to be" and the arrow operator `->` may be understood as "plug in".
 
-::: {.rmdnote}  
-
-1. The assignment operator `:=` to the left-hand side the value of the right-hand side. The left-hand side normally is a name and the right-hand side is a value or expression.
-
-2. As far as I know, starting from Maple 2019, one can also define a function using the syntax:
+Another way to define a function is using the function notation as follows
 
   ```
   functionname(independent variable) := expression
   ```
 
-:::
+Note that this feature only available in Maple 10 or a later version.
+
+Yet another uncommon, but useful way to define a function is to use the command `unapply`. This command turns an expression into an operator.
 
 ::: {.example}
 
@@ -154,11 +170,25 @@ $$f(x)=\dfrac{x}{x-1}$$
 :::
 
 ::: {.solution}
-The function name is $f$, the independent variable is $x$ and the function rule is $\dfrac{x}{x-1}$. So the function can be defined in Maple by the following command.
+The function name is $f$, the independent variable is $x$ and the function rule is $\dfrac{x}{x-1}$. So the function can be defined using one of the following methods.
 
-```
-f:=x->x/(x-1)
-```
+- Method 1:  
+
+  ```
+  f:=x->x/(x-1)
+  ```
+
+- Method 2:
+
+  ```
+  f(x):=x/(x-1)
+  ```
+
+- Method 3:
+
+  ```
+  f:=unapply(x/(x-1), x)
+  ```
 
 Once the function is define, you may find the function value using the following the command.
 
@@ -176,7 +206,7 @@ $$g(x)=\dfrac{x^3}{(x-2)^2}$$
 
 :::
 
-## Initially known mathematical functions
+### Initially known mathematical functions
 
 Maple has many predefined functions which can be used to create new functions. To see all initially known mathematical functions in maple, you may use the help command `?functions` and click the hyperlinked "initial functions" in the description shown in the new window.
 
@@ -196,7 +226,7 @@ Some frequently used functions are listed in tables below.
 |:-------:|:-------:|:-------:|:---------:|:-------:|:--------:|
 | `arcsin()`   | `arccos()`     | `arctan()`      | `arccot()`        | `arcsec()`     | `arccsc()`       |
 
-## Evaluation and Substitution
+### Evaluation and Substitution
 
 To evaluate an expression with given values for the variables, there are multiple approaches.
 
@@ -226,7 +256,7 @@ f(1/2);
 
 :::
 
-To evaluates expressions numerically, you need apply the command `evalf`. To keep only $n$ digits in total, you may use `evalf[n]`.
+To evaluates expressions numerically, you need apply the command `evalf`. To keep only $n$ digits in total, you may use `evalf[n]` or `evalf( , n)`.
 
 ::: {.example}
 
@@ -249,23 +279,41 @@ Evaluate the expression $\sin(x)-2x^2-1$ at $x=\pi$ and find the numerical value
 
 :::
 
-## Plot functions
+## Packages and Plotting
+
+### Frequently used packages and how to load them
+
+A package is a collection of commands that extends the basic functionality of Maple and provided tools for solving problems of certain type or in certain field.
+
+The package `Student` contains subpackages designed for learning of standard undergraduate mathematics courses, such as Calculus, Linear Algebra, Ordinary Differential Equations.
+
+A few useful packages for differential equations are `Student[ODEs]`, `DETools` and `Plots`.
+
+Packages can be loaded from the Menu bar or using the command `with()`. For example, the follows commands will load the above mentioned three packages without display the available commands of each package.
+
+```
+with(Student[ODEs]): with(DETools): with(plots):
+```
+
+Note that you may use the semicolon separator to see possible commands supported by a package.
+
+### Plot explicit functions
 
 In Maple, you may plot a single variable function easily using the command
 
 ```
-plot(expression, domain, options)
+plot(expression, range, options)
 ```
 
 or plot several single variable functions together using
 
 ```
-plot([experssion1, experssion2], domain, options)
+plot([experssion1, experssion2], range, options)
 ```
 
-In the command, options may be omitted, but the domain must be given. To see details about available options, you may run the command `?plot` in Maple.
+In the command, options may be omitted, but the range must be given. A range of values for a variable in Maple has the form `x = a..b`, where $a$ and $b$ are the left and the right ends of the interval $[a, b]$ for $x$. For example, if the range `x = 0..5` is given, the graph will be only plotted over the domain $[0, 5]$ for the function.
 
-Other plotting functions will be introduced when being used. 
+To see details about available options, you may run the command `?plot` in Maple.
 
 ::: {.example}
 
@@ -285,43 +333,97 @@ plot([x^2, 2*x+1], x=-1..2, color=[red, blue])
 
 :::
 
+In this example, we used square brackets to order lists of functions and colors so that a function is paired with a color in the given order.
+
 ::: {.exercise}
 
 Plot the functions $f(x)=\ln(x+5)$ and $g(x)=3\cos(2x+1)+4$ over the domain $[-\pi, \pi]$.
 
 :::
 
-## Packages
+### Plot implicit functions
 
-A package is a collection of commands that extends the basic functionality of Maple and provided tools for solving problems of certain type or in certain field.
+To plot the curve of implicit functions defined by equations, we need the command `implicitplot` which is supported by the package `plots`. The usage of `implicitplot` is similar to the commands `plot`. Indeed, there share many common options. For details, you can run the command `?implicitplot`.
 
-The package `Student` contains subpackages designed for learning of standard undergraduate mathematics courses, such as Calculus, Linear Algebra, Ordinary Differential Equations.
+::: {.example}
 
-A few useful packages for differential equations are `Student[ODEs]`, `DETools` and `Plots`.
+Plot the curve defined by $x^2+4y^2=25$ in the region where $-5\le x\le 5$ and $-3\le y\le 3$.
 
-Packages can be loaded from the Menu bar or using the command `with()`. For example, the follows commands will load the above mentioned three packages without display the available commands of each package.
+:::
+::: {.solution}
+ After loading the package, we may use this command to plot the graph.
 
 ```
-with(Student[ODEs]): with(DETools): with(plots):
+with(plots):
+implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3);
 ```
 
-Note that you may use the semicolon separator to see possible commands supported by a package.
+![An ellipse in squarely scaled coordinates](img/unconstrainedellipse.png){width=50%}
 
-::: {.exercise}
+You will find the the graph looks a circle instead of a ellipse that the equation defined. This is because, the $x$-axis and $y$-axis are not in the same scaling. To have the same scaling, we need to add the option `scaling = constrained`. The following command will plot the curve in equally scaled coordinates.
 
-Use the command `?implicitplot` to learn how to use this command and use it to plot the graph for the curve $x^2-4y^2=9$.
+```
+implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3, scaling = constrained);
+```
+
+![An ellipse in equally scaled coordinates](img/ellipse.png){width=50%}
 
 :::
 
-## Some useful commands from Calculus
+::: {.exercise}
 
-- The `simplify` command is used to apply simplification rules to an expression.
+Plot the curve defined by $x^2-4y^2=9$ in the equally scaled region: $-5\le x\le 5$ and $-3\le y\le 3$.
+
+:::
+
+## Differentiation and Integration
 
 - The `int(f(x), x)` calling sequence computes an indefinite integral $\int f(x) \mathrm{d} x$. The `int(f(x), x=a..b)` calling sequence computes an indefinite integral $\int_a^b f(x) \mathrm{d} x$.
 
 - The `diff` command computes the partial derivative of the expression a with respect to $x_1$, $x_2$, ..., $x_n$, respectively. The most frequent use is `diff(y(x),x)`, which computes the derivative $\frac{\mathrm{d} y}{\mathrm{d} x}$.
 
 - The `implicitdiff(f(x,y)=g(x, y), y, x)` calling sequence computes the derivative $\frac{\mathrm{d} y}{\mathrm{d} x}$ using the implicit differentiation method.
+
+- The differential operator `D` in maple applies to a function and returns a first order (partial) derivative as a function. For example, given a function $y=f(x, y)$, the command `D[1](f)` returns the partial derivative $\frac{\partial}{\partial x}f$.
+
+- In Maple (version >=10), the prime derivative notation also works. For example, given a function `f(x):= sin(x^2)`, the second derivative of $f$ can be calculated using the command `f''(x)`. When applying the prime derivative notation to a function or an expression, the result is in the same type. The default differentiation variable for the prime notation is $x$. To change it the another variable, say $t$, you may use the following command
+  ```
+  Typesetting:-Settings(prime = t) # Change the default differentiation variable to t.
+  ```
+  Here, the symbol `#` is the comment symbol in Maple.
+  
+When using `diff` or the prime derivative notation to an expression, the result is an expression. To evaluate it, you may use the `subs` command. Another way is to apply `unapply` to the result to convert it into a function (operator).
+
+::: {.example}
+Find $f''(2)$ for the function $f(x)=\sin(x-1)$.
+:::
+
+::: {.solution}
+We first define a function $f$.
+```
+f(x):=sin(x-1)
+```
+
+To calculate the value of the second derivative $f''(2)$$, the easiest way probably is to use the prime notation.
+```
+f''(2)
+```
+
+If you used `diff` to find the derivative, you may run the following command to get the value $f''(2)$
+
+```
+unapply(diff(f(x), x$2), x)(2)
+```
+
+Using the command `D`, you may use the following command
+
+```
+D(D(f))(2) # D^((2))(f)(2)
+```
+
+:::
+
+In this example, the sequence operator `$` is used. The command `x$2` is equivalent to `x, x`.
 
 ::: {.exercise}
 

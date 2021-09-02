@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Maple for Differential Equations</title>
+  <title>Topic 2 Introduction to Differential Equations | Maple for Differential Equations</title>
   <meta name="description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Maple for Differential Equations" />
+  <meta property="og:title" content="Topic 2 Introduction to Differential Equations | Maple for Differential Equations" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="fyemath/maple4ode" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Maple for Differential Equations" />
+  <meta name="twitter:title" content="Topic 2 Introduction to Differential Equations | Maple for Differential Equations" />
   
   <meta name="twitter:description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="basics-in-maple.html"/>
 
-<link rel="next" href="basics-in-maple.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -128,30 +128,84 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Maple for Differential Equations</h1>
-<p class="author"><em>Fei Ye</em></p>
-<p class="date"><em>2021-09-01</em></p>
+<div id="introduction-to-differential-equations" class="section level1" number="2">
+<h1><span class="header-section-number">Topic 2</span> Introduction to Differential Equations</h1>
+<div id="basic-concepts" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Basic concepts</h2>
+<div id="how-to-define-a-differential-equation-in-maple" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> How to define a differential equation in Maple</h3>
+<p>Depending on the differentiation command, there are three ways to define a differential equation in Maple.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-20" class="example"><strong>Example 2.1  </strong></span>Assign the differential equation <span class="math inline">\(y&#39;=2y\)</span> to a variable <code>ode1</code> in Maple.</p>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>This is a book written for Maple labs for differential equations.</p>
-<p>The source of this book can be found at <a href="https://github.com/fyemath/maple4ode">https://github.com/fyemath/maple4ode</a>.</p>
-<p>Comments and suggestions are very welcome.</p>
-<p>This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
-<div class="figure">
-<img src="figs/by-nc-sa.png" alt="" />
-<p class="caption">by-nc-sa license icon</p>
+<div class="solution">
+<ul>
+<li></li>
+<li><p>Method 1: Using the <code>diff</code> command</p>
+<pre><code>ode1:=diff(y(x), x)=2*y(x)</code></pre></li>
+<li><p>Method 2: Using the the prime derivative notation</p>
+<pre><code>ode1:=y&#39;=2y</code></pre></li>
+<li><p>Method 3: Using the command <code>D</code></p>
+<pre><code>ode1:=D(y)(x)=2*y(x)</code></pre></li>
+</ul>
+</div>
+<p>Among the three methods, the one using <code>diff</code> is the standard choice.</p>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-22" class="exercise"><strong>Exercise 2.1  </strong></span>Assign the differential equation <span class="math inline">\(y&#39;=y(1-0.001y)\)</span> to a variable <code>ode2</code> in Maple.</p>
+</div>
+</div>
+<div id="how-to-check-solutions" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> How to check solutions</h3>
+<p>To check a solution, you may use the <code>subs</code> command with the option <code>eval</code> to see if the left-hand side and right-hand side of the equation are the same.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-23" class="example"><strong>Example 2.2  </strong></span>Verify that <span class="math inline">\(y=ce^{2x}\)</span> is a solution to the differential equation <span class="math inline">\(y&#39;=2y\)</span>.</p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-24" class="solution"><em>Solution</em>. </span>You may first assign the differential equation to a variable and using the <code>subs</code> command, or combine them into one command.</p>
+<pre><code>subs[eval](y(x)=c*exp(2*x), diff(y(x), x)=2*y(x))</code></pre>
+</div>
+<p>Note that if you have an implicit solution, then the above mentioned method does not work well. You may have to find the derivative using the <code>implicitdiff</code> command.</p>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-25" class="exercise"><strong>Exercise 2.2  </strong></span>Verify that the function <span class="math inline">\(y=c_1e^x+c_2e^{-x}\)</span> is a solution of the equation <span class="math inline">\(y&#39;&#39;=y\)</span>.</p>
+</div>
+</div>
+</div>
+<div id="direction-fields" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Direction fields</h2>
+<p>In Maple, the commands <code>DEplot</code>, <code>dfieldplot</code>, and <code>phaseportrait</code> supported by the package <code>DETools</code> can be used to plot the direction field and solution curves. The basic usage is as follows</p>
+<pre><code>DEplot(differential equation, function, ranges, options)</code></pre>
+<p>Again, using the command <code>?DEplot</code>, we can find details and examples on the command. In the following, I will use <code>DEplot</code> as an example to show how they work.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-26" class="example"><strong>Example 2.3  </strong></span>Plot the direction field for the differential equation <span class="math inline">\(y&#39;=-\frac xy\)</span>. Can you guess what is a solution to this equation?</p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-27" class="solution"><em>Solution</em>. </span>Let’s first define the differential equations and assign it to a variable <code>ode3</code>.</p>
+<pre><code>ode3:=diff(y(x), x)=-x/(y(x))</code></pre>
+<p>Now load the package <code>DETools</code> using the command <code>with()</code>.</p>
+<pre><code>with(DETools):</code></pre>
+<p>With the package loaded, we can use <code>DEplot</code> to plot the direction field for <code>ode3</code>, say in the region <span class="math inline">\(-5\le x\le 5\)</span> and <span class="math inline">\(-5\le y\le 5\)</span>.</p>
+<pre><code>DEplot(ode3, y(x), x =-5..5, y =-5..5, title = &quot; Direction Field for y&#39;=-x/y &quot;)</code></pre>
+<p>Note that one may change the outlook by add options, such as color and arrows. Running the following command, you will see the difference.</p>
+<pre><code>DEplot(diff(y(x), x) = -(x - 1)/(y(x) + 1), y(x), x = -5 .. 5, y = -5 .. 5, 
+title = &quot;Direction Field for y&#39;=2 y&quot;, color = -(x - 1)/(y(x) + 1), arrows = line)</code></pre>
+<p>The direction field suggests that solutions are circles.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-28" class="exercise"><strong>Exercise 2.3  </strong></span>Plot the direction field for the differential equation <span class="math inline">\(y&#39;=-\frac{x-1}{y+1}\)</span>. Can you guess what is a solution to this equation?</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-29" class="exercise"><strong>Exercise 2.4  </strong></span>Plot the direction field for the differential equation <span class="math inline">\(y&#39;=-\frac{x}{2y}\)</span>. Can you guess what is a solution to this equation?</p>
 </div>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="basics-in-maple.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="basics-in-maple.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -173,7 +227,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/fyemath/maple4calc/index.Rmd",
+"link": "https://github.com/fyemath/maple4calc/01-ODE-Intro.Rmd",
 "text": "Edit"
 },
 "history": {
