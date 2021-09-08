@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Topic 1 Basics in Maple | Maple for Differential Equations</title>
   <meta name="description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Topic 1 Basics in Maple | Maple for Differential Equations" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Fei Ye" />
 
 
-<meta name="date" content="2021-09-01" />
+<meta name="date" content="2021-09-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -35,6 +35,7 @@
 <link rel="next" href="introduction-to-differential-equations.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,7 +43,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -71,7 +71,7 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><a href="./">Maple for ODE</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
@@ -106,7 +106,14 @@
 <li class="chapter" data-level="2.1.1" data-path="introduction-to-differential-equations.html"><a href="introduction-to-differential-equations.html#how-to-define-a-differential-equation-in-maple"><i class="fa fa-check"></i><b>2.1.1</b> How to define a differential equation in Maple</a></li>
 <li class="chapter" data-level="2.1.2" data-path="introduction-to-differential-equations.html"><a href="introduction-to-differential-equations.html#how-to-check-solutions"><i class="fa fa-check"></i><b>2.1.2</b> How to check solutions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="introduction-to-differential-equations.html"><a href="introduction-to-differential-equations.html#direction-fields"><i class="fa fa-check"></i><b>2.2</b> Direction fields</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-differential-equations.html"><a href="introduction-to-differential-equations.html#solution-curves-vs-integral-curves"><i class="fa fa-check"></i><b>2.2</b> Solution curves vs Integral curves</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-differential-equations.html"><a href="introduction-to-differential-equations.html#direction-fields"><i class="fa fa-check"></i><b>2.3</b> Direction fields</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html"><i class="fa fa-check"></i><b>3</b> First Order Differential Equations</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#classification"><i class="fa fa-check"></i><b>3.1</b> Classification</a></li>
+<li class="chapter" data-level="3.2" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#solving-differential-equations"><i class="fa fa-check"></i><b>3.2</b> Solving differential equations</a></li>
+<li class="chapter" data-level="3.3" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#integrating-factors"><i class="fa fa-check"></i><b>3.3</b> Integrating factors</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -463,13 +470,13 @@ The command <code>evalf[5](Pi)</code> will return the numerical value 3.1416 of 
 <pre><code>with(plots):
 implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3);</code></pre>
 <div class="figure">
-<img src="img/unconstrainedellipse.png" style="width:50.0%" alt="" />
+<img src="figs/unconstrainedellipse.png" style="width:50.0%" alt="" />
 <p class="caption">An ellipse in squarely scaled coordinates</p>
 </div>
 <p>You will find the the graph looks a circle instead of a ellipse that the equation defined. This is because, the <span class="math inline">\(x\)</span>-axis and <span class="math inline">\(y\)</span>-axis are not in the same scaling. To have the same scaling, we need to add the option <code>scaling = constrained</code>. The following command will plot the curve in equally scaled coordinates.</p>
 <pre><code>implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3, scaling = constrained);</code></pre>
 <div class="figure">
-<img src="img/ellipse.png" style="width:50.0%" alt="" />
+<img src="figs/ellipse.png" style="width:50.0%" alt="" />
 <p class="caption">An ellipse in equally scaled coordinates</p>
 </div>
 </div>
@@ -525,7 +532,6 @@ implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3);</code></pre>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -543,7 +549,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/fyemath/maple4calc/00-Maple-Intro.Rmd",
+"link": "https://github.com/fyemath/maple4ode/00-Maple-Intro.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -556,7 +562,7 @@ gitbook.start({
 },
 "download": ["maple4ODE.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

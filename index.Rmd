@@ -5,10 +5,10 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 description: "This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown"
 documentclass: elegantbook
-github-repo: fyemath/maple4ode
+github-repo: "fyemath/maple4ode"
 # logo: ''
-# cover: figs/Wintersweet.jpg
-classoption: en,12pt
+cover: "figs/cover.jpg"
+classoption: 12pt
 version: '1.0'
 ---
 
@@ -19,6 +19,10 @@ knitr::opts_chunk$set(out.width="60%", fig.align="center", fig.pos = "!H", out.e
 
 ```{r include=FALSE}
 file.copy('_redirects', 'book_output/_redirects', overwrite = TRUE)
+```
+
+```{r thm_style, include=FALSE}
+options(bookdown.theorem.preamble = FALSE)
 ```
 
 \mainmatter

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 2 Introduction to Differential Equations | Maple for Differential Equations</title>
+  <title>Topic 3 First Order Differential Equations | Maple for Differential Equations</title>
   <meta name="description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 2 Introduction to Differential Equations | Maple for Differential Equations" />
+  <meta property="og:title" content="Topic 3 First Order Differential Equations | Maple for Differential Equations" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="fyemath/maple4ode" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 2 Introduction to Differential Equations | Maple for Differential Equations" />
+  <meta name="twitter:title" content="Topic 3 First Order Differential Equations | Maple for Differential Equations" />
   
   <meta name="twitter:description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="basics-in-maple.html"/>
-<link rel="next" href="first-order-differential-equations.html"/>
+<link rel="prev" href="introduction-to-differential-equations.html"/>
+
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -135,125 +135,90 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction-to-differential-equations" class="section level1" number="2">
-<h1><span class="header-section-number">Topic 2</span> Introduction to Differential Equations</h1>
-<div id="basic-concepts" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Basic concepts</h2>
-<div id="how-to-define-a-differential-equation-in-maple" class="section level3" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> How to define a differential equation in Maple</h3>
-<p>Depending on the differentiation command, there are three ways to define a differential equation in Maple.</p>
+<div id="first-order-differential-equations" class="section level1" number="3">
+<h1><span class="header-section-number">Topic 3</span> First Order Differential Equations</h1>
+<div id="classification" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Classification</h2>
+<p>Knowing the type of a differential equation will be very helpful for solving it. In Maple, we can use the command <code>odeadvisor(ode, y(x))</code> supported by the package <code>DETools</code> to learn what type of equation is it.</p>
 <div class="example">
-<p><span id="exm:unlabeled-div-20" class="example"><strong>Example 2.1  </strong></span>Assign the differential equation <span class="math inline">\(y&#39;=2y\)</span> to a variable in Maple.</p>
+<p><span id="exm:unlabeled-div-36" class="example"><strong>Example 3.1  </strong></span>Determine the primary type of each of the following differential equations.</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(y&#39;=xy\)</span></li>
+<li><span class="math inline">\(y&#39;=xy+1\)</span></li>
+<li><span class="math inline">\(y&#39;=xy+y^2\)</span></li>
+<li><span class="math inline">\(y&#39;=\frac{xy}{x^2+y^2}\)</span></li>
+</ol>
 </div>
 <div class="solution">
-<ul>
-<li></li>
-<li><p>Method 1: Using the <code>diff</code> command</p>
-<pre><code>ode111:=diff(y(x), x)=2*y(x)</code></pre></li>
-<li><p>Method 2: Using the the prime derivative notation</p>
-<pre><code>ode112:=y&#39;=2y</code></pre></li>
-<li><p>Method 3: Using the command <code>D</code></p>
-<pre><code>ode113:=D(y)(x)=2*y(x)</code></pre></li>
-</ul>
-</div>
-<p>Among the three methods, the one using <code>diff</code> is the standard choice.</p>
-<div class="exercise">
-<p><span id="exr:unlabeled-div-22" class="exercise"><strong>Exercise 2.1  </strong></span>Assign the differential equation <span class="math inline">\(y&#39;=y(1-0.001y)\)</span> to a variable in Maple.</p>
-</div>
-</div>
-<div id="how-to-check-solutions" class="section level3" number="2.1.2">
-<h3><span class="header-section-number">2.1.2</span> How to check solutions</h3>
-<p>To check if a function (explicitly of implicitly defined) is a solution of a given differential equation, you may use the <code>odetest(function, ODE, y(x))</code> command. If the output is 0, then the function is a solution.</p>
-<div class="example">
-<p><span id="exm:unlabeled-div-23" class="example"><strong>Example 2.2  </strong></span>Verify that <span class="math inline">\(y=ce^{2x}\)</span> is a solution to the differential equation <span class="math inline">\(y&#39;=2y\)</span>.</p>
-</div>
-<div class="solution">
-<p><span id="unlabeled-div-24" class="solution"><em>Solution</em>. </span>Run the following command, you will see that output is 0. So the function is a solution.</p>
-<pre><code>odetest(y(x)=c*exp(2*x), diff(y(x), x)=2*y(x), y(x))</code></pre>
-</div>
-<!-- 
-Note that one may also use `subs[eval]` to check if a function is a solution:
-
-```
-subs[eval](y(x)=c*exp(2*x), diff(y(x), x)=2*y(x))
-``` 
--->
-<div class="example">
-<p><span id="exm:unlabeled-div-25" class="example"><strong>Example 2.3  </strong></span>Verify that <span class="math inline">\(x^2+y^2=1\)</span> is a solution of the equation <span class="math inline">\(y&#39;=-\frac xy\)</span>.</p>
-</div>
-<div class="solution">
-<p><span id="unlabeled-div-26" class="solution"><em>Solution</em>. </span>Again, running the following command returns the number 0. So the implicit function is a solution.</p>
-<pre><code>odetest(x^2+y(x)^2=1, diff(y(x),x)=-x/(y(x)), y(x));</code></pre>
-</div>
-<div class="rmdnote">
-<p>When working with differential equations, we should always use <span class="math inline">\(y(x)\)</span> instead of <span class="math inline">\(y\)</span> to indicate that <span class="math inline">\(y\)</span> is a function of <span class="math inline">\(x\)</span>.</p>
-</div>
-<div class="exercise">
-<p><span id="exr:unlabeled-div-27" class="exercise"><strong>Exercise 2.2  </strong></span>Verify that the function <span class="math inline">\(y=c_1e^x+c_2e^{-x}\)</span> is a solution of the equation <span class="math inline">\(y&#39;&#39;=y\)</span>.</p>
-</div>
-<div class="exercise">
-<p><span id="exr:unlabeled-div-28" class="exercise"><strong>Exercise 2.3  </strong></span>Verify that <span class="math inline">\(x^2+4y^2=c\)</span> is an implicit solution of the equation <span class="math inline">\(4yy&#39;=x\)</span>.</p>
-</div>
-</div>
-</div>
-<div id="solution-curves-vs-integral-curves" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Solution curves vs Integral curves</h2>
-<p>A solution curve is the graph of a function <span class="math inline">\(y=f(x)\)</span> that satisfies the given differential equation. An integral curves is a union of solution curves.</p>
-<div class="example">
-<p><span id="exm:unlabeled-div-29" class="example"><strong>Example 2.4  </strong></span>Consider the differential equation <span class="math inline">\(yy&#39;=4x\)</span>. Verify that the graphs of the functions <span class="math inline">\(y=\pm\sqrt{4x^2-1}\)</span> are solution curves of the equation, while the hyperbola <span class="math inline">\(4x^2-y^2=1\)</span> defines an integral curve of the equation.</p>
-</div>
-<div class="solution">
-<p><span id="unlabeled-div-30" class="solution"><em>Solution</em>. </span>Let’s rename the function as <span class="math inline">\(y_1(x)=\sqrt{4x^2-1}\)</span> and <span class="math inline">\(y_2(x)=-\sqrt{4x^2-1}\)</span>. In Maple, it means we <code>y[1](x)</code> and <code>y[2](x)</code>. We can check that they are solutions using the <code>seq</code> loop.</p>
-<pre><code>ode121:=y(x)*diff(y(x), x)=4*x:
-y[1](x):=sqrt(4*x^2-1);
-y[2](x):=-sqrt(4*x^2-1);
-seq(odetest(y(x)=y[i](x), ode121, y(x)), i = 1 .. 2);</code></pre>
-<p>The outputs show that <span class="math inline">\(y_1\)</span> and <span class="math inline">\(y_2\)</span> are solutions.</p>
-<p>To see that hyperbola <span class="math inline">\(4x^2-y^2=1\)</span> defines an integral curve, we solve for <span class="math inline">\(y\)</span>.</p>
-<pre><code>soly:=solve(4*x^2-y^2=1, y);</code></pre>
-<p>You will see that the solutions are exactly the functions <span class="math inline">\(y_1\)</span> and <span class="math inline">\(y_2\)</span>. So as an union of solution curves the hyperbola is an integral curve.</p>
-<p>Plotting those curves will help use understand better.</p>
-<pre><code>solutioncurves := plot([y[1](x), y[2](x)], 
-  x = -5 .. 5, y = -5 .. 5, color = [green, red]);
-with(plots):
-integralcurve := implicitplot(4*x^2 - y^2 = 1, 
-  x = -5 .. 5, y = -5 .. 5, color = blue, 
-  linestyle = dot);</code></pre>
-<p>To check the integral curve is the union of the two solution curve, we can use the <code>display</code> command.</p>
-<pre><code>display(solutioncurves,integralcurve)</code></pre>
-</div>
-<div class="exercise">
-<p><span id="exr:unlabeled-div-31" class="exercise"><strong>Exercise 2.4  </strong></span>Consider the differential equation <span class="math inline">\(yy&#39;=4x\)</span>. Verify that the graphs of the functions <span class="math inline">\(y=\pm\sqrt{4x^2+1}\)</span> are solution curves of the equation, while the hyperbola <span class="math inline">\(y^2-4x^2=1\)</span> defines an integral curve of the equation.</p>
-</div>
-</div>
-<div id="direction-fields" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Direction fields</h2>
-<p>In Maple, the commands <code>DEplot</code>, <code>dfieldplot</code>, and <code>phaseportrait</code> supported by the package <code>DETools</code> can be used to plot the direction field and solution curves. The basic usage is as follows</p>
-<pre><code>DEplot(differential equation, function, ranges, options)</code></pre>
-<p>Again, using the command <code>?DEplot</code>, we can find details and examples on the command. In the following, I will use <code>DEplot</code> as an example to show how they work.</p>
-<div class="example">
-<p><span id="exm:unlabeled-div-32" class="example"><strong>Example 2.5  </strong></span>Plot the direction field for the differential equation <span class="math inline">\(y&#39;=-\frac xy\)</span>. Can you guess what is a solution to this equation?</p>
-</div>
-<div class="solution">
-<p><span id="unlabeled-div-33" class="solution"><em>Solution</em>. </span>Let’s first define the differential equations and assign it to a variable.</p>
-<pre><code>ode131:=diff(y(x), x)=-x/(y(x))</code></pre>
-<p>Now load the package <code>DETools</code> using the command <code>with()</code>.</p>
+<p><span id="unlabeled-div-37" class="solution"><em>Solution</em>. </span>We first load the package <code>DETools</code> anonymously.</p>
 <pre><code>with(DETools):</code></pre>
-<p>With the package loaded, we can use <code>DEplot</code> to plot the direction field for <code>ode131</code>, say in the region <span class="math inline">\(-5\le x\le 5\)</span> and <span class="math inline">\(-5\le y\le 5\)</span>.</p>
-<pre><code>DEplot(ode131, y(x), x =-5..5, y =-5..5, 
-  title = &quot; Direction Field for y&#39;=-x/y &quot;)</code></pre>
-<p>Note that one may change the outlook by add options, such as color and arrows. Running the following command, you will see the difference.</p>
-<pre><code>DEplot(diff(y(x), x) = -(x - 1)/(y(x) + 1), y(x), 
-  x = -5 .. 5, y = -5 .. 5,
-  title = &quot;Direction Field for y&#39;=2 y&quot;,
-  color = -(x - 1)/(y(x) + 1), arrows = line)</code></pre>
-<p>The direction field suggests that solutions are circles.</p>
+<p>Now we can classify those equations using <code>odeadvisor</code>.</p>
+<pre><code>odeadvisor(diff(y(x),x)=x*y(x));
+odeadvisor(diff(y(x),x)=x*y(x)+1);
+odeadvisor(diff(y(x),x)=x*y(x)+y(x)^2;
+odeadvisor(diff(y(x), x) = (x*y(x))/(x^2 + y(x)^2));</code></pre>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-34" class="exercise"><strong>Exercise 2.5  </strong></span>Plot the direction field for the differential equation <span class="math inline">\(y&#39;=-\frac{x-1}{y+1}\)</span>. Can you guess what is a solution to this equation?</p>
+<p><span id="exr:unlabeled-div-38" class="exercise"><strong>Exercise 3.1  </strong></span>Determine the primary type of each of the following differential equations.</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(y&#39;=x^2y^2+x^2\)</span></li>
+<li><span class="math inline">\(y&#39;=x^2y+x\)</span></li>
+<li><span class="math inline">\(y&#39;=xy+y^3\)</span></li>
+<li><span class="math inline">\(y&#39;=\frac{x-y}{x+y}\)</span></li>
+</ol>
+</div>
+</div>
+<div id="solving-differential-equations" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Solving differential equations</h2>
+<p>To solve an ordinary differential equation, or a system of them, or initial value problems, you may use the command <code>dsolve({ODE, InitialConditions}, y(x), options)</code>, where the initial conditions may be omitted to get a general solution. Note that <code>dsolve</code> returns an equation with <span class="math inline">\(y(x)\)</span> on the left.</p>
+<p>Among options, you may choose to use different method to solve the equations, for example, <code>numeric</code>, <code>series</code> or <code>method=laplace</code> are options that can be imposed and will be used later.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-39" class="example"><strong>Example 3.2  </strong></span>Consider the differential equation
+<span class="math display">\[y&#39;=2y+x.\]</span></p>
+<ol style="list-style-type: decimal">
+<li>Find the general solution.</li>
+<li>Find the solution that satisfies the initial condition <span class="math inline">\(y(0)=1\)</span>.</li>
+<li>Plot the solution curve of the initial value problem.</li>
+</ol>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-40" class="solution"><em>Solution</em>. </span>It will be convenient to define the differential equation first.</p>
+<pre><code>ode221:=diff(y(x), x)=2*y(x)+x:</code></pre>
+<p>The general solution can be obtained by the following command.</p>
+<pre><code>dsolve(ode221, y(x));</code></pre>
+<p>The solution of the initial value problem can be obtained by</p>
+<pre><code>sol221:=dsolve({ode221, y(0)=1}, y(x));</code></pre>
+<p>To plot the solution curve, we need to get the function expression instead of the equation. This can be done using the command <code>rhs</code>.</p>
+<pre><code>plot(rhs(sol221), x=-5..5)</code></pre>
+</div>
+<div class="example">
+<p><span id="exm:unlabeled-div-41" class="example"><strong>Example 3.3  </strong></span>Consider the differential equation
+<span class="math display">\[y&#39;=x+y.\]</span></p>
+<ol style="list-style-type: decimal">
+<li>Find the general solution.</li>
+<li>Find the solution that satisfies the initial condition <span class="math inline">\(y(0)=1\)</span>.</li>
+<li>Plot the solution curve of the initial value problem.</li>
+</ol>
+</div>
+</div>
+<div id="integrating-factors" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Integrating factors</h2>
+<p>In Maple, you may use <code>intfactor</code> that is supported by the package <code>DETools</code> to find an integrating factor for a given ODE. To test an integrating factor, you may use <code>mutest</code> which is again supported by the package <code>DETools</code>. If the command returns a 0, then the expression being tested is an integrating factor.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-42" class="example"><strong>Example 3.4  </strong></span>Find an integrating factor for the equations <span class="math inline">\(y&#39;=x^2y-x\)</span> and test it using <code>mutest</code>.</p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-43" class="solution"><em>Solution</em>. </span>Let’s first define the differential equation.</p>
+<pre><code>ode231:=diff(y(x), x)=x^2*y(x)-x:</code></pre>
+<p>Now loading the package and find an integrating factor <span class="math inline">\(\mu\)</span>.</p>
+<pre><code>with(DETools):
+mu:=intfactor(ode231);</code></pre>
+<p>To test it, you may run the following command.</p>
+<pre><code>mutest(mu, ode231, y(x));</code></pre>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-35" class="exercise"><strong>Exercise 2.6  </strong></span>Plot the direction field for the differential equation <span class="math inline">\(y&#39;=-\frac{x}{2y}\)</span>. Can you guess what is a solution to this equation?</p>
+<p><span id="exr:unlabeled-div-44" class="exercise"><strong>Exercise 3.2  </strong></span>Find an integrating factor for the differential equation.
+<span class="math display">\[xy&#39;=y-x.\]</span></p>
 </div>
 
 </div>
@@ -263,8 +228,8 @@ integralcurve := implicitplot(4*x^2 - y^2 = 1,
           </div>
         </div>
       </div>
-<a href="basics-in-maple.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="first-order-differential-equations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="introduction-to-differential-equations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -285,7 +250,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/fyemath/maple4ode/01-ODE-Intro.Rmd",
+"link": "https://github.com/fyemath/maple4ode/02-FirstOrder-ODE.Rmd",
 "text": "Edit"
 },
 "history": {

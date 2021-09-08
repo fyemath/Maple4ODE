@@ -1,0 +1,142 @@
+# First Order Differential Equations
+
+## Classification
+
+Knowing the type of a differential equation will be very helpful for solving it. In Maple, we can use the command `odeadvisor(ode, y(x))` supported by the package `DETools` to learn what type of equation is it.
+
+::: {.example}
+
+Determine the primary type of each of the following differential equations.
+
+1. $y'=xy$
+2. $y'=xy+1$
+3. $y'=xy+y^2$
+4. $y'=\frac{xy}{x^2+y^2}$
+
+:::
+
+::: {.solution}
+
+We first load the package `DETools` anonymously.
+
+```
+with(DETools):
+```
+
+Now we can classify those equations using `odeadvisor`.
+
+```
+odeadvisor(diff(y(x),x)=x*y(x));
+odeadvisor(diff(y(x),x)=x*y(x)+1);
+odeadvisor(diff(y(x),x)=x*y(x)+y(x)^2;
+odeadvisor(diff(y(x), x) = (x*y(x))/(x^2 + y(x)^2));
+```
+
+:::
+
+::: {.exercise}
+
+Determine the primary type of each of the following differential equations.
+
+1. $y'=x^2y^2+x^2$
+2. $y'=x^2y+x$
+3. $y'=xy+y^3$
+4. $y'=\frac{x-y}{x+y}$
+
+:::
+
+## Solving differential equations
+
+To solve an ordinary differential equation, or a system of them, or initial value problems, you may use the command `dsolve({ODE, InitialConditions}, y(x), options)`, where the initial conditions may be omitted to get a general solution. Note that `dsolve` returns an equation with $y(x)$ on the left.
+
+Among options, you may choose to use different method to solve the equations, for example, `numeric`, `series` or `method=laplace` are options that can be imposed and will be used later.
+
+::: {.example}
+
+Consider the differential equation
+$$y'=2y+x.$$
+
+1. Find the general solution.
+2. Find the solution that satisfies the initial condition $y(0)=1$.
+3. Plot the solution curve of the initial value problem.
+
+:::
+
+::: {.solution}
+
+It will be convenient to define the differential equation first.
+
+```
+ode221:=diff(y(x), x)=2*y(x)+x:
+```
+
+The general solution can be obtained by the following command.
+
+```
+dsolve(ode221, y(x));
+```
+
+The solution of the initial value problem can be obtained by
+
+```
+sol221:=dsolve({ode221, y(0)=1}, y(x));
+```
+
+To plot the solution curve, we need to get the function expression instead of the equation. This can be done using the command `rhs`.
+
+```
+plot(rhs(sol221), x=-5..5)
+```
+
+:::
+
+::: {.example}
+
+Consider the differential equation
+$$y'=x+y.$$
+
+1. Find the general solution.
+2. Find the solution that satisfies the initial condition $y(0)=1$.
+3. Plot the solution curve of the initial value problem.
+
+:::
+
+## Integrating factors
+
+In Maple, you may use `intfactor` that is supported by the package `DETools` to find an integrating factor for a given ODE. To test an integrating factor, you may use `mutest` which is again supported by the package `DETools`. If the command returns a 0, then the expression being tested is an integrating factor.
+
+::: {.example}
+
+Find an integrating factor for the equations $y'=x^2y-x$ and test it using `mutest`.
+
+:::
+
+::: {.solution}
+
+Let's first define the differential equation.
+
+```
+ode231:=diff(y(x), x)=x^2*y(x)-x:
+```
+
+Now loading the package and find an integrating factor $\mu$.
+
+```
+with(DETools):
+mu:=intfactor(ode231);
+```
+
+To test it, you may run the following command.
+
+```
+mutest(mu, ode231, y(x));
+```
+
+:::
+
+::: {.exercise}
+
+Find an integrating factor for the differential equation.
+$$xy'=y-x.$$
+
+:::

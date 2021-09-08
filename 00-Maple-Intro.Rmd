@@ -358,7 +358,7 @@ with(plots):
 implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3);
 ```
 
-![An ellipse in squarely scaled coordinates](img/unconstrainedellipse.png){width=50%}
+![An ellipse in squarely scaled coordinates](figs/unconstrainedellipse.png){width=50%}
 
 You will find the the graph looks a circle instead of a ellipse that the equation defined. This is because, the $x$-axis and $y$-axis are not in the same scaling. To have the same scaling, we need to add the option `scaling = constrained`. The following command will plot the curve in equally scaled coordinates.
 
@@ -366,7 +366,7 @@ You will find the the graph looks a circle instead of a ellipse that the equatio
 implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3, scaling = constrained);
 ```
 
-![An ellipse in equally scaled coordinates](img/ellipse.png){width=50%}
+![An ellipse in equally scaled coordinates](figs/ellipse.png){width=50%}
 
 :::
 
@@ -388,7 +388,8 @@ Plot the curve defined by $x^2-4y^2=9$ in the equally scaled region: $-5\le x\le
 
 - In Maple (version >=10), the prime derivative notation also works. For example, given a function `f(x):= sin(x^2)`, the second derivative of $f$ can be calculated using the command `f''(x)`. When applying the prime derivative notation to a function or an expression, the result is in the same type. The default differentiation variable for the prime notation is $x$. To change it the another variable, say $t$, you may use the following command
   ```
-  Typesetting:-Settings(prime = t) # Change the default differentiation variable to t.
+  Typesetting:-Settings(prime = t) 
+  # Change the default differentiation variable to t.
   ```
   Here, the symbol `#` is the comment symbol in Maple.
   

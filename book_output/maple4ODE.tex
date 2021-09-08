@@ -1,0 +1,1055 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  12pt]{elegantbook}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Maple for Differential Equations},
+  pdfauthor={Fei Ye},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\cover{figs/cover.jpg}
+\institute{QCC-CUNY}
+% \version{ElegantBook 4.1} % 当前使用的 elegantbook 宏包版本
+% \bioinfo{自定义}{信息}
+% \extrainfo{Victory won\rq t come to us unless we go to it. --- M. Moore}
+
+\definecolor{customcolor}{RGB}{0,255,128}
+\colorlet{coverlinecolor}{customcolor}
+
+\usepackage{booktabs}
+\usepackage[makeroom]{cancel}
+
+\usepackage[export]{adjustbox} %Needed for max width
+%\patchcmd{<command>}{<code to replace>}{<code>}{<success>}{<failure>}
+%The following codes add max dimension option to includegraphics
+%Gin@ii is from graphicx package and looks for a second optional argument
+\expandafter\patchcmd\csname Gin@ii\endcsname 
+{\setkeys{Gin}{#1}}
+{\setkeys{Gin}{max width=\textwidth, max height=.5\textwidth,keepaspectratio,#1}}
+{}
+{}
+
+\definecolor{colortip}{RGB}{81,183,73}
+\definecolor{colornote}{RGB}{251,188,5}
+\definecolor{colorwarn}{RGB}{255,83,59}
+\definecolor{colorinfo}{RGB}{204,204,204}
+
+\tcbset{
+  colbacktitle=white,
+  enhanced,
+  attach boxed title to top center={yshift=-2mm},
+  colback=white, % 背景色
+  coltext=black, % 文本色
+  leftrule=1mm,
+  rightrule=.25mm,
+  bottomrule=.25mm,
+  toprule=.25mm,
+  boxsep=1pt, % 文字和边框的空隙
+  arc=1pt % 圆角
+}
+
+\newtcolorbox{rmdtip}[1]{
+  title=#1,
+  coltitle=colortip,
+  colframe=colortip, % 边框色
+}
+
+\newtcolorbox{rmdnote}[1]{
+  title=#1,
+  coltitle=colornote,
+  colframe=colornote % 边框色
+}
+
+\newtcolorbox{rmdwarn}[1]{
+  title=#1,
+  coltitle=colorwarn,
+  colframe=colorwarn % 边框色
+}
+
+\newtcolorbox{rmdinfo}{
+  colframe=colorinfo % 边框色
+}
+
+\frontmatter
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Maple for Differential Equations}
+\author{Fei Ye}
+\date{2021-09-07}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{0}
+\tableofcontents
+}
+\mainmatter
+
+\hypersetup{pageanchor=true}
+
+\captionsetup[figure]{labelformat=empty}
+\captionsetup[subfigure]{labelformat=empty}
+
+\hypertarget{preface}{%
+\chapter*{Preface}\label{preface}}
+\addcontentsline{toc}{chapter}{Preface}
+
+This is a book written for Maple labs for differential equations.
+
+The source of this book can be found at \url{https://github.com/fyemath/maple4ode}.
+
+Comments and suggestions are very welcome.
+
+This work is licensed under a \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License}.
+
+\begin{figure}
+\centering
+\includegraphics{figs/by-nc-sa.png}
+\caption{by-nc-sa license icon}
+\end{figure}
+
+\hypertarget{basics-in-maple}{%
+\chapter{Basics in Maple}\label{basics-in-maple}}
+
+\hypertarget{getting-started}{%
+\section{Getting Started}\label{getting-started}}
+
+When Maple (say Maple2021) starts, you will see the following Maple Start document.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth,height=\textheight]{figs/Maple-Start.png}
+\caption{Maple start page screenshot}
+\end{figure}
+
+\begin{itemize}
+\item
+  The palettes of Maple found on the left side of the Maple window contains expressions and
+  symbols that you can used to quickly entry them.
+\item
+  The context panel of Maple found on the right side of the Maple window can be used to perform a wide variety of operations on an expression or its output.
+\end{itemize}
+
+If you already know what you want to do, then you may open a new document by clicking \textbf{New Document} icon in the start document. The following shows what an new (empty document) looks like.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth,height=\textheight]{figs/New-Document.png}
+\caption{Maple new document page screenshot}
+\end{figure}
+
+\begin{itemize}
+\item
+  In the context bar of this new document, the current mode is indicated.
+
+  \begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth,height=\textheight]{figs/Maple-Modes.png}
+  \caption{Different Modes in Maple}
+  \end{figure}
+\item
+  Initially, the Text mode is in use. You may switch to another mode by clicking one of the three modes: Text, Nonexecutable math, or Math.
+\item
+  Alternatively, you may use the \textbf{F5} shortcut key, to toggle between these three modes in sequence: text entry, nonexecutable math entry, and executable math.
+\end{itemize}
+
+If you want to explore some featured sample documents, you may go to \textbf{Start.mw} document and click on different icons to open a new document.
+
+\begin{itemize}
+\tightlist
+\item
+  You may alway reopen the start page by click the home icon \includegraphics[width=1.5em,height=\textheight]{figs/Home-icon.png} located in the Toolbar to reopen the start page.
+\end{itemize}
+
+To seek help in Maple is easy, in the Math mode, type in the keywords after the question mark \texttt{?} and press \textbf{ENTER}, you will see a new window popping out with searched results.
+
+\begin{itemize}
+\tightlist
+\item
+  For example, typing in \texttt{?solve} and pressing \textbf{ENTER} will open the following window.
+  \includegraphics[width=0.5\textwidth,height=\textheight]{figs/Maple-QuickHelp.png}
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Using the \textbf{ENTER} key, the result will appear in the next line.
+\item
+  To get the result in the SAME line, you may use \textbf{ALT+ENTER}.
+\end{enumerate}
+
+In the coming sections, some basics of Maple will be introduced. Another good place to start learning maple is the \href{https://www.maplesoft.com/support/help/Maple/view.aspx?path=worksheet/help/usingquickreference\&cid=36}{Maple Quick Reference Card}.
+
+\hypertarget{operators-variables-and-delimiters}{%
+\section{Operators, Variables, and Delimiters}\label{operators-variables-and-delimiters}}
+
+\hypertarget{basic-operators}{%
+\subsection{Basic Operators}\label{basic-operators}}
+
+Use the command \texttt{?operators}, you may find descriptions of arithmetic operators in Maple.
+
+\begin{longtable}[]{@{}cccccc@{}}
+\toprule
+& addition & subtraction & multiplication & division & exponentiation \\
+\midrule
+\endhead
+Maple Operators & \texttt{+} & \texttt{-} & \texttt{*} & \texttt{/} & \texttt{\^{}} \\
+In writing & \(x+2\) & \(a-b\) & \(2x\) & \(\dfrac pq\) & \(b^5\) \\
+In Maple & \texttt{x+2} & \texttt{a-b} & \texttt{2*x} & \texttt{p/q} & \texttt{b\^{}5} \\
+\bottomrule
+\end{longtable}
+
+In the case of a number multiplied by a variable, the multiplication symbol may be omitted. In general, you can use \texttt{*} or a \texttt{{[}space{]}} to denote multiplication. However, it's highly recommended to use \texttt{*} which is easier to debug.
+
+Among all operators in Maple, we will frequently use the assignment operator \texttt{:=}. You will see examples in the next section.
+
+\hypertarget{variables}{%
+\subsection{Variables}\label{variables}}
+
+Variables in Maple can be defined using combinations of letters, digits, and underscores, but not beginning with a digit. For example, we frequently use letters as well as letters followed by a number as variable names. Words connected by underscores are also frequently used as variable names.
+
+Note that there are reserved combinations. Those combinations are not allowed in Maple. For example, if you use \texttt{sin} as a variable name and try to assign 1 to it using the command \texttt{sin:=1}. You will see the following error message
+
+Error, attempting to assign to \texttt{sin} which is protected. Try declaring \texttt{local\ sin}; see ?protect for details.
+
+However, you will find that \texttt{sinx} is a valid variable name. If you assign 1 to it using the command \texttt{sinx:=1}. Pressing ENTER, you will get
+
+sinx := 1
+
+Sometime you may want to clear the value assigned to a variable. To do so, one way is to assign to the variable its own name:
+
+\begin{verbatim}
+sinx:='sinx'
+\end{verbatim}
+
+Another way is to use the unassign command \texttt{unassign()}:
+
+\begin{verbatim}
+x:=1;
+unassign('x');
+\end{verbatim}
+
+If you would like to forget all previous commands and results, the \texttt{restart} command can be used to clear Maple's memory so that it will act (almost) as if just started.
+
+\begin{exercise}
+Define a variable, assign a number to it, then clear the value assigned to it.
+\end{exercise}
+
+\hypertarget{delimiters}{%
+\subsection{Delimiters}\label{delimiters}}
+
+In Maple, commands or functions obey the function notation: \texttt{FunctionName()}. Note that there should be no space between the command/function and the parentheses \texttt{()}. For example, \texttt{unassign(f)} is valid but \texttt{unassign\ (f)} is not.
+
+Square brackets \texttt{{[},{]}} can be used to enclose a list of ordered objects. They can also be used for subscripts. For example, you may define a order list \texttt{v} and use \texttt{v{[}1{]}} to get the first value. Square brackets sometime are also used for options of commands.
+
+Curly brackets \texttt{\{,\}} are used to enclose sets of objects whose order is unimportant.
+
+Triangle brackets \texttt{\textless{},\textgreater{}} or \texttt{\textless{}\textbar{}\textgreater{}} can be used to create column or row vectors, or matrices.
+
+Examples of usage of above mentioned delimiters can be found in later sections.
+
+\hypertarget{statement-separator}{%
+\subsection{Statement Separator}\label{statement-separator}}
+
+In Maple you may use the semicolon (\texttt{;}) and the colon (\texttt{:}) to end a statement.
+
+\begin{itemize}
+\tightlist
+\item
+  The semicolon is the normal statement separator.
+\item
+  When using the colon, the statement will be executed but the result of the statement will not be displayed.
+\item
+  Statement separator may be omitted if there is only one statement in a single line.
+\end{itemize}
+
+\begin{example}
+
+Entering the following commands will only display the values of \(b\), \(c\) and \(d\) but not \(a\)
+
+\begin{verbatim}
+a := 1:
+b := a+1; c:=b+1;
+d := c+1
+\end{verbatim}
+
+\end{example}
+
+\begin{exercise}
+Define a variable and assign a value to it without display the result. Add the value 1 to the variable and display the result.
+\end{exercise}
+
+\hypertarget{functions-and-evaluation}{%
+\section{Functions and Evaluation}\label{functions-and-evaluation}}
+
+\hypertarget{how-to-define-a-function}{%
+\subsection{How to define a function}\label{how-to-define-a-function}}
+
+A function is an assignment, for a given input \(x\), we assignment an output \(y\) under a certain rule. Maple takes this idea to define functions.
+
+\begin{verbatim}
+function name:= independent variable -> function rule
+\end{verbatim}
+
+Here \texttt{:=} means ``defined/assigned to be'' and the arrow operator \texttt{-\textgreater{}} may be understood as ``plug in''.
+
+Another way to define a function is using the function notation as follows
+
+\begin{verbatim}
+functionname(independent variable) := expression
+\end{verbatim}
+
+Note that this feature only available in Maple 10 or a later version.
+
+Yet another uncommon, but useful way to define a function is to use the command \texttt{unapply}. This command turns an expression into an operator.
+
+\begin{example}
+Define the following function in Maple and find the value \(f(0.999)\).
+\[f(x)=\dfrac{x}{x-1}\]
+\end{example}
+
+\begin{solution}
+
+The function name is \(f\), the independent variable is \(x\) and the function rule is \(\dfrac{x}{x-1}\). So the function can be defined using one of the following methods.
+
+\begin{itemize}
+\item
+  Method 1:
+
+\begin{verbatim}
+f:=x->x/(x-1)
+\end{verbatim}
+\item
+  Method 2:
+
+\begin{verbatim}
+f(x):=x/(x-1)
+\end{verbatim}
+\item
+  Method 3:
+
+\begin{verbatim}
+f:=unapply(x/(x-1), x)
+\end{verbatim}
+\end{itemize}
+
+Once the function is define, you may find the function value using the following the command.
+
+\begin{verbatim}
+f(0.999)
+\end{verbatim}
+
+\end{solution}
+
+\begin{exercise}
+Define the following function in Maple and find the value \(f(2.0001)\).
+
+\[g(x)=\dfrac{x^3}{(x-2)^2}\]
+\end{exercise}
+
+\hypertarget{initially-known-mathematical-functions}{%
+\subsection{Initially known mathematical functions}\label{initially-known-mathematical-functions}}
+
+Maple has many predefined functions which can be used to create new functions. To see all initially known mathematical functions in maple, you may use the help command \texttt{?functions} and click the hyperlinked ``initial functions'' in the description shown in the new window.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth,height=\textheight]{figs/Initial-Functions.PNG}
+\caption{Maple function help page screenshot}
+\end{figure}
+
+Some frequently used functions are listed in tables below.
+
+\begin{longtable}[]{@{}ccccc@{}}
+\toprule
+absolute value & square root & n-th root & natural exponential & logarithmic \\
+\midrule
+\endhead
+\texttt{abs()} & \texttt{sqrt()} & \texttt{surd(,n)} & \texttt{exp()} & \texttt{log()},\texttt{log{[}b{]}()}, \texttt{ln()} \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}cccccc@{}}
+\toprule
+sine & cosine & tangent & cotangent & secant & cosecant \\
+\midrule
+\endhead
+\texttt{sin()} & \texttt{cos()} & \texttt{tan()} & \texttt{cot()} & \texttt{sec()} & \texttt{csc()} \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.16}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.16}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.16}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.19}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.16}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.18}}@{}}
+\toprule
+inverse sine & inverse cosine & inverse tangent & inverse cotangent & inverse secant & inverse cosecant \\
+\midrule
+\endhead
+\texttt{arcsin()} & \texttt{arccos()} & \texttt{arctan()} & \texttt{arccot()} & \texttt{arcsec()} & \texttt{arccsc()} \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{evaluation-and-substitution}{%
+\subsection{Evaluation and Substitution}\label{evaluation-and-substitution}}
+
+To evaluate an expression with given values for the variables, there are multiple approaches.
+
+\begin{itemize}
+\item
+  The \texttt{subs} command.
+\item
+  Define a function using the expression and evaluate it using the function notation. For example, you may find the value of \(e^{1.2}\) using the command \texttt{exp(1.2)}. Here \texttt{exp()} is the exponential function with the base \(e\).
+\end{itemize}
+
+\begin{example}
+
+The following codes show how to evaluate an expression using the \texttt{subs} command.
+
+\begin{verbatim}
+f:=a*x^2+b*x+c;
+g:=subs({a=1, b=2, c=3}, f);
+h:=subs(x=1, g);
+\end{verbatim}
+
+\end{example}
+
+\begin{example}
+
+The following codes show how to evaluate an expression using the functional approach.
+
+\begin{verbatim}
+f := x -> x^2 + 2*x + 3;
+f(1/2);
+\end{verbatim}
+
+\end{example}
+
+To evaluates expressions numerically, you need apply the command \texttt{evalf}. To keep only \(n\) digits in total, you may use \texttt{evalf{[}n{]}} or \texttt{evalf(\ ,\ n)}.
+
+\begin{example}
+The command \texttt{evalf(sqrt(2))} will return the numerical value 1.414213562 of \(\sqrt{2}\).
+The command \texttt{evalf{[}5{]}(Pi)} will return the numerical value 3.1416 of \(\pi\).
+\end{example}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  In Maple, the name \texttt{Pi} is for calculation. But the name \texttt{pi}, where \texttt{p} is in lower case, is for the mathematical constant \(\pi\). You will see the difference when evaluating \texttt{sin(Pi)} and \texttt{sin(pi)}.
+\item
+  In Maple, to keep \(n\) decimal places of number, you may use \texttt{floor()+evalf{[}3{]}(frac())}.
+\end{enumerate}
+
+\begin{exercise}
+Evaluate the expression \(\sin(x)-2x^2-1\) at \(x=\pi\) and find the numerical value of the result.
+\end{exercise}
+
+\hypertarget{packages-and-plotting}{%
+\section{Packages and Plotting}\label{packages-and-plotting}}
+
+\hypertarget{frequently-used-packages-and-how-to-load-them}{%
+\subsection{Frequently used packages and how to load them}\label{frequently-used-packages-and-how-to-load-them}}
+
+A package is a collection of commands that extends the basic functionality of Maple and provided tools for solving problems of certain type or in certain field.
+
+The package \texttt{Student} contains subpackages designed for learning of standard undergraduate mathematics courses, such as Calculus, Linear Algebra, Ordinary Differential Equations.
+
+A few useful packages for differential equations are \texttt{Student{[}ODEs{]}}, \texttt{DETools} and \texttt{Plots}.
+
+Packages can be loaded from the Menu bar or using the command \texttt{with()}. For example, the follows commands will load the above mentioned three packages without display the available commands of each package.
+
+\begin{verbatim}
+with(Student[ODEs]): with(DETools): with(plots):
+\end{verbatim}
+
+Note that you may use the semicolon separator to see possible commands supported by a package.
+
+\hypertarget{plot-explicit-functions}{%
+\subsection{Plot explicit functions}\label{plot-explicit-functions}}
+
+In Maple, you may plot a single variable function easily using the command
+
+\begin{verbatim}
+plot(expression, range, options)
+\end{verbatim}
+
+or plot several single variable functions together using
+
+\begin{verbatim}
+plot([experssion1, experssion2], range, options)
+\end{verbatim}
+
+In the command, options may be omitted, but the range must be given. A range of values for a variable in Maple has the form \texttt{x\ =\ a..b}, where \(a\) and \(b\) are the left and the right ends of the interval \([a, b]\) for \(x\). For example, if the range \texttt{x\ =\ 0..5} is given, the graph will be only plotted over the domain \([0, 5]\) for the function.
+
+To see details about available options, you may run the command \texttt{?plot} in Maple.
+
+\begin{example}
+Plot the functions \(f(x)=x^2\) in red and \(l(x)=2x+1\) in blue over the domain \([-1, 2]\).
+\end{example}
+
+\begin{solution}
+Here are the command and the output
+
+\begin{verbatim}
+plot([x^2, 2*x+1], x=-1..2, color=[red, blue])
+\end{verbatim}
+
+\includegraphics[width=0.5\textwidth,height=\textheight]{figs/First-Plot-Example.png}
+\end{solution}
+
+In this example, we used square brackets to order lists of functions and colors so that a function is paired with a color in the given order.
+
+\begin{exercise}
+Plot the functions \(f(x)=\ln(x+5)\) and \(g(x)=3\cos(2x+1)+4\) over the domain \([-\pi, \pi]\).
+\end{exercise}
+
+\hypertarget{plot-implicit-functions}{%
+\subsection{Plot implicit functions}\label{plot-implicit-functions}}
+
+To plot the curve of implicit functions defined by equations, we need the command \texttt{implicitplot} which is supported by the package \texttt{plots}. The usage of \texttt{implicitplot} is similar to the commands \texttt{plot}. Indeed, there share many common options. For details, you can run the command \texttt{?implicitplot}.
+
+\begin{example}
+Plot the curve defined by \(x^2+4y^2=25\) in the region where \(-5\le x\le 5\) and \(-3\le y\le 3\).
+\end{example}
+
+\begin{solution}
+After loading the package, we may use this command to plot the graph.
+
+\begin{verbatim}
+with(plots):
+implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3);
+\end{verbatim}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth,height=\textheight]{figs/unconstrainedellipse.png}
+\caption{An ellipse in squarely scaled coordinates}
+\end{figure}
+
+You will find the the graph looks a circle instead of a ellipse that the equation defined. This is because, the \(x\)-axis and \(y\)-axis are not in the same scaling. To have the same scaling, we need to add the option \texttt{scaling\ =\ constrained}. The following command will plot the curve in equally scaled coordinates.
+
+\begin{verbatim}
+implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3, scaling = constrained);
+\end{verbatim}
+
+\includegraphics[width=0.5\textwidth,height=\textheight]{figs/ellipse.png}
+\end{solution}
+
+\begin{exercise}
+Plot the curve defined by \(x^2-4y^2=9\) in the equally scaled region: \(-5\le x\le 5\) and \(-3\le y\le 3\).
+\end{exercise}
+
+\hypertarget{differentiation-and-integration}{%
+\section{Differentiation and Integration}\label{differentiation-and-integration}}
+
+\begin{itemize}
+\item
+  The \texttt{int(f(x),\ x)} calling sequence computes an indefinite integral \(\int f(x) \mathrm{d} x\). The \texttt{int(f(x),\ x=a..b)} calling sequence computes an indefinite integral \(\int_a^b f(x) \mathrm{d} x\).
+\item
+  The \texttt{diff} command computes the partial derivative of the expression a with respect to \(x_1\), \(x_2\), \ldots, \(x_n\), respectively. The most frequent use is \texttt{diff(y(x),x)}, which computes the derivative \(\frac{\mathrm{d} y}{\mathrm{d} x}\).
+\item
+  The \texttt{implicitdiff(f(x,y)=g(x,\ y),\ y,\ x)} calling sequence computes the derivative \(\frac{\mathrm{d} y}{\mathrm{d} x}\) using the implicit differentiation method.
+\item
+  The differential operator \texttt{D} in maple applies to a function and returns a first order (partial) derivative as a function. For example, given a function \(y=f(x, y)\), the command \texttt{D{[}1{]}(f)} returns the partial derivative \(\frac{\partial}{\partial x}f\).
+\item
+  In Maple (version \textgreater=10), the prime derivative notation also works. For example, given a function \texttt{f(x):=\ sin(x\^{}2)}, the second derivative of \(f\) can be calculated using the command \texttt{f\textquotesingle{}\textquotesingle{}(x)}. When applying the prime derivative notation to a function or an expression, the result is in the same type. The default differentiation variable for the prime notation is \(x\). To change it the another variable, say \(t\), you may use the following command
+
+\begin{verbatim}
+Typesetting:-Settings(prime = t) 
+# Change the default differentiation variable to t.
+\end{verbatim}
+
+  Here, the symbol \texttt{\#} is the comment symbol in Maple.
+\end{itemize}
+
+When using \texttt{diff} or the prime derivative notation to an expression, the result is an expression. To evaluate it, you may use the \texttt{subs} command. Another way is to apply \texttt{unapply} to the result to convert it into a function (operator).
+
+\begin{example}
+Find \(f''(2)\) for the function \(f(x)=\sin(x-1)\).
+\end{example}
+
+\begin{solution}
+
+We first define a function \(f\).
+
+\begin{verbatim}
+f(x):=sin(x-1)
+\end{verbatim}
+
+To calculate the value of the second derivative \(f''(2)\)\$, the easiest way probably is to use the prime notation.
+
+\begin{verbatim}
+f''(2)
+\end{verbatim}
+
+If you used \texttt{diff} to find the derivative, you may run the following command to get the value \(f''(2)\)
+
+\begin{verbatim}
+unapply(diff(f(x), x$2), x)(2)
+\end{verbatim}
+
+Using the command \texttt{D}, you may use the following command
+
+\begin{verbatim}
+D(D(f))(2) # D^((2))(f)(2)
+\end{verbatim}
+
+\end{solution}
+
+In this example, the sequence operator \texttt{\$} is used. The command \texttt{x\$2} is equivalent to \texttt{x,\ x}.
+
+\begin{exercise}
+
+Use above commands to solve the following problems.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Find the indefinite integral of the function \(\frac1x\).
+\item
+  Find the first derivative of the function \(\arctan(x)\).
+\item
+  Find \(\frac{\mathrm{d} y}{\mathrm{d} x}\), where \(x\) and \(y\) satisfy the equation \(x^2-4y^2=9\).
+\end{enumerate}
+
+\end{exercise}
+
+\hypertarget{introduction-to-differential-equations}{%
+\chapter{Introduction to Differential Equations}\label{introduction-to-differential-equations}}
+
+\hypertarget{basic-concepts}{%
+\section{Basic concepts}\label{basic-concepts}}
+
+\hypertarget{how-to-define-a-differential-equation-in-maple}{%
+\subsection{How to define a differential equation in Maple}\label{how-to-define-a-differential-equation-in-maple}}
+
+Depending on the differentiation command, there are three ways to define a differential equation in Maple.
+
+\begin{example}
+Assign the differential equation \(y'=2y\) to a variable in Maple.
+\end{example}
+
+\begin{solution}
+
+\begin{itemize}
+\item
+  Method 1: Using the \texttt{diff} command
+
+\begin{verbatim}
+ode111:=diff(y(x), x)=2*y(x)
+\end{verbatim}
+\item
+  Method 2: Using the the prime derivative notation
+
+\begin{verbatim}
+ode112:=y'=2y
+\end{verbatim}
+\item
+  Method 3: Using the command \texttt{D}
+
+\begin{verbatim}
+ode113:=D(y)(x)=2*y(x)
+\end{verbatim}
+\end{itemize}
+
+\end{solution}
+
+Among the three methods, the one using \texttt{diff} is the standard choice.
+
+\begin{exercise}
+Assign the differential equation \(y'=y(1-0.001y)\) to a variable in Maple.
+\end{exercise}
+
+\hypertarget{how-to-check-solutions}{%
+\subsection{How to check solutions}\label{how-to-check-solutions}}
+
+To check if a function (explicitly of implicitly defined) is a solution of a given differential equation, you may use the \texttt{odetest(function,\ ODE,\ y(x))} command. If the output is 0, then the function is a solution.
+
+\begin{example}
+Verify that \(y=ce^{2x}\) is a solution to the differential equation \(y'=2y\).
+\end{example}
+
+\begin{solution}
+
+Run the following command, you will see that output is 0. So the function is a solution.
+
+\begin{verbatim}
+odetest(y(x)=c*exp(2*x), diff(y(x), x)=2*y(x), y(x))
+\end{verbatim}
+
+\end{solution}
+
+\begin{example}
+Verify that \(x^2+y^2=1\) is a solution of the equation \(y'=-\frac xy\).
+\end{example}
+
+\begin{solution}
+
+Again, running the following command returns the number 0. So the implicit function is a solution.
+
+\begin{verbatim}
+odetest(x^2+y(x)^2=1, diff(y(x),x)=-x/(y(x)), y(x));
+\end{verbatim}
+
+\end{solution}
+
+When working with differential equations, we should always use \(y(x)\) instead of \(y\) to indicate that \(y\) is a function of \(x\).
+
+\begin{exercise}
+Verify that the function \(y=c_1e^x+c_2e^{-x}\) is a solution of the equation \(y''=y\).
+\end{exercise}
+
+\begin{exercise}
+Verify that \(x^2+4y^2=c\) is an implicit solution of the equation \(4yy'=x\).
+\end{exercise}
+
+\hypertarget{solution-curves-vs-integral-curves}{%
+\section{Solution curves vs Integral curves}\label{solution-curves-vs-integral-curves}}
+
+A solution curve is the graph of a function \(y=f(x)\) that satisfies the given differential equation. An integral curves is a union of solution curves.
+
+\begin{example}
+Consider the differential equation \(yy'=4x\). Verify that the graphs of the functions \(y=\pm\sqrt{4x^2-1}\) are solution curves of the equation, while the hyperbola \(4x^2-y^2=1\) defines an integral curve of the equation.
+\end{example}
+
+\begin{solution}
+
+Let's rename the function as \(y_1(x)=\sqrt{4x^2-1}\) and \(y_2(x)=-\sqrt{4x^2-1}\). In Maple, it means we \texttt{y{[}1{]}(x)} and \texttt{y{[}2{]}(x)}. We can check that they are solutions using the \texttt{seq} loop.
+
+\begin{verbatim}
+ode121:=y(x)*diff(y(x), x)=4*x:
+y[1](x):=sqrt(4*x^2-1);
+y[2](x):=-sqrt(4*x^2-1);
+seq(odetest(y(x)=y[i](x), ode121, y(x)), i = 1 .. 2);
+\end{verbatim}
+
+The outputs show that \(y_1\) and \(y_2\) are solutions.
+
+To see that hyperbola \(4x^2-y^2=1\) defines an integral curve, we solve for \(y\).
+
+\begin{verbatim}
+soly:=solve(4*x^2-y^2=1, y);
+\end{verbatim}
+
+You will see that the solutions are exactly the functions \(y_1\) and \(y_2\). So as an union of solution curves the hyperbola is an integral curve.
+
+Plotting those curves will help use understand better.
+
+\begin{verbatim}
+solutioncurves := plot([y[1](x), y[2](x)], 
+  x = -5 .. 5, y = -5 .. 5, color = [green, red]);
+with(plots):
+integralcurve := implicitplot(4*x^2 - y^2 = 1, 
+  x = -5 .. 5, y = -5 .. 5, color = blue, 
+  linestyle = dot);
+\end{verbatim}
+
+To check the integral curve is the union of the two solution curve, we can use the \texttt{display} command.
+
+\begin{verbatim}
+display(solutioncurves,integralcurve)
+\end{verbatim}
+
+\end{solution}
+
+\begin{exercise}
+Consider the differential equation \(yy'=4x\). Verify that the graphs of the functions \(y=\pm\sqrt{4x^2+1}\) are solution curves of the equation, while the hyperbola \(y^2-4x^2=1\) defines an integral curve of the equation.
+\end{exercise}
+
+\hypertarget{direction-fields}{%
+\section{Direction fields}\label{direction-fields}}
+
+In Maple, the commands \texttt{DEplot}, \texttt{dfieldplot}, and \texttt{phaseportrait} supported by the package \texttt{DETools} can be used to plot the direction field and solution curves. The basic usage is as follows
+
+\begin{verbatim}
+DEplot(differential equation, function, ranges, options)
+\end{verbatim}
+
+Again, using the command \texttt{?DEplot}, we can find details and examples on the command. In the following, I will use \texttt{DEplot} as an example to show how they work.
+
+\begin{example}
+Plot the direction field for the differential equation \(y'=-\frac xy\). Can you guess what is a solution to this equation?
+\end{example}
+
+\begin{solution}
+Let's first define the differential equations and assign it to a variable.
+
+\begin{verbatim}
+ode131:=diff(y(x), x)=-x/(y(x))
+\end{verbatim}
+
+Now load the package \texttt{DETools} using the command \texttt{with()}.
+
+\begin{verbatim}
+with(DETools):
+\end{verbatim}
+
+With the package loaded, we can use \texttt{DEplot} to plot the direction field for \texttt{ode131}, say in the region \(-5\le x\le 5\) and \(-5\le y\le 5\).
+
+\begin{verbatim}
+DEplot(ode131, y(x), x =-5..5, y =-5..5, 
+  title = " Direction Field for y'=-x/y ")
+\end{verbatim}
+
+Note that one may change the outlook by add options, such as color and arrows. Running the following command, you will see the difference.
+
+\begin{verbatim}
+DEplot(diff(y(x), x) = -(x - 1)/(y(x) + 1), y(x), 
+  x = -5 .. 5, y = -5 .. 5,
+  title = "Direction Field for y'=2 y",
+  color = -(x - 1)/(y(x) + 1), arrows = line)
+\end{verbatim}
+
+The direction field suggests that solutions are circles.
+\end{solution}
+
+\begin{exercise}
+Plot the direction field for the differential equation \(y'=-\frac{x-1}{y+1}\). Can you guess what is a solution to this equation?
+\end{exercise}
+
+\begin{exercise}
+Plot the direction field for the differential equation \(y'=-\frac{x}{2y}\). Can you guess what is a solution to this equation?
+\end{exercise}
+
+\hypertarget{first-order-differential-equations}{%
+\chapter{First Order Differential Equations}\label{first-order-differential-equations}}
+
+\hypertarget{classification}{%
+\section{Classification}\label{classification}}
+
+Knowing the type of a differential equation will be very helpful for solving it. In Maple, we can use the command \texttt{odeadvisor(ode,\ y(x))} supported by the package \texttt{DETools} to learn what type of equation is it.
+
+\begin{example}
+
+Determine the primary type of each of the following differential equations.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(y'=xy\)
+\item
+  \(y'=xy+1\)
+\item
+  \(y'=xy+y^2\)
+\item
+  \(y'=\frac{xy}{x^2+y^2}\)
+\end{enumerate}
+
+\end{example}
+
+\begin{solution}
+
+We first load the package \texttt{DETools} anonymously.
+
+\begin{verbatim}
+with(DETools):
+\end{verbatim}
+
+Now we can classify those equations using \texttt{odeadvisor}.
+
+\begin{verbatim}
+odeadvisor(diff(y(x),x)=x*y(x));
+odeadvisor(diff(y(x),x)=x*y(x)+1);
+odeadvisor(diff(y(x),x)=x*y(x)+y(x)^2;
+odeadvisor(diff(y(x), x) = (x*y(x))/(x^2 + y(x)^2));
+\end{verbatim}
+
+\end{solution}
+
+\begin{exercise}
+
+Determine the primary type of each of the following differential equations.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(y'=x^2y^2+x^2\)
+\item
+  \(y'=x^2y+x\)
+\item
+  \(y'=xy+y^3\)
+\item
+  \(y'=\frac{x-y}{x+y}\)
+\end{enumerate}
+
+\end{exercise}
+
+\hypertarget{solving-differential-equations}{%
+\section{Solving differential equations}\label{solving-differential-equations}}
+
+To solve an ordinary differential equation, or a system of them, or initial value problems, you may use the command \texttt{dsolve(\{ODE,\ InitialConditions\},\ y(x),\ options)}, where the initial conditions may be omitted to get a general solution. Note that \texttt{dsolve} returns an equation with \(y(x)\) on the left.
+
+Among options, you may choose to use different method to solve the equations, for example, \texttt{numeric}, \texttt{series} or \texttt{method=laplace} are options that can be imposed and will be used later.
+
+\begin{example}
+
+Consider the differential equation
+\[y'=2y+x.\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Find the general solution.
+\item
+  Find the solution that satisfies the initial condition \(y(0)=1\).
+\item
+  Plot the solution curve of the initial value problem.
+\end{enumerate}
+
+\end{example}
+
+\begin{solution}
+
+It will be convenient to define the differential equation first.
+
+\begin{verbatim}
+ode221:=diff(y(x), x)=2*y(x)+x:
+\end{verbatim}
+
+The general solution can be obtained by the following command.
+
+\begin{verbatim}
+dsolve(ode221, y(x));
+\end{verbatim}
+
+The solution of the initial value problem can be obtained by
+
+\begin{verbatim}
+sol221:=dsolve({ode221, y(0)=1}, y(x));
+\end{verbatim}
+
+To plot the solution curve, we need to get the function expression instead of the equation. This can be done using the command \texttt{rhs}.
+
+\begin{verbatim}
+plot(rhs(sol221), x=-5..5)
+\end{verbatim}
+
+\end{solution}
+
+\begin{example}
+
+Consider the differential equation
+\[y'=x+y.\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Find the general solution.
+\item
+  Find the solution that satisfies the initial condition \(y(0)=1\).
+\item
+  Plot the solution curve of the initial value problem.
+\end{enumerate}
+
+\end{example}
+
+\hypertarget{integrating-factors}{%
+\section{Integrating factors}\label{integrating-factors}}
+
+In Maple, you may use \texttt{intfactor} that is supported by the package \texttt{DETools} to find an integrating factor for a given ODE. To test an integrating factor, you may use \texttt{mutest} which is again supported by the package \texttt{DETools}. If the command returns a 0, then the expression being tested is an integrating factor.
+
+\begin{example}
+Find an integrating factor for the equations \(y'=x^2y-x\) and test it using \texttt{mutest}.
+\end{example}
+
+\begin{solution}
+
+Let's first define the differential equation.
+
+\begin{verbatim}
+ode231:=diff(y(x), x)=x^2*y(x)-x:
+\end{verbatim}
+
+Now loading the package and find an integrating factor \(\mu\).
+
+\begin{verbatim}
+with(DETools):
+mu:=intfactor(ode231);
+\end{verbatim}
+
+To test it, you may run the following command.
+
+\begin{verbatim}
+mutest(mu, ode231, y(x));
+\end{verbatim}
+
+\end{solution}
+
+\begin{exercise}
+Find an integrating factor for the differential equation.
+\[xy'=y-x.\]
+\end{exercise}
+
+\end{document}

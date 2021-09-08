@@ -8,7 +8,7 @@ Depending on the differentiation command, there are three ways to define a diffe
 
 ::: {.example}
 
-Assign the differential equation $y'=2y$ to a variable `ode1` in Maple.
+Assign the differential equation $y'=2y$ to a variable in Maple.
 
 :::
 
@@ -17,19 +17,19 @@ Assign the differential equation $y'=2y$ to a variable `ode1` in Maple.
 - Method 1: Using the `diff` command
   
   ```
-  ode1:=diff(y(x), x)=2*y(x)
+  ode111:=diff(y(x), x)=2*y(x)
   ```
 
 - Method 2: Using the the prime derivative notation
   
   ```
-  ode1:=y'=2y
+  ode112:=y'=2y
   ```
 
 - Method 3: Using the command `D`
   
   ```
-  ode1:=D(y)(x)=2*y(x)
+  ode113:=D(y)(x)=2*y(x)
   ```
 
 :::
@@ -38,13 +38,13 @@ Among the three methods, the one using `diff` is the standard choice.
 
 ::: {.exercise}
 
-Assign the differential equation $y'=y(1-0.001y)$ to a variable `ode2` in Maple.
+Assign the differential equation $y'=y(1-0.001y)$ to a variable in Maple.
 
 :::
 
 ### How to check solutions
 
-To check a solution, you may use the `subs` command with the option `eval` to see if the left-hand side and right-hand side of the equation are the same.
+To check if a function (explicitly of implicitly defined) is a solution of a given differential equation, you may use the `odetest(function, ODE, y(x))` command. If the output is 0, then the function is a solution.
 
 ::: {.example}
 
@@ -54,19 +54,108 @@ Verify that $y=ce^{2x}$ is a solution to the differential equation $y'=2y$.
 
 ::: {.solution}
 
-You may first assign the differential equation to a variable and using the `subs` command, or combine them into one command.
+Run the following command, you will see that output is 0. So the function is a solution.
+
+```
+odetest(y(x)=c*exp(2*x), diff(y(x), x)=2*y(x), y(x))
+```
+
+:::
+<!-- 
+Note that one may also use `subs[eval]` to check if a function is a solution:
 
 ```
 subs[eval](y(x)=c*exp(2*x), diff(y(x), x)=2*y(x))
+``` 
+-->
+
+::: {.example}
+
+Verify that $x^2+y^2=1$ is a solution of the equation $y'=-\frac xy$.
+
+:::
+
+::: {.solution}
+
+Again, running the following command returns the number 0. So the implicit function is a solution.
+
+```
+odetest(x^2+y(x)^2=1, diff(y(x),x)=-x/(y(x)), y(x));
 ```
 
 :::
 
-Note that if you have an implicit solution, then the above mentioned method does not work well. You may have to find the derivative using the `implicitdiff` command.
+::: {.rmdnote}
+
+When working with differential equations, we should always use $y(x)$ instead of $y$ to indicate that $y$ is a function of $x$.
+
+:::
 
 ::: {.exercise}
 
 Verify that the function $y=c_1e^x+c_2e^{-x}$ is a solution of the equation $y''=y$.
+
+:::
+
+::: {.exercise}
+
+Verify that $x^2+4y^2=c$ is an implicit solution of the equation $4yy'=x$.
+
+:::
+
+## Solution curves vs Integral curves
+
+A solution curve is the graph of a function $y=f(x)$ that satisfies the given differential equation. An integral curves is a union of solution curves.
+
+::: {.example}
+
+Consider the differential equation $yy'=4x$. Verify that the graphs of the functions $y=\pm\sqrt{4x^2-1}$ are solution curves of the equation, while the hyperbola $4x^2-y^2=1$ defines an integral curve of the equation.
+
+:::
+
+::: {.solution}
+
+Let's rename the function as $y_1(x)=\sqrt{4x^2-1}$ and $y_2(x)=-\sqrt{4x^2-1}$. In Maple, it means we `y[1](x)` and `y[2](x)`. We can check that they are solutions using the `seq` loop.
+
+```
+ode121:=y(x)*diff(y(x), x)=4*x:
+y[1](x):=sqrt(4*x^2-1);
+y[2](x):=-sqrt(4*x^2-1);
+seq(odetest(y(x)=y[i](x), ode121, y(x)), i = 1 .. 2);
+```
+
+The outputs show that $y_1$ and $y_2$ are solutions.
+
+To see that hyperbola $4x^2-y^2=1$ defines an integral curve, we solve for $y$.
+
+```
+soly:=solve(4*x^2-y^2=1, y);
+```
+
+You will see that the solutions are exactly the functions $y_1$ and $y_2$. So as an union of solution curves the hyperbola is an integral curve.
+
+Plotting those curves will help use understand better.
+
+```
+solutioncurves := plot([y[1](x), y[2](x)], 
+  x = -5 .. 5, y = -5 .. 5, color = [green, red]);
+with(plots):
+integralcurve := implicitplot(4*x^2 - y^2 = 1, 
+  x = -5 .. 5, y = -5 .. 5, color = blue, 
+  linestyle = dot);
+```
+
+To check the integral curve is the union of the two solution curve, we can use the `display` command.
+
+```
+display(solutioncurves,integralcurve)
+```
+
+:::
+
+::: {.exercise}
+
+Consider the differential equation $yy'=4x$. Verify that the graphs of the functions $y=\pm\sqrt{4x^2+1}$ are solution curves of the equation, while the hyperbola $y^2-4x^2=1$ defines an integral curve of the equation.
 
 :::
 
@@ -88,10 +177,10 @@ Plot the direction field for the differential equation $y'=-\frac xy$. Can you g
 
 ::: {.solution}
 
-Let's first define the differential equations and assign it to a variable `ode3`.
+Let's first define the differential equations and assign it to a variable.
 
 ```
-ode3:=diff(y(x), x)=-x/(y(x))
+ode131:=diff(y(x), x)=-x/(y(x))
 ```
 
 Now load the package `DETools` using the command `with()`.
@@ -100,17 +189,20 @@ Now load the package `DETools` using the command `with()`.
 with(DETools):
 ```
 
-With the package loaded, we can use `DEplot` to plot the direction field for `ode3`, say in the region $-5\le x\le 5$ and $-5\le y\le 5$.
+With the package loaded, we can use `DEplot` to plot the direction field for `ode131`, say in the region $-5\le x\le 5$ and $-5\le y\le 5$.
 
 ```
-DEplot(ode3, y(x), x =-5..5, y =-5..5, title = " Direction Field for y'=-x/y ")
+DEplot(ode131, y(x), x =-5..5, y =-5..5, 
+  title = " Direction Field for y'=-x/y ")
 ```
 
 Note that one may change the outlook by add options, such as color and arrows. Running the following command, you will see the difference.
 
 ```
-DEplot(diff(y(x), x) = -(x - 1)/(y(x) + 1), y(x), x = -5 .. 5, y = -5 .. 5, 
-title = "Direction Field for y'=2 y", color = -(x - 1)/(y(x) + 1), arrows = line)
+DEplot(diff(y(x), x) = -(x - 1)/(y(x) + 1), y(x), 
+  x = -5 .. 5, y = -5 .. 5,
+  title = "Direction Field for y'=2 y",
+  color = -(x - 1)/(y(x) + 1), arrows = line)
 ```
 
 The direction field suggests that solutions are circles.
