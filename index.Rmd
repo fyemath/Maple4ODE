@@ -25,6 +25,12 @@ file.copy('_redirects', 'book_output/_redirects', overwrite = TRUE)
 options(bookdown.theorem.preamble = FALSE)
 ```
 
+```{r mathjax-macro, include=FALSE}
+if (knitr::is_html_output()) {
+  knitr::asis_output('<div class="latex-macro" style="display:none">$$\\require{color}$$</div>')
+}
+```
+
 \mainmatter
 
 \hypersetup{pageanchor=true}

@@ -180,7 +180,7 @@ Plot the direction field for the differential equation $y'=-\frac xy$. Can you g
 Let's first define the differential equations and assign it to a variable.
 
 ```
-ode131:=diff(y(x), x)=-x/(y(x))
+ode131:=diff(y(x), x)=-x/(y(x));
 ```
 
 Now load the package `DETools` using the command `with()`.
@@ -206,6 +206,24 @@ DEplot(diff(y(x), x) = -(x - 1)/(y(x) + 1), y(x),
 ```
 
 The direction field suggests that solutions are circles.
+
+:::
+
+::: {.rmdnote}
+
+To display $y(x)$ as $y$ in the output, you may run the following commands first.
+
+```
+with(PDEtools, declare):
+declare(y(x), prime=x); # Turn ON the enhanced DEdisplay feature
+```
+
+You will see the following output
+$$
+{\color{blue}
+\text{derivatives with respect to } x \text{ of functions of one variable will now be displayed with '}
+}
+$$
 
 :::
 

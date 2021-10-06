@@ -24,7 +24,7 @@
 <meta name="author" content="Fei Ye" />
 
 
-<meta name="date" content="2021-09-07" />
+<meta name="date" content="2021-10-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="basics-in-maple.html"/>
 <link rel="next" href="first-order-differential-equations.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -114,6 +114,16 @@
 <li class="chapter" data-level="3.1" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#classification"><i class="fa fa-check"></i><b>3.1</b> Classification</a></li>
 <li class="chapter" data-level="3.2" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#solving-differential-equations"><i class="fa fa-check"></i><b>3.2</b> Solving differential equations</a></li>
 <li class="chapter" data-level="3.3" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#integrating-factors"><i class="fa fa-check"></i><b>3.3</b> Integrating factors</a></li>
+<li class="chapter" data-level="3.4" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#commands-for-specific-type-of-equations"><i class="fa fa-check"></i><b>3.4</b> Commands for specific type of equations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html"><i class="fa fa-check"></i><b>4</b> Linear Second Order Differential Equations</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#the-general-solution-of-a-linear-equation"><i class="fa fa-check"></i><b>4.1</b> The general solution of a linear equation</a></li>
+<li class="chapter" data-level="4.2" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#wronskian-of-solutions"><i class="fa fa-check"></i><b>4.2</b> Wronskian of Solutions</a></li>
+<li class="chapter" data-level="4.3" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#linear-equations-with-constant-coefficients"><i class="fa fa-check"></i><b>4.3</b> Linear Equations with Constant Coefficients</a></li>
+<li class="chapter" data-level="4.4" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#undetermined-coefficients"><i class="fa fa-check"></i><b>4.4</b> Undetermined Coefficients</a></li>
+<li class="chapter" data-level="4.5" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#reduction-of-order"><i class="fa fa-check"></i><b>4.5</b> Reduction of Order</a></li>
+<li class="chapter" data-level="4.6" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#variation-of-parameters"><i class="fa fa-check"></i><b>4.6</b> Variation of Parameters</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -236,7 +246,7 @@ integralcurve := implicitplot(4*x^2 - y^2 = 1,
 </div>
 <div class="solution">
 <p><span id="unlabeled-div-33" class="solution"><em>Solution</em>. </span>Let’s first define the differential equations and assign it to a variable.</p>
-<pre><code>ode131:=diff(y(x), x)=-x/(y(x))</code></pre>
+<pre><code>ode131:=diff(y(x), x)=-x/(y(x));</code></pre>
 <p>Now load the package <code>DETools</code> using the command <code>with()</code>.</p>
 <pre><code>with(DETools):</code></pre>
 <p>With the package loaded, we can use <code>DEplot</code> to plot the direction field for <code>ode131</code>, say in the region <span class="math inline">\(-5\le x\le 5\)</span> and <span class="math inline">\(-5\le y\le 5\)</span>.</p>
@@ -248,6 +258,17 @@ integralcurve := implicitplot(4*x^2 - y^2 = 1,
   title = &quot;Direction Field for y&#39;=2 y&quot;,
   color = -(x - 1)/(y(x) + 1), arrows = line)</code></pre>
 <p>The direction field suggests that solutions are circles.</p>
+</div>
+<div class="rmdnote">
+<p>To display <span class="math inline">\(y(x)\)</span> as <span class="math inline">\(y\)</span> in the output, you may run the following commands first.</p>
+<pre><code>with(PDEtools, declare):
+declare(y(x), prime=x); # Turn ON the enhanced DEdisplay feature</code></pre>
+<p>You will see the following output
+<span class="math display">\[
+{\color{blue}
+\text{derivatives with respect to } x \text{ of functions of one variable will now be displayed with &#39;}
+}
+\]</span></p>
 </div>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-34" class="exercise"><strong>Exercise 2.5  </strong></span>Plot the direction field for the differential equation <span class="math inline">\(y&#39;=-\frac{x-1}{y+1}\)</span>. Can you guess what is a solution to this equation?</p>

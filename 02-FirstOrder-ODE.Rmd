@@ -9,8 +9,11 @@ Knowing the type of a differential equation will be very helpful for solving it.
 Determine the primary type of each of the following differential equations.
 
 1. $y'=xy$
+
 2. $y'=xy+1$
+
 3. $y'=xy+y^2$
+
 4. $y'=\frac{xy}{x^2+y^2}$
 
 :::
@@ -39,8 +42,11 @@ odeadvisor(diff(y(x), x) = (x*y(x))/(x^2 + y(x)^2));
 Determine the primary type of each of the following differential equations.
 
 1. $y'=x^2y^2+x^2$
+
 2. $y'=x^2y+x$
+
 3. $y'=xy+y^3$
+
 4. $y'=\frac{x-y}{x+y}$
 
 :::
@@ -54,10 +60,12 @@ Among options, you may choose to use different method to solve the equations, fo
 ::: {.example}
 
 Consider the differential equation
-$$y'=2y+x.$$
+$y'=2y+x.$
 
 1. Find the general solution.
+
 2. Find the solution that satisfies the initial condition $y(0)=1$.
+
 3. Plot the solution curve of the initial value problem.
 
 :::
@@ -90,13 +98,21 @@ plot(rhs(sol221), x=-5..5)
 
 :::
 
-::: {.example}
+::: {.rmdnote}
+
+By default, the `dsolve` command only returns a function. To show more detailed information about the computation, you may assign to `infolevel[dsolve]` an integer 1 through 5 before using the `dsolve` command. For example, after running the following command `infolevel[dsolve]:=3`, the output from `dsolve` will show three pieces of information: methods tried, successful or not, the solution.
+
+:::
+
+::: {.exercise}
 
 Consider the differential equation
-$$y'=x+y.$$
+$y'=x+y.$
 
 1. Find the general solution.
+
 2. Find the solution that satisfies the initial condition $y(0)=1$.
+
 3. Plot the solution curve of the initial value problem.
 
 :::
@@ -137,6 +153,85 @@ mutest(mu, ode231, y(x));
 ::: {.exercise}
 
 Find an integrating factor for the differential equation.
-$$xy'=y-x.$$
+$xy'=y-x.$
+
+:::
+
+## Commands for specific type of equations
+
+The `DETools` package also provides some commands for solving specific type of equations. The following is an incomplete list.
+
+1. The command `separablesol(ode, dependent variable)` determines whether the ode is a separable first order ODE and, if so, returns a solution to the equation.
+
+::: {.example}
+
+Consider the first order differential equation
+$$y'=\frac{x}{x^2y+y}.$$
+
+Executing The following codes
+
+```
+with(DEtools):
+sode := diff(y(x), x) = x/(x^2*y(x)+y(x));
+exactsol(sode, y(x));
+```
+
+will produce a set of solutions
+$$\color{blue}{\left\{y(x) = \sqrt{\ln(x^{2}+1)-2\_\textit{C1}}, y(x) = -\sqrt{\ln(x^{2}+1)-2\_\textit{C1}}\right\}}.$$
+
+:::
+
+2. The command `linearsol(ode, dependent variable)` determines whether the ode is a first order linear ODE and, if so, returns a solution to the equation.
+
+::: {.example}
+
+Consider the linear first order differential equation
+$$y'+p(x)y=q(x).$$
+
+Executing The following codes
+
+```
+with(DEtools):
+lode := diff(y(x), x) + p(x)*y(x) = q(x);
+linearsol(lode, y(x));
+```
+
+will produce a set of solutions
+$$
+\color{blue}{
+\{y(x) = {\color{gray}{\int}}(-p(x) z(x)+q(x)){\color{gray}{d}}x +\_\textit{C1}\}
+}
+$$
+
+:::
+
+3. The command `exactsol(ode, dependent variable)` determines whether the ode is an exact first order ODE and, if so, returns a solution to the equation. When the equation is not exact, it tries to find an integrating factor that converts the equation into an equivalent exact equation.
+
+::: {.example}
+
+Consider the first order differential equation
+$$(x^2 - y^2)\mathrm{d} x + 2xy\mathrm{d} y.$$
+
+Executing The following codes
+
+```
+with(DEtools):
+eode := x^2 - y(x)^2 + 2*x*y(x)*diff(y(x), x) = 0;
+exactsol(eode, y(x));
+```
+
+will produce a set of solutions
+$$
+\color{blue}{
+\{y(x) = \sqrt{-\_\textit{C1} x -x^{2}},
+y(x) = -\sqrt{-\_\textit{C1} x -x^{2}}\}
+}
+$$
+
+:::
+
+::: {.rmdnote}
+
+One can also specific the method (type of the equation) in the `dsolve` command so that the equation will be solve by using the given method.
 
 :::

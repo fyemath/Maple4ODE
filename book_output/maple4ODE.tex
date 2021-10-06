@@ -68,7 +68,7 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
-\cover{figs/cover.jpg}
+\cover{figs/cover.pdf}
 \institute{QCC-CUNY}
 % \version{ElegantBook 4.1} % 当前使用的 elegantbook 宏包版本
 % \bioinfo{自定义}{信息}
@@ -138,7 +138,7 @@
 
 \title{Maple for Differential Equations}
 \author{Fei Ye}
-\date{2021-09-07}
+\date{2021-10-05}
 
 \begin{document}
 \maketitle
@@ -228,10 +228,14 @@ If you want to explore some featured sample documents, you may go to \textbf{Sta
 To seek help in Maple is easy, in the Math mode, type in the keywords after the question mark \texttt{?} and press \textbf{ENTER}, you will see a new window popping out with searched results.
 
 \begin{itemize}
-\tightlist
 \item
   For example, typing in \texttt{?solve} and pressing \textbf{ENTER} will open the following window.
+
+  \begin{figure}
+  \centering
   \includegraphics[width=0.5\textwidth,height=\textheight]{figs/Maple-QuickHelp.png}
+  \caption{Example of using the question mark to get quick help in Maple}
+  \end{figure}
 \end{itemize}
 
 \begin{enumerate}
@@ -274,11 +278,18 @@ Variables in Maple can be defined using combinations of letters, digits, and und
 
 Note that there are reserved combinations. Those combinations are not allowed in Maple. For example, if you use \texttt{sin} as a variable name and try to assign 1 to it using the command \texttt{sin:=1}. You will see the following error message
 
-Error, attempting to assign to \texttt{sin} which is protected. Try declaring \texttt{local\ sin}; see ?protect for details.
+\[
+\color{blue}{
+  \begin{aligned}
+  &\text{Error, attempting to assign to `sin` which is protected.}\\
+  &\text{Try declaring `local sin`; see ?protect for details.}
+  \end{aligned}
+  }
+\]
 
 However, you will find that \texttt{sinx} is a valid variable name. If you assign 1 to it using the command \texttt{sinx:=1}. Pressing ENTER, you will get
 
-sinx := 1
+\[\color{blue}{sinx := 1}.\]
 
 Sometime you may want to clear the value assigned to a variable. To do so, one way is to assign to the variable its own name:
 
@@ -555,13 +566,21 @@ Plot the functions \(f(x)=x^2\) in red and \(l(x)=2x+1\) in blue over the domain
 \end{example}
 
 \begin{solution}
-Here are the command and the output
+Use the \texttt{plot} command to create graphs.
 
 \begin{verbatim}
 plot([x^2, 2*x+1], x=-1..2, color=[red, blue])
 \end{verbatim}
 
+The output is shown below.
+
+\begin{figure}
+\centering
 \includegraphics[width=0.5\textwidth,height=\textheight]{figs/First-Plot-Example.png}
+\caption{Plotting of two functions \(x^2\) and \(2x+1\)}
+\end{figure}
+
+The red curve is the graph of \(y=x^2\). The blue curve is the graph of \(y=2x+1\).
 \end{solution}
 
 In this example, we used square brackets to order lists of functions and colors so that a function is paired with a color in the given order.
@@ -587,19 +606,29 @@ with(plots):
 implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3);
 \end{verbatim}
 
+The output is the following graph.
+
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth,height=\textheight]{figs/unconstrainedellipse.png}
 \caption{An ellipse in squarely scaled coordinates}
 \end{figure}
 
-You will find the the graph looks a circle instead of a ellipse that the equation defined. This is because, the \(x\)-axis and \(y\)-axis are not in the same scaling. To have the same scaling, we need to add the option \texttt{scaling\ =\ constrained}. The following command will plot the curve in equally scaled coordinates.
+You will find the the graph looks a circle instead of a ellipse that the equation defined. This is because, the \(x\)-axis and \(y\)-axis are not in the same scaling. To have the same scaling, we need to add the option \texttt{scaling\ =\ constrained}.
 
 \begin{verbatim}
 implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3, scaling = constrained);
 \end{verbatim}
 
+Here is the output:
+
+\begin{figure}
+\centering
 \includegraphics[width=0.5\textwidth,height=\textheight]{figs/ellipse.png}
+\caption{An ellipse in equally scaled coordinates}
+\end{figure}
+
+Now the graph is in equally scaled coordinates.
 \end{solution}
 
 \begin{exercise}
@@ -843,7 +872,7 @@ Plot the direction field for the differential equation \(y'=-\frac xy\). Can you
 Let's first define the differential equations and assign it to a variable.
 
 \begin{verbatim}
-ode131:=diff(y(x), x)=-x/(y(x))
+ode131:=diff(y(x), x)=-x/(y(x));
 \end{verbatim}
 
 Now load the package \texttt{DETools} using the command \texttt{with()}.
@@ -871,6 +900,20 @@ DEplot(diff(y(x), x) = -(x - 1)/(y(x) + 1), y(x),
 The direction field suggests that solutions are circles.
 \end{solution}
 
+To display \(y(x)\) as \(y\) in the output, you may run the following commands first.
+
+\begin{verbatim}
+with(PDEtools, declare):
+declare(y(x), prime=x); # Turn ON the enhanced DEdisplay feature
+\end{verbatim}
+
+You will see the following output
+\[
+{\color{blue}
+\text{derivatives with respect to } x \text{ of functions of one variable will now be displayed with '}
+}
+\]
+
 \begin{exercise}
 Plot the direction field for the differential equation \(y'=-\frac{x-1}{y+1}\). Can you guess what is a solution to this equation?
 \end{exercise}
@@ -893,7 +936,6 @@ Determine the primary type of each of the following differential equations.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   \(y'=xy\)
 \item
@@ -931,7 +973,6 @@ Determine the primary type of each of the following differential equations.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   \(y'=x^2y^2+x^2\)
 \item
@@ -954,11 +995,10 @@ Among options, you may choose to use different method to solve the equations, fo
 \begin{example}
 
 Consider the differential equation
-\[y'=2y+x.\]
+\(y'=2y+x.\)
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   Find the general solution.
 \item
@@ -997,14 +1037,15 @@ plot(rhs(sol221), x=-5..5)
 
 \end{solution}
 
-\begin{example}
+By default, the \texttt{dsolve} command only returns a function. To show more detailed information about the computation, you may assign to \texttt{infolevel{[}dsolve{]}} an integer 1 through 5 before using the \texttt{dsolve} command. For example, after running the following command \texttt{infolevel{[}dsolve{]}:=3}, the output from \texttt{dsolve} will show three pieces of information: methods tried, successful or not, the solution.
+
+\begin{exercise}
 
 Consider the differential equation
-\[y'=x+y.\]
+\(y'=x+y.\)
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   Find the general solution.
 \item
@@ -1013,7 +1054,7 @@ Consider the differential equation
   Plot the solution curve of the initial value problem.
 \end{enumerate}
 
-\end{example}
+\end{exercise}
 
 \hypertarget{integrating-factors}{%
 \section{Integrating factors}\label{integrating-factors}}
@@ -1049,7 +1090,426 @@ mutest(mu, ode231, y(x));
 
 \begin{exercise}
 Find an integrating factor for the differential equation.
-\[xy'=y-x.\]
+\(xy'=y-x.\)
+\end{exercise}
+
+\hypertarget{commands-for-specific-type-of-equations}{%
+\section{Commands for specific type of equations}\label{commands-for-specific-type-of-equations}}
+
+The \texttt{DETools} package also provides some commands for solving specific type of equations. The following is an incomplete list.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The command \texttt{separablesol(ode,\ dependent\ variable)} determines whether the ode is a separable first order ODE and, if so, returns a solution to the equation.
+\end{enumerate}
+
+\begin{example}
+Consider the first order differential equation
+\[y'=\frac{x}{x^2y+y}.\]
+
+Executing The following codes
+
+\begin{verbatim}
+with(DEtools):
+sode := diff(y(x), x) = x/(x^2*y(x)+y(x));
+exactsol(sode, y(x));
+\end{verbatim}
+
+will produce a set of solutions
+\[\color{blue}{\left\{y(x) = \sqrt{\ln(x^{2}+1)-2\_\textit{C1}}, y(x) = -\sqrt{\ln(x^{2}+1)-2\_\textit{C1}}\right\}}.\]
+\end{example}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  The command \texttt{linearsol(ode,\ dependent\ variable)} determines whether the ode is a first order linear ODE and, if so, returns a solution to the equation.
+\end{enumerate}
+
+\begin{example}
+Consider the linear first order differential equation
+\[y'+p(x)y=q(x).\]
+
+Executing The following codes
+
+\begin{verbatim}
+with(DEtools):
+lode := diff(y(x), x) + p(x)*y(x) = q(x);
+linearsol(lode, y(x));
+\end{verbatim}
+
+will produce a set of solutions
+\[
+\color{blue}{
+\{y(x) = {\color{gray}{\int}}(-p(x) z(x)+q(x)){\color{gray}{d}}x +\_\textit{C1}\}
+}
+\]
+\end{example}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  The command \texttt{exactsol(ode,\ dependent\ variable)} determines whether the ode is an exact first order ODE and, if so, returns a solution to the equation. When the equation is not exact, it tries to find an integrating factor that converts the equation into an equivalent exact equation.
+\end{enumerate}
+
+\begin{example}
+Consider the first order differential equation
+\[(x^2 - y^2)\mathrm{d} x + 2xy\mathrm{d} y.\]
+
+Executing The following codes
+
+\begin{verbatim}
+with(DEtools):
+eode := x^2 - y(x)^2 + 2*x*y(x)*diff(y(x), x) = 0;
+exactsol(eode, y(x));
+\end{verbatim}
+
+will produce a set of solutions
+\[
+\color{blue}{
+\{y(x) = \sqrt{-\_\textit{C1} x -x^{2}},
+y(x) = -\sqrt{-\_\textit{C1} x -x^{2}}\}
+}
+\]
+\end{example}
+
+One can also specific the method (type of the equation) in the \texttt{dsolve} command so that the equation will be solve by using the given method.
+
+\hypertarget{linear-second-order-differential-equations}{%
+\chapter{Linear Second Order Differential Equations}\label{linear-second-order-differential-equations}}
+
+\hypertarget{the-general-solution-of-a-linear-equation}{%
+\section{The general solution of a linear equation}\label{the-general-solution-of-a-linear-equation}}
+
+Consider the linear second order differential equation
+\[y''+p(x)y'+q(x)y=f(x).\]
+Let \(y_p\) be a particular solution, and \(y_h\) the general solution of the associated homogeneous equation
+\[y''+p(x)y'+q(x)y=0.\]
+Then the function \(y_h+y_p\) is the general solution of the non-homogeneous equation \(y''+p(x)y'+q(x)y=f(x)\).
+
+The function \(y_h\) can be written as \(c_1y_1+c_2y_2\), where \(y_1\) and \(y_2\) are linearly independent solutions of the associated homogeneous equation. To find \(y_1\) and \(y_2\), we can use \texttt{dsolve} with the option \texttt{output=basis}.
+
+\begin{example}
+Find two linearly independent solutions of the equation
+\[y''+ y=0.\]
+\end{example}
+
+\begin{solution}
+We first run commands which provide better display.
+
+\begin{verbatim}
+PDETools[declare](y(x), prime=x): # Turn ON the enhanced DEdisplay feature
+infolevel[dsolve] := 3: # Show more detailed information about computation
+\end{verbatim}
+
+Now define the equation
+
+\begin{verbatim}
+ode31:=diff(y(x), x$2)+y(x)=0 # here x$n = x, x, ..., x, n copies of x
+\end{verbatim}
+
+To find the independent solutions, run the following command
+
+\begin{verbatim}
+dsolve(ode31, y(x), output=basis)
+\end{verbatim}
+
+The output is
+\[
+  \color{blue}{[\sin(x), \cos(x)]}
+\]
+which means that \(\sin x\) and \(\cos x\) are linearly independent solutions.
+\end{solution}
+
+If the homogeneous linear equation has constant coefficients, then one can also use
+\texttt{DETools{[}constcoeffsols{]}} to find a list of independent solutions.
+
+\begin{exercise}
+Find two linearly independent solutions of the equation
+\[y'' - y' - 2y=0.\]
+\end{exercise}
+
+To find a particular solution of a nonlinear ODE, or a linear non-homogeneous ODE, one can use the command \texttt{particularsol(ODE,\ dependent\ variable)}.
+
+\begin{example}
+Find a particular solution to the equation
+\[y''-3y'+2y=2.\]
+\end{example}
+
+\begin{solution}
+
+First define the equation
+
+\begin{verbatim}
+ode32:=diff(y(x), x, x)-3*diff(y(x), x)+2*y(x)=2
+\end{verbatim}
+
+To find a particular solution, we can use
+
+\begin{verbatim}
+with(DETools):
+particularsol(ode32, y(x));
+\end{verbatim}
+
+or
+
+\begin{verbatim}
+DETools[particularsol](ode32, y(x))
+\end{verbatim}
+
+\end{solution}
+
+\begin{exercise}
+Find a particular solution to the equation
+\[y''-3y'+2xy=2x^2-3.\]
+\end{exercise}
+
+\hypertarget{wronskian-of-solutions}{%
+\section{Wronskian of Solutions}\label{wronskian-of-solutions}}
+
+The Wronskian of two solutions \(y_1\) and \(y_2\) of a linear homogeneous second order differential equation \(y''+p(x)y'+q(x)y=0\) is defined by
+\[W(y_1, y_2)=y_1y_2'-y_1'y_2\]. In Maple, one can use the command \texttt{Wronskian({[}y\_1,\ y\_2{]},\ independent\ variable,\ determinant=true)} or \texttt{LinearAlgebra{[}Determinant{]}(Wronskian({[}y\_1,\ y\_2{]},\ independent\ variable)} to find the Wronskian.
+
+\begin{example}
+The equation \(x^2y''+ 3xy'-3y=0\) has two solutions \(y_1=x\) and \(y_2=x^{-3}\). Find the Wronskian and determine if the two solutions are linearly independent.
+\end{example}
+
+\begin{solution}
+We first load the package \texttt{VectorCalculus}.
+
+\begin{verbatim}
+with(VectorCalculus):
+\end{verbatim}
+
+Now we calculate the Wronskian.
+
+\begin{verbatim}
+LinearAlgebra[Determinant](Wronskian([x, x^(-3)], x))
+\end{verbatim}
+
+The output is
+\[\color{blue}{-\frac{4}{x^{3}}}.\]
+
+Because the Wronskian is not identically zero, the solutions are linearly independent.
+\end{solution}
+
+\begin{exercise}
+The equation \(x^2y''+ 4xy'-4y=0\) has two solutions \(y_1=x\) and \(y_2=x^{-4}\). Find the Wronskian and determine if the two solutions are linearly independent.
+\end{exercise}
+
+\hypertarget{linear-equations-with-constant-coefficients}{%
+\section{Linear Equations with Constant Coefficients}\label{linear-equations-with-constant-coefficients}}
+
+When solving linear equations with constant coefficients, we need to solve equations and system of equations. That can be done by the Maple command \texttt{solve(\{equations\},\ \{unknowns\})}. Moreover, one can add constrains by using \texttt{assuming} together with \texttt{solve}.
+
+\begin{example}
+Solve the initial value problem
+\[y''-2y'-3y=0,\qquad y(0)=1, y'(0)=-1.\]
+\end{example}
+
+\begin{solution}
+
+Since this equation is a linear second order equation with constant coefficient, the solution is determined by the roots of the characteristic equation \(r^2-2r-3=0\). Running the following Maple command will give us the roots.
+
+\begin{verbatim}
+rts:=solve(r^2-2*r-3=0, r);
+\end{verbatim}
+
+The roots are
+\[\color{blue}{3, -1}.\]
+
+Since the root are real numbers, the general solution of the differential equation is
+
+\begin{verbatim}
+yh(x):=c1*exp(rts[1]*x)+c2*exp(rts[2]*x);
+\end{verbatim}
+
+The initial conditions impose two equations for the constants \texttt{c1} and \texttt{c2}. We can calculate \(y'\) using \texttt{D(y)} and solve the constants by the following command
+
+\begin{verbatim}
+consts:=solve({yh(0)=1, D(yh)(0)=-1}, {c1,c2});
+\end{verbatim}
+
+The output is
+\[\color{blue}{\{{c1} = 0, {c2} = 1\}}.\]
+
+So the solution to the initial value problem is
+\[y(x)=e^{-x}\]
+which can be seen by the maple commands
+
+\begin{verbatim}
+y(x):=subs(consts, yh(x));
+y(x);
+\end{verbatim}
+
+\end{solution}
+
+Here, we take the approach of solving the problem manually. In Maple, we can use \texttt{dsolve} or \texttt{constcoeffsols} to solve differential equations with constant coefficients.
+
+\begin{exercise}
+Solve the initial value problem
+\[y''+3y'+2y=0,\qquad y(0)=3, y'(0)=1.\]
+\end{exercise}
+
+\hypertarget{undetermined-coefficients}{%
+\section{Undetermined Coefficients}\label{undetermined-coefficients}}
+
+For some equations that can be written into the form
+\[ay''+by'+cy=f(x)\], a particular solution can be found using the method of undetermined coefficients.
+Calculations can be made easy using Maple.
+
+\begin{example}
+Find a particular solution of
+\[y''-5y'+6y=3e^{2x}.\]
+\end{example}
+
+\begin{solution}
+Since the right hand side is an exponential function, and 2 is a root of the characteristic polynomial of the complementary equation, we expect a specific solution \(y_p=Axe^{2x}\). We then plug it into the equation to solve for \(A\).
+
+Define the differential equation and the solution function.
+
+\begin{verbatim}
+ode34:=diff(y(x), x, x)-5*diff(y(x), x)+6*y(x)=3*exp(2*x);
+yp(x):=A*x*exp(2*x);
+\end{verbatim}
+
+Plugging \(y_p\) into the differential equation and solve for A.
+
+\begin{verbatim}
+eqnA:=subs[eval](y(x)=yp(x), ode34);
+A=solve(eqnA, A);
+\end{verbatim}
+
+The output is
+\[\color{blue}{A = -3}.\]
+\end{solution}
+
+\begin{exercise}
+Find a particular solution of
+\[y''- 5y'- 6y=2e^{3x}.\]
+\end{exercise}
+
+\hypertarget{reduction-of-order}{%
+\section{Reduction of Order}\label{reduction-of-order}}
+
+Given a solution \(y_1\) of a linear second order differential equation \(y'' + p(x)y' + q(x)y=f(x)\), one can use the trick of variation of parameter to find another solution in the form \(y_2=y_1v\), here \(v\) satisfies a second order equation in the form \(y_1v'' + v'(p(x)y_1+2y_1)=0\). This equation can be solve by reduction of order using the substitution \(u=v'\). Indeed, we can expect \(y_2=y_1\int u(x)\mathrm{d}x\).
+
+In Maple, one can use the command \texttt{reduce\_order(ode,\ y(x)=y\_1(x),\ u(t))} to obtain a lower order equation for \(u\). This command again belongs to the package \texttt{DETools}.
+
+\begin{example}
+The equation \(x^2y''+ 4xy'-4y=0\) has a solution \(y_1=x\). Find another linearly independent solution \(y_2\).
+\end{example}
+
+\begin{solution}
+
+Let's load packages first. Since \texttt{with} can only load one package each time, let's use a \texttt{for} loop to load packages. To make the display looks better, let's also run the \texttt{declare} command.
+
+\begin{verbatim}
+for i in [DETools, LinearAlgebra, PDETools] do with(i) end do:
+declare(y(x), prime=x):
+\end{verbatim}
+
+Define the equation
+
+\begin{verbatim}
+ode35:=x^2*diff(y(x), x, x)+4*x*diff(y(x),x)-4*y=0;
+\end{verbatim}
+
+Find the equation that \texttt{u} satisfies.
+
+\begin{verbatim}
+RdOrder:=reduce_order(ode35, y(x) = x, u(t));
+\end{verbatim}
+
+The output is
+\[\color{blue}{
+  \begin{aligned}
+  y =& \left(t \left({\color{gray}{\int}}u  \left(t \right){\color{gray}{d}}t +\_\textit{C1} \right)\right)\boldsymbol{\mathrm{where}}\\
+  &\left[\left\{t \left(u_{t}\right)+6 u  \left(t \right)=0\right\}, \left\{t =x , u  \left(t \right)=\frac{x \left({y'}\right)-y}{x^{2}}\right\}, \left\{x =t , y =t \left({\color{gray}{\int}}u  \left(t \right){\color{gray}{d}}t +\_\textit{C1} \right)\right\}\right]
+  \end{aligned}
+}\]
+
+You can see that the equation for \(u\) is \(t \left(u_{t}\right)+6 u \left(t \right)=0\), where \(u_t\) is \(v'(t)\).
+
+We can solve for \(u\) and then find \(v\). Here, we use the operand extract command \texttt{op} to get the differential equation for \(u\). The equation is the first element in the first list of the second vector of the right hand side of the output. We now get the equation for \(u(x)\).
+
+\begin{verbatim}
+odeu:=subs(t=x, op([2, 1, 1], rhs(RdOrder)));
+\end{verbatim}
+
+Now we substitute \(t\) by \(x\) and solve for \(u\) and \(v\).
+
+\begin{verbatim}
+ux:=dsolve(odeu, u(x));
+v:=int(ux, x);
+\end{verbatim}
+
+Therefore, by the following command, we know that \(y_2(x)=\frac{c}{x^4}\).
+
+\begin{verbatim}
+y[2](x):=x*v(x);
+\end{verbatim}
+
+Testing \(y_2\) using the following command shows that it is a solution.
+
+\begin{verbatim}
+odetest(y(x)=y[2](x), ode35);
+\end{verbatim}
+
+\end{solution}
+
+\begin{itemize}
+\item
+  To get the second solution \(y_2\) after obtained the differential equation for \(u\), one can also use the command
+
+\begin{verbatim}
+buildsol(Reduced_Order_Equation, Particular_Solution_of_u)
+\end{verbatim}
+\item
+  One can also find \(y_2\) without using \texttt{DETools} (see for example \href{https://www.maplesoft.com/applications/view.aspx?SID=4715\&view=html\#mapleautobookmark23}{the Maple document on Linear Equations} created by \href{http://www.math.sc.edu/~meade/}{Prof.~Douglas B. Meade}.)
+\end{itemize}
+
+\begin{exercise}
+The equation \(x^2y'' + 3xy' - 3y=0\) has a solution \(y_1=x\). Find another linearly independent solution \(y_2\).
+\end{exercise}
+
+\hypertarget{variation-of-parameters}{%
+\section{Variation of Parameters}\label{variation-of-parameters}}
+
+Maple has the command \texttt{varparam(Solutions,\ f(x),\ x)} to find the general solution of a linear ODE by the method of variation of parameters, where \(f(x)\) is the right-hand side function. Again this command belongs to \texttt{DETools}.
+
+\begin{example}
+Find the generals solution for the equation
+\[x^2y'' + 4xy' - 4y=x\]
+using the solutions \(y_1=x\) and \(y_2=\frac{1}{x^4}\) of the complementary equation
+\[x^2y'' + 4xy' - 4y=0.\]
+\end{example}
+
+\begin{solution}
+We can find the general solution using one line of command.
+
+\begin{verbatim}
+DETools[varparam]([x, 1/x^4], x, x)
+\end{verbatim}
+
+The output is
+\[
+\color{blue}{
+  \_C_{1} x +\frac{\_C_{2}}{x^{3}}+\frac{x^{3}}{14}
+}
+\]
+\end{solution}
+
+\begin{exercise}
+Find the generals solution for the equation
+\[x^2y'' + 3xy' - 3y=x\]
+using the solutions \(y_1=x\) and \(y_2=\frac{1}{x^3}\) of the complementary equation
+\[x^2y'' + 3xy' - 3y=0.\]
 \end{exercise}
 
 \end{document}

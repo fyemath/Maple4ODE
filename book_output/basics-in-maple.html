@@ -24,7 +24,7 @@
 <meta name="author" content="Fei Ye" />
 
 
-<meta name="date" content="2021-09-07" />
+<meta name="date" content="2021-10-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="introduction-to-differential-equations.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -114,6 +114,16 @@
 <li class="chapter" data-level="3.1" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#classification"><i class="fa fa-check"></i><b>3.1</b> Classification</a></li>
 <li class="chapter" data-level="3.2" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#solving-differential-equations"><i class="fa fa-check"></i><b>3.2</b> Solving differential equations</a></li>
 <li class="chapter" data-level="3.3" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#integrating-factors"><i class="fa fa-check"></i><b>3.3</b> Integrating factors</a></li>
+<li class="chapter" data-level="3.4" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#commands-for-specific-type-of-equations"><i class="fa fa-check"></i><b>3.4</b> Commands for specific type of equations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html"><i class="fa fa-check"></i><b>4</b> Linear Second Order Differential Equations</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#the-general-solution-of-a-linear-equation"><i class="fa fa-check"></i><b>4.1</b> The general solution of a linear equation</a></li>
+<li class="chapter" data-level="4.2" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#wronskian-of-solutions"><i class="fa fa-check"></i><b>4.2</b> Wronskian of Solutions</a></li>
+<li class="chapter" data-level="4.3" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#linear-equations-with-constant-coefficients"><i class="fa fa-check"></i><b>4.3</b> Linear Equations with Constant Coefficients</a></li>
+<li class="chapter" data-level="4.4" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#undetermined-coefficients"><i class="fa fa-check"></i><b>4.4</b> Undetermined Coefficients</a></li>
+<li class="chapter" data-level="4.5" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#reduction-of-order"><i class="fa fa-check"></i><b>4.5</b> Reduction of Order</a></li>
+<li class="chapter" data-level="4.6" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#variation-of-parameters"><i class="fa fa-check"></i><b>4.6</b> Variation of Parameters</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -169,8 +179,11 @@ symbols that you can used to quickly entry them.</p></li>
 </ul>
 <p>To seek help in Maple is easy, in the Math mode, type in the keywords after the question mark <code>?</code> and press <strong>ENTER</strong>, you will see a new window popping out with searched results.</p>
 <ul>
-<li>For example, typing in <code>?solve</code> and pressing <strong>ENTER</strong> will open the following window.
-<img src="figs/Maple-QuickHelp.png" style="width:50.0%" alt="Example of using the question mark to get quick help in Maple" /></li>
+<li><p>For example, typing in <code>?solve</code> and pressing <strong>ENTER</strong> will open the following window.</p>
+<div class="figure">
+<img src="figs/Maple-QuickHelp.png" style="width:50.0%" alt="" />
+<p class="caption">Example of using the question mark to get quick help in Maple</p>
+</div></li>
 </ul>
 <div class="rmdnote">
 <ol style="list-style-type: decimal">
@@ -232,13 +245,16 @@ symbols that you can used to quickly entry them.</p></li>
 <h3><span class="header-section-number">1.2.2</span> Variables</h3>
 <p>Variables in Maple can be defined using combinations of letters, digits, and underscores, but not beginning with a digit. For example, we frequently use letters as well as letters followed by a number as variable names. Words connected by underscores are also frequently used as variable names.</p>
 <p>Note that there are reserved combinations. Those combinations are not allowed in Maple. For example, if you use <code>sin</code> as a variable name and try to assign 1 to it using the command <code>sin:=1</code>. You will see the following error message</p>
-<div class="mapleerror">
-<p>Error, attempting to assign to <code>sin</code> which is protected. Try declaring <code>local sin</code>; see ?protect for details.</p>
-</div>
+<p><span class="math display">\[
+\color{blue}{
+  \begin{aligned}
+  &amp;\text{Error, attempting to assign to `sin` which is protected.}\\
+  &amp;\text{Try declaring `local sin`; see ?protect for details.}
+  \end{aligned}
+  }
+\]</span></p>
 <p>However, you will find that <code>sinx</code> is a valid variable name. If you assign 1 to it using the command <code>sinx:=1</code>. Pressing ENTER, you will get</p>
-<div class="mapleoutput">
-<p>sinx := 1</p>
-</div>
+<p><span class="math display">\[\color{blue}{sinx := 1}.\]</span></p>
 <p>Sometime you may want to clear the value assigned to a variable. To do so, one way is to assign to the variable its own name:</p>
 <pre><code>sinx:=&#39;sinx&#39;</code></pre>
 <p>Another way is to use the unassign command <code>unassign()</code>:</p>
@@ -447,12 +463,14 @@ The command <code>evalf[5](Pi)</code> will return the numerical value 3.1416 of 
 <p><span id="exm:unlabeled-div-11" class="example"><strong>Example 1.6  </strong></span>Plot the functions <span class="math inline">\(f(x)=x^2\)</span> in red and <span class="math inline">\(l(x)=2x+1\)</span> in blue over the domain <span class="math inline">\([-1, 2]\)</span>.</p>
 </div>
 <div class="solution">
-<p><span id="unlabeled-div-12" class="solution"><em>Solution</em>. </span>Here are the command and the output</p>
+<p><span id="unlabeled-div-12" class="solution"><em>Solution</em>. </span>Use the <code>plot</code> command to create graphs.</p>
 <pre><code>plot([x^2, 2*x+1], x=-1..2, color=[red, blue])</code></pre>
+<p>The output is shown below.</p>
 <div class="figure">
 <img src="figs/First-Plot-Example.png" style="width:50.0%" alt="" />
-<p class="caption">Screen shot of the output generated by plotting of two function</p>
+<p class="caption">Plotting of two functions <span class="math inline">\(x^2\)</span> and <span class="math inline">\(2x+1\)</span></p>
 </div>
+<p>The red curve is the graph of <span class="math inline">\(y=x^2\)</span>. The blue curve is the graph of <span class="math inline">\(y=2x+1\)</span>.</p>
 </div>
 <p>In this example, we used square brackets to order lists of functions and colors so that a function is paired with a color in the given order.</p>
 <div class="exercise">
@@ -469,16 +487,19 @@ The command <code>evalf[5](Pi)</code> will return the numerical value 3.1416 of 
 <p><span id="unlabeled-div-15" class="solution"><em>Solution</em>. </span>After loading the package, we may use this command to plot the graph.</p>
 <pre><code>with(plots):
 implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3);</code></pre>
+<p>The output is the following graph.</p>
 <div class="figure">
 <img src="figs/unconstrainedellipse.png" style="width:50.0%" alt="" />
 <p class="caption">An ellipse in squarely scaled coordinates</p>
 </div>
-<p>You will find the the graph looks a circle instead of a ellipse that the equation defined. This is because, the <span class="math inline">\(x\)</span>-axis and <span class="math inline">\(y\)</span>-axis are not in the same scaling. To have the same scaling, we need to add the option <code>scaling = constrained</code>. The following command will plot the curve in equally scaled coordinates.</p>
+<p>You will find the the graph looks a circle instead of a ellipse that the equation defined. This is because, the <span class="math inline">\(x\)</span>-axis and <span class="math inline">\(y\)</span>-axis are not in the same scaling. To have the same scaling, we need to add the option <code>scaling = constrained</code>.</p>
 <pre><code>implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3, scaling = constrained);</code></pre>
+<p>Here is the output:</p>
 <div class="figure">
 <img src="figs/ellipse.png" style="width:50.0%" alt="" />
 <p class="caption">An ellipse in equally scaled coordinates</p>
 </div>
+<p>Now the graph is in equally scaled coordinates.</p>
 </div>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-16" class="exercise"><strong>Exercise 1.6  </strong></span>Plot the curve defined by <span class="math inline">\(x^2-4y^2=9\)</span> in the equally scaled region: <span class="math inline">\(-5\le x\le 5\)</span> and <span class="math inline">\(-3\le y\le 3\)</span>.</p>
@@ -493,7 +514,8 @@ implicitplot(x^2+4*y^2=25, x=-5..5, y=-3..3);</code></pre>
 <li><p>The <code>implicitdiff(f(x,y)=g(x, y), y, x)</code> calling sequence computes the derivative <span class="math inline">\(\frac{\mathrm{d} y}{\mathrm{d} x}\)</span> using the implicit differentiation method.</p></li>
 <li><p>The differential operator <code>D</code> in maple applies to a function and returns a first order (partial) derivative as a function. For example, given a function <span class="math inline">\(y=f(x, y)\)</span>, the command <code>D[1](f)</code> returns the partial derivative <span class="math inline">\(\frac{\partial}{\partial x}f\)</span>.</p></li>
 <li><p>In Maple (version &gt;=10), the prime derivative notation also works. For example, given a function <code>f(x):= sin(x^2)</code>, the second derivative of <span class="math inline">\(f\)</span> can be calculated using the command <code>f''(x)</code>. When applying the prime derivative notation to a function or an expression, the result is in the same type. The default differentiation variable for the prime notation is <span class="math inline">\(x\)</span>. To change it the another variable, say <span class="math inline">\(t\)</span>, you may use the following command</p>
-<pre><code>Typesetting:-Settings(prime = t) # Change the default differentiation variable to t.</code></pre>
+<pre><code>Typesetting:-Settings(prime = t) 
+# Change the default differentiation variable to t.</code></pre>
 <p>Here, the symbol <code>#</code> is the comment symbol in Maple.</p></li>
 </ul>
 <p>When using <code>diff</code> or the prime derivative notation to an expression, the result is an expression. To evaluate it, you may use the <code>subs</code> command. Another way is to apply <code>unapply</code> to the result to convert it into a function (operator).</p>

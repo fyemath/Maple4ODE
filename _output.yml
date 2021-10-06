@@ -1,4 +1,7 @@
 bookdown::gitbook:
+  # mathjax: null
+  # includes:
+  #   in_header: config-mathjax.html
   css: [css/style.css, css/thm.css]
   config:
     toc:

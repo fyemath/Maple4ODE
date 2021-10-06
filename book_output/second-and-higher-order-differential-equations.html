@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Topic 4 Second and Higher Order Differential Equations | Maple for Differential Equations</title>
+  <meta name="description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Topic 4 Second and Higher Order Differential Equations | Maple for Differential Equations" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
+  <meta name="github-repo" content="fyemath/maple4ode" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Topic 4 Second and Higher Order Differential Equations | Maple for Differential Equations" />
+  
+  <meta name="twitter:description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
+  
+
+<meta name="author" content="Fei Ye" />
+
+
+<meta name="date" content="2021-10-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="first-order-differential-equations.html"/>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/thm.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Maple for ODE</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="basics-in-maple.html"><a href="basics-in-maple.html"><i class="fa fa-check"></i><b>1</b> Basics in Maple</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="basics-in-maple.html"><a href="basics-in-maple.html#getting-started"><i class="fa fa-check"></i><b>1.1</b> Getting Started</a></li>
+<li class="chapter" data-level="1.2" data-path="basics-in-maple.html"><a href="basics-in-maple.html#operators-variables-and-delimiters"><i class="fa fa-check"></i><b>1.2</b> Operators, Variables, and Delimiters</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="basics-in-maple.html"><a href="basics-in-maple.html#basic-operators"><i class="fa fa-check"></i><b>1.2.1</b> Basic Operators</a></li>
+<li class="chapter" data-level="1.2.2" data-path="basics-in-maple.html"><a href="basics-in-maple.html#variables"><i class="fa fa-check"></i><b>1.2.2</b> Variables</a></li>
+<li class="chapter" data-level="1.2.3" data-path="basics-in-maple.html"><a href="basics-in-maple.html#delimiters"><i class="fa fa-check"></i><b>1.2.3</b> Delimiters</a></li>
+<li class="chapter" data-level="1.2.4" data-path="basics-in-maple.html"><a href="basics-in-maple.html#statement-separator"><i class="fa fa-check"></i><b>1.2.4</b> Statement Separator</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="basics-in-maple.html"><a href="basics-in-maple.html#functions-and-evaluation"><i class="fa fa-check"></i><b>1.3</b> Functions and Evaluation</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="basics-in-maple.html"><a href="basics-in-maple.html#how-to-define-a-function"><i class="fa fa-check"></i><b>1.3.1</b> How to define a function</a></li>
+<li class="chapter" data-level="1.3.2" data-path="basics-in-maple.html"><a href="basics-in-maple.html#initially-known-mathematical-functions"><i class="fa fa-check"></i><b>1.3.2</b> Initially known mathematical functions</a></li>
+<li class="chapter" data-level="1.3.3" data-path="basics-in-maple.html"><a href="basics-in-maple.html#evaluation-and-substitution"><i class="fa fa-check"></i><b>1.3.3</b> Evaluation and Substitution</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="basics-in-maple.html"><a href="basics-in-maple.html#packages-and-plotting"><i class="fa fa-check"></i><b>1.4</b> Packages and Plotting</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="basics-in-maple.html"><a href="basics-in-maple.html#frequently-used-packages-and-how-to-load-them"><i class="fa fa-check"></i><b>1.4.1</b> Frequently used packages and how to load them</a></li>
+<li class="chapter" data-level="1.4.2" data-path="basics-in-maple.html"><a href="basics-in-maple.html#plot-explicit-functions"><i class="fa fa-check"></i><b>1.4.2</b> Plot explicit functions</a></li>
+<li class="chapter" data-level="1.4.3" data-path="basics-in-maple.html"><a href="basics-in-maple.html#plot-implicit-functions"><i class="fa fa-check"></i><b>1.4.3</b> Plot implicit functions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="basics-in-maple.html"><a href="basics-in-maple.html#differentiation-and-integration"><i class="fa fa-check"></i><b>1.5</b> Differentiation and Integration</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-differential-equations.html"><a href="introduction-to-differential-equations.html"><i class="fa fa-check"></i><b>2</b> Introduction to Differential Equations</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-differential-equations.html"><a href="introduction-to-differential-equations.html#basic-concepts"><i class="fa fa-check"></i><b>2.1</b> Basic concepts</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="introduction-to-differential-equations.html"><a href="introduction-to-differential-equations.html#how-to-define-a-differential-equation-in-maple"><i class="fa fa-check"></i><b>2.1.1</b> How to define a differential equation in Maple</a></li>
+<li class="chapter" data-level="2.1.2" data-path="introduction-to-differential-equations.html"><a href="introduction-to-differential-equations.html#how-to-check-solutions"><i class="fa fa-check"></i><b>2.1.2</b> How to check solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-differential-equations.html"><a href="introduction-to-differential-equations.html#solution-curves-vs-integral-curves"><i class="fa fa-check"></i><b>2.2</b> Solution curves vs Integral curves</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-differential-equations.html"><a href="introduction-to-differential-equations.html#direction-fields"><i class="fa fa-check"></i><b>2.3</b> Direction fields</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html"><i class="fa fa-check"></i><b>3</b> First Order Differential Equations</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#classification"><i class="fa fa-check"></i><b>3.1</b> Classification</a></li>
+<li class="chapter" data-level="3.2" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#solving-differential-equations"><i class="fa fa-check"></i><b>3.2</b> Solving differential equations</a></li>
+<li class="chapter" data-level="3.3" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#integrating-factors"><i class="fa fa-check"></i><b>3.3</b> Integrating factors</a></li>
+<li class="chapter" data-level="3.4" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#commands-for-specific-type-of-equations"><i class="fa fa-check"></i><b>3.4</b> Commands for specific type of equations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="second-and-higher-order-differential-equations.html"><a href="second-and-higher-order-differential-equations.html"><i class="fa fa-check"></i><b>4</b> Second and Higher Order Differential Equations</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="second-and-higher-order-differential-equations.html"><a href="second-and-higher-order-differential-equations.html#the-general-solution-of-a-linear-equation"><i class="fa fa-check"></i><b>4.1</b> The general solution of a linear equation</a></li>
+<li class="chapter" data-level="4.2" data-path="second-and-higher-order-differential-equations.html"><a href="second-and-higher-order-differential-equations.html#wronskian-of-solutions"><i class="fa fa-check"></i><b>4.2</b> Wronskian of Solutions</a></li>
+<li class="chapter" data-level="4.3" data-path="second-and-higher-order-differential-equations.html"><a href="second-and-higher-order-differential-equations.html#linear-equations-with-constant-coefficients"><i class="fa fa-check"></i><b>4.3</b> Linear Equations with Constant Coefficients</a></li>
+<li class="chapter" data-level="4.4" data-path="second-and-higher-order-differential-equations.html"><a href="second-and-higher-order-differential-equations.html#undetermined-coefficients"><i class="fa fa-check"></i><b>4.4</b> Undetermined Coefficients</a></li>
+<li class="chapter" data-level="4.5" data-path="second-and-higher-order-differential-equations.html"><a href="second-and-higher-order-differential-equations.html#reduction-of-order"><i class="fa fa-check"></i><b>4.5</b> Reduction of Order</a></li>
+<li class="chapter" data-level="4.6" data-path="second-and-higher-order-differential-equations.html"><a href="second-and-higher-order-differential-equations.html#variation-of-parameters"><i class="fa fa-check"></i><b>4.6</b> Variation of Parameters</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Maple for Differential Equations</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="second-and-higher-order-differential-equations" class="section level1" number="4">
+<h1><span class="header-section-number">Topic 4</span> Second and Higher Order Differential Equations</h1>
+<div id="the-general-solution-of-a-linear-equation" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> The general solution of a linear equation</h2>
+<p>Consider the linear second order differential equation
+<span class="math display">\[y&#39;&#39;+p(x)y&#39;+q(x)y=f(x).\]</span>
+Let <span class="math inline">\(y_p\)</span> be a particular solution, and <span class="math inline">\(y_h\)</span> the general solution of the associated homogeneous equation
+<span class="math display">\[y&#39;&#39;+p(x)y&#39;+q(x)y=0.\]</span>
+Then the function <span class="math inline">\(y_h+y_p\)</span> is the general solution of the non-homogeneous equation <span class="math inline">\(y&#39;&#39;+p(x)y&#39;+q(x)y=f(x)\)</span>.</p>
+<p>The function <span class="math inline">\(y_h\)</span> can be written as <span class="math inline">\(c_1y_1+c_2y_2\)</span>, where <span class="math inline">\(y_1\)</span> and <span class="math inline">\(y_2\)</span> are linearly independent solutions of the associated homogeneous equation. To find <span class="math inline">\(y_1\)</span> and <span class="math inline">\(y_2\)</span>, we can use <code>dsolve</code> with the option <code>output=basis</code>.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-48" class="example"><strong>Example 4.1  </strong></span>Find two linearly independent solutions of the equation
+<span class="math display">\[y&#39;&#39;+ y=0.\]</span></p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-49" class="solution"><em>Solution</em>. </span>We first run commands which provide better display.</p>
+<pre><code>PDETools[declare](y(x), prime=x): # Turn ON the enhanced DEdisplay feature
+infolevel[dsolve] := 3: # Show more detailed information about computation</code></pre>
+<p>Now define the equation</p>
+<pre><code>ode31:=diff(y(x), x$2)+y(x)=0 # here x$n = x, x, ..., x, n copies of x</code></pre>
+<p>To find the independent solutions, run the following command</p>
+<pre><code>dsolve(ode31, y(x), output=basis)</code></pre>
+<p>The output is
+<span class="math display">\[
+  \color{blue}{[\sin(x), \cos(x)]}
+\]</span>
+which means that <span class="math inline">\(\sin x\)</span> and <span class="math inline">\(\cos x\)</span> are linearly independent solutions.</p>
+</div>
+<div class="rmdnote">
+<p>If the homogeneous linear equation has constant coefficients, then one can also use
+<code>DETools[constcoeffsols]</code> to find a list of independent solutions.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-50" class="exercise"><strong>Exercise 4.1  </strong></span>Find two linearly independent solutions of the equation
+<span class="math display">\[y&#39;&#39; - y&#39; - 2y=0.\]</span></p>
+</div>
+<p>To find a particular solution of a nonlinear ODE, or a linear non-homogeneous ODE, one can use the command <code>particularsol(ODE, dependent variable)</code>.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-51" class="example"><strong>Example 4.2  </strong></span>Find a particular solution to the equation
+<span class="math display">\[y&#39;&#39;-3y&#39;+2y=2.\]</span></p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-52" class="solution"><em>Solution</em>. </span>First define the equation</p>
+<pre><code>ode32:=diff(y(x), x, x)-3*diff(y(x), x)+2*y(x)=2</code></pre>
+<p>To find a particular solution, we can use</p>
+<pre><code>with(DETools):
+particularsol(ode32, y(x));</code></pre>
+<p>or</p>
+<pre><code>DETools[particularsol](ode32, y(x))</code></pre>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-53" class="exercise"><strong>Exercise 4.2  </strong></span>Find a particular solution to the equation
+<span class="math display">\[y&#39;&#39;-3y&#39;+2xy=2x^2-3.\]</span></p>
+</div>
+</div>
+<div id="wronskian-of-solutions" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Wronskian of Solutions</h2>
+<p>The Wronskian of two solutions <span class="math inline">\(y_1\)</span> and <span class="math inline">\(y_2\)</span> of a linear homogeneous second order differential equation <span class="math inline">\(y&#39;&#39;+p(x)y&#39;+q(x)y=0\)</span> is defined by
+<span class="math display">\[W(y_1, y_2)=y_1y_2&#39;-y_1&#39;y_2\]</span>. In Maple, one can use the command <code>Wronskian([y_1, y_2], independent variable, determinant=true)</code> or <code>LinearAlgebra[Determinant](Wronskian([y_1, y_2], independent variable)</code> to find the Wronskian.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-54" class="example"><strong>Example 4.3  </strong></span>The equation <span class="math inline">\(x^2y&#39;&#39;+ 3xy&#39;-3y=0\)</span> has two solutions <span class="math inline">\(y_1=x\)</span> and <span class="math inline">\(y_2=x^{-3}\)</span>. Find the Wronskian and determine if the two solutions are linearly independent.</p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-55" class="solution"><em>Solution</em>. </span>We first load the package <code>VectorCalculus</code>.</p>
+<pre><code>with(VectorCalculus):</code></pre>
+<p>Now we calculate the Wronskian.</p>
+<pre><code>LinearAlgebra[Determinant](Wronskian([x, x^(-3)], x))</code></pre>
+<p>The output is
+<span class="math display">\[\color{blue}{-\frac{4}{x^{3}}}.\]</span></p>
+<p>Because the Wronskian is not identically zero, the solutions are linearly independent.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-56" class="exercise"><strong>Exercise 4.3  </strong></span>The equation <span class="math inline">\(x^2y&#39;&#39;+ 4xy&#39;-4y=0\)</span> has two solutions <span class="math inline">\(y_1=x\)</span> and <span class="math inline">\(y_2=x^{-4}\)</span>. Find the Wronskian and determine if the two solutions are linearly independent.</p>
+</div>
+</div>
+<div id="linear-equations-with-constant-coefficients" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Linear Equations with Constant Coefficients</h2>
+<p>When solving linear equations with constant coefficients, we need to solve equations and system of equations. That can be done by the Maple command <code>solve({equations}, {unknowns})</code>. Moreover, one can add constrains by using <code>assuming</code> together with <code>solve</code>.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-57" class="example"><strong>Example 4.4  </strong></span>Solve the initial value problem
+<span class="math display">\[y&#39;&#39;-2y&#39;-3y=0,\qquad y(0)=1, y&#39;(0)=-1.\]</span></p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-58" class="solution"><em>Solution</em>. </span>Since this equation is a linear second order equation with constant coefficient, the solution is determined by the roots of the characteristic equation <span class="math inline">\(r^2-2r-3=0\)</span>. Running the following Maple command will give us the roots.</p>
+<pre><code>rts:=solve(r^2-2*r-3=0, r);</code></pre>
+<p>The roots are
+<span class="math display">\[\color{blue}{3, -1}.\]</span></p>
+<p>Since the root are real numbers, the general solution of the differential equation is</p>
+<pre><code>yh(x):=c1*exp(rts[1]*x)+c2*exp(rts[2]*x);</code></pre>
+<p>The initial conditions impose two equations for the constants <code>c1</code> and <code>c2</code>. We can calculate <span class="math inline">\(y&#39;\)</span> using <code>D(y)</code> and solve the constants by the following command</p>
+<pre><code>consts:=solve({yh(0)=1, D(yh)(0)=-1}, {c1,c2});</code></pre>
+<p>The output is
+<span class="math display">\[\color{blue}{\{{c1} = 0, {c2} = 1\}}.\]</span></p>
+<p>So the solution to the initial value problem is
+<span class="math display">\[y(x)=e^{-x}\]</span>
+which can be seen by the maple commands</p>
+<pre><code>y(x):=subs(consts, yh(x));
+y(x);</code></pre>
+</div>
+<div class="rmdnote">
+<p>Here, we take the approach of solving the problem manually. In Maple, we can use <code>dsolve</code> or <code>constcoeffsols</code> to solve differential equations with constant coefficients.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-59" class="exercise"><strong>Exercise 4.4  </strong></span>Solve the initial value problem
+<span class="math display">\[y&#39;&#39;+3y&#39;+2y=0,\qquad y(0)=3, y&#39;(0)=1.\]</span></p>
+</div>
+</div>
+<div id="undetermined-coefficients" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Undetermined Coefficients</h2>
+<p>For some equations that can be written into the form
+<span class="math display">\[ay&#39;&#39;+by&#39;+cy=f(x)\]</span>, a particular solution can be found using the method of undetermined coefficients.
+Calculations can be made easy using Maple.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-60" class="example"><strong>Example 4.5  </strong></span>Find a particular solution of
+<span class="math display">\[y&#39;&#39;-5y&#39;+6y=3e^{2x}.\]</span></p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-61" class="solution"><em>Solution</em>. </span>Since the right hand side is an exponential function, and 2 is a root of the characteristic polynomial of the complementary equation, we expect a specific solution <span class="math inline">\(y_p=Axe^{2x}\)</span>. We then plug it into the equation to solve for <span class="math inline">\(A\)</span>.</p>
+<p>Define the differential equation and the solution function.</p>
+<pre><code>ode34:=diff(y(x), x, x)-5*diff(y(x), x)+6*y(x)=3*exp(2*x);
+yp(x):=A*x*exp(2*x);</code></pre>
+<p>Plugging <span class="math inline">\(y_p\)</span> into the differential equation and solve for A.</p>
+<pre><code>eqnA:=subs[eval](y(x)=yp(x), ode34);
+A=solve(eqnA, A);</code></pre>
+<p>The output is
+<span class="math display">\[\color{blue}{A = -3}.\]</span></p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-62" class="exercise"><strong>Exercise 4.5  </strong></span>Find a particular solution of
+<span class="math display">\[y&#39;&#39;- 5y&#39;- 6y=2e^{3x}.\]</span></p>
+</div>
+</div>
+<div id="reduction-of-order" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Reduction of Order</h2>
+<p>Given a solution <span class="math inline">\(y_1\)</span> of a linear second order differential equation <span class="math inline">\(y&#39;&#39; + p(x)y&#39; + q(x)y=f(x)\)</span>, one can use the trick of variation of parameter to find another solution in the form <span class="math inline">\(y_2=y_1v\)</span>, here <span class="math inline">\(v\)</span> satisfies a second order equation in the form <span class="math inline">\(y_1v&#39;&#39; + v&#39;(p(x)y_1+2y_1)=0\)</span>. This equation can be solve by reduction of order using the substitution <span class="math inline">\(u=v&#39;\)</span>. Indeed, we can expect <span class="math inline">\(y_2=y_1\int u(x)\mathrm{d}x\)</span>.</p>
+<p>In Maple, one can use the command <code>reduce_order(ode, y(x)=y_1(x), u(t))</code> to obtain a lower order equation for <span class="math inline">\(u\)</span>. This command again belongs to the package <code>DETools</code>.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-63" class="example"><strong>Example 4.6  </strong></span>The equation <span class="math inline">\(x^2y&#39;&#39;+ 4xy&#39;-4y=0\)</span> has a solution <span class="math inline">\(y_1=x\)</span>. Find another linearly independent solution <span class="math inline">\(y_2\)</span>.</p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-64" class="solution"><em>Solution</em>. </span>Let’s load packages first. Since <code>with</code> can only load one package each time, let’s use a <code>for</code> loop to load packages. To make the display looks better, let’s also run the <code>declare</code> command.</p>
+<pre><code>for i in [DETools, LinearAlgebra, PDETools] do with(i) end do:
+declare(y(x), prime=x):</code></pre>
+<p>Define the equation</p>
+<pre><code>ode35:=x^2*diff(y(x), x, x)+4*x*diff(y(x),x)-4*y=0;</code></pre>
+<p>Find the equation that <code>u</code> satisfies.</p>
+<pre><code>RdOrder:=reduce_order(ode35, y(x) = x, u(t));</code></pre>
+<p>The output is
+<span class="math display">\[\color{blue}{
+  \begin{aligned}
+  y =&amp; \left(t \left(\color{gray}{\int}u  \left(t \right)\color{gray}{d}t +\_\textit{C1} \right)\right)\boldsymbol{\mathrm{where}}\\
+  &amp;\left[\left\{t \left(u_{t}\right)+6 u  \left(t \right)=0\right\}, \left\{t =x , u  \left(t \right)=\frac{x \left({y&#39;}\right)-y}{x^{2}}\right\}, \left\{x =t , y =t \left(\color{gray}{\int}u  \left(t \right)\color{gray}{d}t +\_\textit{C1} \right)\right\}\right]
+  \end{aligned}
+}\]</span></p>
+<p>You can see that the equation for <span class="math inline">\(u\)</span> is <span class="math inline">\(t \left(u_{t}\right)+6 u \left(t \right)=0\)</span>, where <span class="math inline">\(u_t\)</span> is <span class="math inline">\(v&#39;(t)\)</span>.</p>
+<p>We can solve for <span class="math inline">\(u\)</span> and then find <span class="math inline">\(v\)</span>. Here, we use the operand extract command <code>op</code> to get the differential equation for <span class="math inline">\(u\)</span>. The equation is the first element in the first list of the second vector of the right hand side of the output. We now get the equation for <span class="math inline">\(u(x)\)</span>.</p>
+<pre><code>odeu:=subs(t=x, op([2, 1, 1], rhs(RdOrder)));</code></pre>
+<p>Now we substitute <span class="math inline">\(t\)</span> by <span class="math inline">\(x\)</span> and solve for <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span>.</p>
+<pre><code>ux:=dsolve(odeu, u(x));
+v:=int(ux, x);</code></pre>
+<p>Therefore, by the following command, we know that <span class="math inline">\(y_2(x)=\frac{c}{x^4}\)</span>.</p>
+<pre><code>y[2](x):=x*v(x);</code></pre>
+<p>Testing <span class="math inline">\(y_2\)</span> using the following command shows that it is a solution.</p>
+<pre><code>odetest(y(x)=y[2](x), ode35);</code></pre>
+</div>
+<div class="rmdnote">
+<ul>
+<li><p>To get the second solution <span class="math inline">\(y_2\)</span> after obtained the differential equation for <span class="math inline">\(u\)</span>, one can also use the command</p>
+<pre><code>buildsol(Reduced_Order_Equation, Particular_Solution_of_u)</code></pre></li>
+<li><p>One can also find <span class="math inline">\(y_2\)</span> without using <code>DETools</code> (see for example <a href="https://www.maplesoft.com/applications/view.aspx?SID=4715&amp;view=html#mapleautobookmark23">the Maple document on Linear Equations</a> created by <a href="http://www.math.sc.edu/~meade/">Prof. Douglas B. Meade</a>.)</p></li>
+</ul>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-65" class="exercise"><strong>Exercise 4.6  </strong></span>The equation <span class="math inline">\(x^2y&#39;&#39; + 3xy&#39; - 3y=0\)</span> has a solution <span class="math inline">\(y_1=x\)</span>. Find another linearly independent solution <span class="math inline">\(y_2\)</span>.</p>
+</div>
+</div>
+<div id="variation-of-parameters" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Variation of Parameters</h2>
+<p>Maple has the command <code>varparam(Solutions, f(x), x)</code> to find the general solution of a linear ODE by the method of variation of parameters, where <span class="math inline">\(f(x)\)</span> is the right-hand side function. Again this command belongs to <code>DETools</code>.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-66" class="example"><strong>Example 4.7  </strong></span>Find the generals solution for the equation
+<span class="math display">\[x^2y&#39;&#39; + 4xy&#39; - 4y=x\]</span>
+using the solutions <span class="math inline">\(y_1=x\)</span> and <span class="math inline">\(y_2=\frac{1}{x^4}\)</span> of the complementary equation
+<span class="math display">\[x^2y&#39;&#39; + 4xy&#39; - 4y=0.\]</span></p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-67" class="solution"><em>Solution</em>. </span>We can find the general solution using one line of command.</p>
+<pre><code>DETools[varparam]([x, 1/x^4], x, x)</code></pre>
+<p>The output is
+<span class="math display">\[
+\color{blue}{
+  \_C_{1} x +\frac{\_C_{2}}{x^{3}}+\frac{x^{3}}{14}
+}
+\]</span></p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-68" class="exercise"><strong>Exercise 4.7  </strong></span>Find the generals solution for the equation
+<span class="math display">\[x^2y&#39;&#39; + 3xy&#39; - 3y=x\]</span>
+using the solutions <span class="math inline">\(y_1=x\)</span> and <span class="math inline">\(y_2=\frac{1}{x^3}\)</span> of the complementary equation
+<span class="math display">\[x^2y&#39;&#39; + 3xy&#39; - 3y=0.\]</span></p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="first-order-differential-equations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/fyemath/maple4ode/03-HigherOrder-ODE.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["maple4ODE.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
