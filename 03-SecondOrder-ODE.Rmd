@@ -217,19 +217,86 @@ Since the right hand side is an exponential function, and 2 is a root of the cha
 Define the differential equation and the solution function.
 
 ```
-ode34:=diff(y(x), x, x)-5*diff(y(x), x)+6*y(x)=3*exp(2*x);
+ode341:=diff(y(x), x, x)-5*diff(y(x), x)+6*y(x)=3*exp(2*x);
 yp(x):=A*x*exp(2*x);
 ```
 
 Plugging $y_p$ into the differential equation and solve for A.
 
 ```
-eqnA:=subs[eval](y(x)=yp(x), ode34);
+eqnA:=subs[eval](y(x)=yp(x), ode341);
 A=solve(eqnA, A);
 ```
 
 The output is
 $$\color{blue}{A = -3}.$$
+
+:::
+
+In the above, example, we can solve for $A$ directly from resulting equation after plugging in $y_p$. Indeed, we solve for $A$ from the equation by putting $x=0$. 
+
+When $f(x)$ involves a polynomial, we want to get a system of undetermined coefficients. One way is to substitute $x$ by some general numbers. Another way is to differentiate both sides and then plug in $x=0$. Once we get a system of the unknowns, we can solve it by the Maple command `solve({eq1, eq2, ...}, {unknown1, unknown2, ...})`.
+
+When $f(x)$ involves sine or cosine, surely, we can plug in some general values for $x$ to obtain a system. We may also substitute $\sin x$ by $0$ and $\cos x=0$ to get two equations. From those two equations, we can build a system. 
+
+::: {.example}
+
+Find a particular solution of
+$$y''- 2y'-3y=x\sin x.$$
+
+:::
+
+::: {.solution}
+
+We expect a specific solution of the same type as the right hand side. Let's try $y_p=(ax+b)\cos x+(cx+d)\sin x$. We then plug it into the equation to solve for $a$, $b$, $c$, and $d$.
+
+Define the differential equation and the solution function.
+
+```
+ode342:=diff(y(x), x, x)-2*diff(y(x), x)-3*y(x)=x*sin(x);
+yp(x):=(a*x+b)*cos(x)+(c*x+d)*sin(x);
+```
+
+Plugging $y_p$ into the differential equation and solve for A.
+
+```
+eqnB:=subs[eval](y(x)=yp(x), ode342);
+```
+
+Now let's deduce a system of equations for $a$, $b$, $c$ and $d$.
+
+```
+CoefCosine := subs([sin(x) = 0, cos(x) = 1], eqnB); # get an equation from coefficients of cosine
+CoefSine := subs([sin(x) = 1, cos(x) = 0], eqnB); # get an equation from coefficients of sine
+# Get four equations for a, b, c, and d
+eq1 := subs(x = 0, CoefCosine):
+eq2 := subs(x = 0, CoefSine):
+eq3 := diff(CoefCosine, x): 
+eq4 := diff(CoefSine, x): 
+```
+
+Now we solve the equations as a system.
+
+```
+abcd:=solve({eq1, eq2, eq3, eq4},{a, b, c, d});
+```
+
+The output is
+$$\color{blue}{\{a = \frac{1}{10}, b = -\frac{7}{50}, c = -\frac{1}{5}, d
+ = -\frac{1}{50}\}
+}.$$
+
+Let's versify that the solution.
+```
+Sol:=subs(abcd, yp(x)) # plug a, b, c, d in yp(x)
+odetest(Sol, ode342)
+```
+
+:::
+
+::: {.rmdnote}
+
+If $f(x)$ is a polynomial, one can also use the command `polysol` to find a polynomial solution.
 
 :::
 
