@@ -77,25 +77,14 @@ jobs:
         shell: Rscript {0}
 
       - name: Cache R packages
-        uses: actions/cache@v3
+        uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
           key: r-${{ hashFiles('DESCRIPTION') }}
           restore-keys: r-
 
-      - name: Cache bookdown results
-          uses: actions/cache@v2
-          with:
-            path: _bookdown_files
-            key: bookdown-${{ hashFiles('**/*Rmd') }}
-            restore-keys: bookdown-   
-
       - name: Render Book
-        id: render-book
-        run: |
-          res <- bookdown::render_book("index.Rmd", "all")
-          cat(sprintf("::set-output name=dir::%s", dirname(res)))
-        shell: Rscript {0}
+          run: Rscript -e 'bookdown::render_book("index.Rmd")'
 
       - name: Upload book folder for debug
         if: failure()
