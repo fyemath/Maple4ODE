@@ -90,6 +90,7 @@ jobs:
       #     restore-keys: r-${{ matrix.config.os }}-${{ matrix.config.r }}-
 
 # https://github.com/mpadge/bookdown-actions-test/blob/master/.github/workflows/master.yml
+
       - name: Query dependencies
         run:
             Rscript -e "install.packages('remotes')" -e "saveRDS(remotes::dev_package_deps(dependencies = TRUE), 'depends.Rds', version = 2)"
@@ -98,8 +99,8 @@ jobs:
         uses: actions/cache@v1
         with:
             path: ${{ env.R_LIBS_USER }}
-            key: ${{ runner.os }}-r-${{ hashFiles('depends.Rds') }}
-            restore-keys: ${{ runner.os }}-r-
+            key: r-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ hashFiles('depends.Rds') }}
+            restore-keys: r-${{ matrix.config.os }}-${{ matrix.config.r }}-
 
 
       - name: Install dependencies
