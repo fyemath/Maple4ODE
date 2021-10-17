@@ -28,6 +28,7 @@ jobs:
 
     env:
       LANG: "en_US.UTF-8"
+      TZ: "America/New York"
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KNITR_OPTIONS: "knitr.chunk.tidy=TRUE"
 
@@ -69,24 +70,43 @@ jobs:
           webshot::install_phantomjs()
         shell: Rscript {0}
 
-      - name: Install bookdown package
-        run: xfun::install_dir(".")
-        shell: Rscript {0}
+      # - name: Install bookdown package
+      #   run: xfun::install_dir(".")
+      #   shell: Rscript {0}
 
-      - name: Session info
-        run: |
-          options(width = 100)
-          pkgs <- installed.packages()[, "Package"]
-          sessioninfo::session_info(pkgs, include_base = TRUE)
-          rmarkdown::find_pandoc()
-        shell: Rscript {0}
+      # - name: Session info
+      #   run: |
+      #     options(width = 100)
+      #     pkgs <- installed.packages()[, "Package"]
+      #     sessioninfo::session_info(pkgs, include_base = TRUE)
+      #     rmarkdown::find_pandoc()
+      #   shell: Rscript {0}
+
+      # - name: Cache R packages
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ${{ env.R_LIBS_USER }}
+      #     key: r-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ hashFiles('renv.lock') }}
+      #     restore-keys: r-${{ matrix.config.os }}-${{ matrix.config.r }}-
+
+# https://github.com/mpadge/bookdown-actions-test/blob/master/.github/workflows/master.yml
+      - name: Query dependencies
+              run:
+                  Rscript -e "install.packages('remotes')" -e "saveRDS(remotes::dev_package_deps(dependencies = TRUE), 'depends.Rds', version = 2)"
 
       - name: Cache R packages
-        uses: actions/cache@v2
+        uses: actions/cache@v1
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: r-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ hashFiles('DESCRIPTION') }}
-          restore-keys: r-${{ matrix.config.os }}-${{ matrix.config.r }}-
+            path: ${{ env.R_LIBS_USER }}
+            key: ${{ runner.os }}-r-${{ hashFiles('depends.Rds') }}
+            restore-keys: ${{ runner.os }}-r-
+
+
+      - name: Install dependencies
+        run:
+            Rscript -e "library(remotes)" -e "deps <- readRDS('depends.Rds')" -e "deps[['installed']] <- vapply(deps[['package']], remotes:::local_sha, character(1))" -e "update(deps)"
+
+###
 
       - name: Cache bookdown results
         uses: actions/cache@v2
