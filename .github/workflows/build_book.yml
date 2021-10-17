@@ -28,7 +28,7 @@ jobs:
 
     env:
       LANG: "en_US.UTF-8"
-      TZ: "America/New York"
+      TZ: "America/New_York"
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KNITR_OPTIONS: "knitr.chunk.tidy=TRUE"
 
@@ -64,11 +64,6 @@ jobs:
           brew update
           brew install --cask xquartz
           brew install --cask calibre
-
-      - name: Install phamtomJS for webshot
-        run: |
-          webshot::install_phantomjs()
-        shell: Rscript {0}
 
       # - name: Install bookdown package
       #   run: xfun::install_dir(".")
