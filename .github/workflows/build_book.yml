@@ -40,69 +40,41 @@ jobs:
         uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
-          Ncpus: 2
 
       - name: Install Pandoc
         uses: r-lib/actions/setup-pandoc@v1
         with:
-          pandoc-version: '2.14.2'
+          pandoc-version: '2.14.1'
 
-      - name: Install TinyTeX
-        uses: r-lib/actions/setup-tinytex@v1
-        env:
-          # install full prebuilt version
-          TINYTEX_INSTALLER: TinyTeX
-
-      # - uses: r-lib/actions/setup-r-dependencies@v1
-      #   with:
-      #     extra-packages: |
-      #       sessioninfo
-      #     needs: book
-
-      - name: Install OS dependencies
+      - name: Install ghostscript and Others
         run: |
           brew update
+          brew install ghostscript
           brew install --cask xquartz
           brew install --cask calibre
-
-      # - name: Install bookdown package
-      #   run: xfun::install_dir(".")
-      #   shell: Rscript {0}
-
-      # - name: Session info
+          # brew tap homebrew/cask
+          # brew tap homebrew/cask-fonts
+          # brew install --cask font-noto-sans-cjk-sc
+          # brew install --cask font-noto-serif-cjk-sc 
+          # fc-list :lang=zh | sort
+          # fc-list :lang=en | sort
+          # fc-list : family | sort -f
+          # ## install fonts
+          # curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip
+          # unzip Adobe-Fonts.zip -d ~/Library/Fonts
+          # fc-cache -fsv
+  
+      # - name: Install phamtomJS for webshot
       #   run: |
-      #     options(width = 100)
-      #     pkgs <- installed.packages()[, "Package"]
-      #     sessioninfo::session_info(pkgs, include_base = TRUE)
-      #     rmarkdown::find_pandoc()
+      #     webshot::install_phantomjs()
       #   shell: Rscript {0}
-
-      # - name: Cache R packages
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ${{ env.R_LIBS_USER }}
-      #     key: r-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ hashFiles('renv.lock') }}
-      #     restore-keys: r-${{ matrix.config.os }}-${{ matrix.config.r }}-
-
-# https://github.com/mpadge/bookdown-actions-test/blob/master/.github/workflows/master.yml
-
-      - name: Query dependencies
-        run:
-            Rscript -e "install.packages('remotes')" -e "saveRDS(remotes::dev_package_deps(dependencies = TRUE), 'depends.Rds', version = 2)"
 
       - name: Cache R packages
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
-            path: ${{ env.R_LIBS_USER }}
-            key: r-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ hashFiles('depends.Rds') }}
-            restore-keys: r-${{ matrix.config.os }}-${{ matrix.config.r }}-
-
-
-      - name: Install dependencies
-        run:
-            Rscript -e "library(remotes)" -e "deps <- readRDS('depends.Rds')" -e "deps[['installed']] <- vapply(deps[['package']], remotes:::local_sha, character(1))" -e "update(deps)"
-
-###
+          path: ${{ env.R_LIBS_USER }}
+          key: r-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ hashFiles('renv.lock') }}
+          restore-keys: r-${{ matrix.config.os }}-${{ matrix.config.r }}-
 
       - name: Cache bookdown results
         uses: actions/cache@v2
@@ -111,8 +83,30 @@ jobs:
           key: bookdown-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ hashFiles('**/*Rmd') }}
           restore-keys: bookdown-${{ matrix.config.os }}-${{ matrix.config.r }}-
 
+      - name: Install TinyTeX
+        uses: r-lib/actions/setup-tinytex@v1
+        env:
+          # install full prebuilt version
+          TINYTEX_INSTALLER: TinyTeX
+
+      - name: Install R packages
+        run: |
+          if(!require('renv')) install.packages('renv')
+          renv::restore()
+        shell: Rscript {0}
+
+      - name: Install LaTeX Packages
+        run: |
+          tinytex::tlmgr_install(readLines("texlive.txt"))
+          tinytex::tl_pkgs()
+        shell: Rscript {0}
+
       - name: Render Book
-        run: Rscript -e 'bookdown::render_book("index.Rmd", "all")'
+        id: render-book
+        run: |
+          res <- bookdown::render_book("index.Rmd", "all")
+          cat(sprintf("::set-output name=dir::%s", dirname(res)))
+        shell: Rscript {0}
 
       - name: Upload book folder for debug
         if: failure()
