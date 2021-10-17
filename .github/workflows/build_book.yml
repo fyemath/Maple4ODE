@@ -96,7 +96,7 @@ jobs:
           restore-keys: bookdown-${{ matrix.config.os }}-${{ matrix.config.r }}-
 
       - name: Render Book
-          run: Rscript -e 'bookdown::render_book("index.Rmd", all)'
+        run: Rscript -e 'bookdown::render_book("index.Rmd", "all")'
 
       - name: Upload book folder for debug
         if: failure()
