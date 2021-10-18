@@ -4,14 +4,15 @@ set -e
 
 cd book-output
 
-git config --local user.email "actions@github.com"
-git config --local user.name "GitHub Actions"
+git config --global user.email "actions@github.com"
+git config --global user.name "GitHub Actions"
 
 ls | xargs rm -rf
 git ls-files --deleted -z | xargs -0 git rm
 
-cp -r ../_book/* ./
+cp -r ../book_output/* ./
 git add --all *
 git commit -m "Update the book" || true
 git reset $(git commit-tree HEAD^{tree} -m "Update the book")
-git push -f -q origin gh-pages
+# git push -f -q origin gh-pages
+git push https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git HEAD:gh-pages --force
