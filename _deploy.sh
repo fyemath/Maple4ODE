@@ -14,5 +14,5 @@ cp -r ../book_output/* ./
 git add --all *
 git commit -m "Update the book" || true
 git reset $(git commit-tree HEAD^{tree} -m "Update the book")
-# git push -f -q origin gh-pages
-git push https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git HEAD:gh-pages --force
+git push -f -q origin gh-pages
+# git push https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git HEAD:gh-pages --force?
