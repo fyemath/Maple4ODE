@@ -4,13 +4,13 @@ set -e
 
 cd book-output
 
-git config --global user.email "actions@github.com"
-git config --global user.name "GitHub Actions"
+git config --local user.email "actions@github.com"
+git config --local user.name "GitHub Actions"
 
 ls | xargs rm -rf
 git ls-files --deleted -z | xargs -0 git rm
 
-cp -r ../book_output/* ./
+cp -r ../_book/* ./
 git add --all *
 git commit -m "Update the book" || true
 git reset $(git commit-tree HEAD^{tree} -m "Update the book")
