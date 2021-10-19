@@ -138,7 +138,7 @@
 
 \title{Maple for Differential Equations}
 \author{Fei Ye}
-\date{2021-10-05}
+\date{2021-10-19}
 
 \begin{document}
 \maketitle
@@ -461,7 +461,19 @@ sine & cosine & tangent & cotangent & secant & cosecant \\
   >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.16}}
   >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.18}}@{}}
 \toprule
-inverse sine & inverse cosine & inverse tangent & inverse cotangent & inverse secant & inverse cosecant \\
+\begin{minipage}[b]{\linewidth}\centering
+inverse sine
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+inverse cosine
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+inverse tangent
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+inverse cotangent
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+inverse secant
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+inverse cosecant
+\end{minipage} \\
 \midrule
 \endhead
 \texttt{arcsin()} & \texttt{arccos()} & \texttt{arctan()} & \texttt{arccot()} & \texttt{arcsec()} & \texttt{arccsc()} \\
@@ -1374,20 +1386,86 @@ Since the right hand side is an exponential function, and 2 is a root of the cha
 Define the differential equation and the solution function.
 
 \begin{verbatim}
-ode34:=diff(y(x), x, x)-5*diff(y(x), x)+6*y(x)=3*exp(2*x);
+ode341:=diff(y(x), x, x)-5*diff(y(x), x)+6*y(x)=3*exp(2*x);
 yp(x):=A*x*exp(2*x);
 \end{verbatim}
 
-Plugging \(y_p\) into the differential equation and solve for A.
+Plugging \(y_p\) into the differential equation and solve for A. Since \(A\) is a number such that the equation is true for any \(x\). We use the \texttt{solve/identity} method. The command runs like \texttt{solve(identity(equation,\ x),\ vars)}.
 
 \begin{verbatim}
-eqnA:=subs[eval](y(x)=yp(x), ode34);
-A=solve(eqnA, A);
+eqnA:=subs[eval](y(x)=yp(x), ode341);
+A=solve(identity(eqnA, x), A);
 \end{verbatim}
 
 The output is
 \[\color{blue}{A = -3}.\]
 \end{solution}
+
+Instead of using the \texttt{solve/identity} scheme, one can also build systems of equations for the undetermined coefficients manually.
+
+When \(f(x)\) involves a polynomial, we want to get a system of undetermined coefficients. One way is to substitute \(x\) by some general numbers. Another way is to differentiate both sides and then plug in \(x=0\). Once we get a system of the unknowns, we can solve it by the Maple command \texttt{solve(\{eq1,\ eq2,\ ...\},\ \{unknown1,\ unknown2,\ ...\})}.
+
+When \(f(x)\) involves sine or cosine, surely, we can plug in some general values for \(x\) to obtain a system. We may also substitute \(\sin x\) by \(0\) and \(\cos x=0\) to get two equations. From those two equations, we can build a system.
+
+\begin{example}
+Find a particular solution of
+\[y''- 2y'-3y=x\sin x.\]
+\end{example}
+
+\begin{solution}
+
+We expect a specific solution of the same type as the right hand side. Let's try \(y_p=(ax+b)\cos x+(cx+d)\sin x\). We then plug it into the equation to solve for \(a\), \(b\), \(c\), and \(d\).
+
+Define the differential equation and the solution function.
+
+\begin{verbatim}
+ode342:=diff(y(x), x, x)-2*diff(y(x), x)-3*y(x)=x*sin(x);
+yp(x):=(a*x+b)*cos(x)+(c*x+d)*sin(x);
+\end{verbatim}
+
+Plugging \(y_p\) into the differential equation and solve for A.
+
+\begin{verbatim}
+eqnB:=subs[eval](y(x)=yp(x), ode342);
+\end{verbatim}
+
+Now let's deduce a system of equations for \(a\), \(b\), \(c\) and \(d\).
+
+\begin{verbatim}
+# get an equation from coefficients of cosine
+CoefCosine := subs([sin(x) = 0, cos(x) = 1], eqnB);
+
+# get an equation from coefficients of sine
+CoefSine := subs([sin(x) = 1, cos(x) = 0], eqnB);
+
+# Get four equations for a, b, c, and d
+eq1 := subs(x = 0, CoefCosine):
+eq2 := subs(x = 0, CoefSine):
+eq3 := diff(CoefCosine, x): 
+eq4 := diff(CoefSine, x): 
+\end{verbatim}
+
+Now we solve the equations as a system.
+
+\begin{verbatim}
+abcd:=solve({eq1, eq2, eq3, eq4},{a, b, c, d});
+\end{verbatim}
+
+The output is
+\[\color{blue}{\left\{a = \frac{1}{10}, b = -\frac{7}{50}, c = -\frac{1}{5}, d
+ = -\frac{1}{50}\right\}
+}.\]
+
+Let's verify that the solution.
+
+\begin{verbatim}
+Sol:=subs(abcd, yp(x)) # plug a, b, c, d in yp(x)
+odetest(Sol, ode342)
+\end{verbatim}
+
+\end{solution}
+
+If \(f(x)\) is a polynomial, one can also use the command \texttt{polysol} to find a polynomial solution.
 
 \begin{exercise}
 Find a particular solution of

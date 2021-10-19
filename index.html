@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 4 Higher Order Differential Equations | Maple for Differential Equations</title>
+  <title>Maple for Differential Equations</title>
   <meta name="description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 4 Higher Order Differential Equations | Maple for Differential Equations" />
+  <meta property="og:title" content="Maple for Differential Equations" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="fyemath/maple4ode" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 4 Higher Order Differential Equations | Maple for Differential Equations" />
+  <meta name="twitter:title" content="Maple for Differential Equations" />
   
   <meta name="twitter:description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   
@@ -24,16 +24,16 @@
 <meta name="author" content="Fei Ye" />
 
 
-<meta name="date" content="2021-09-07" />
+<meta name="date" content="2021-10-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="first-order-differential-equations.html"/>
 
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<link rel="next" href="basics-in-maple.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -114,8 +114,17 @@
 <li class="chapter" data-level="3.1" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#classification"><i class="fa fa-check"></i><b>3.1</b> Classification</a></li>
 <li class="chapter" data-level="3.2" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#solving-differential-equations"><i class="fa fa-check"></i><b>3.2</b> Solving differential equations</a></li>
 <li class="chapter" data-level="3.3" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#integrating-factors"><i class="fa fa-check"></i><b>3.3</b> Integrating factors</a></li>
+<li class="chapter" data-level="3.4" data-path="first-order-differential-equations.html"><a href="first-order-differential-equations.html#commands-for-specific-type-of-equations"><i class="fa fa-check"></i><b>3.4</b> Commands for specific type of equations</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="higher-order-differential-equations.html"><a href="higher-order-differential-equations.html"><i class="fa fa-check"></i><b>4</b> Higher Order Differential Equations</a></li>
+<li class="chapter" data-level="4" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html"><i class="fa fa-check"></i><b>4</b> Linear Second Order Differential Equations</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#the-general-solution-of-a-linear-equation"><i class="fa fa-check"></i><b>4.1</b> The general solution of a linear equation</a></li>
+<li class="chapter" data-level="4.2" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#wronskian-of-solutions"><i class="fa fa-check"></i><b>4.2</b> Wronskian of Solutions</a></li>
+<li class="chapter" data-level="4.3" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#linear-equations-with-constant-coefficients"><i class="fa fa-check"></i><b>4.3</b> Linear Equations with Constant Coefficients</a></li>
+<li class="chapter" data-level="4.4" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#undetermined-coefficients"><i class="fa fa-check"></i><b>4.4</b> Undetermined Coefficients</a></li>
+<li class="chapter" data-level="4.5" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#reduction-of-order"><i class="fa fa-check"></i><b>4.5</b> Reduction of Order</a></li>
+<li class="chapter" data-level="4.6" data-path="linear-second-order-differential-equations.html"><a href="linear-second-order-differential-equations.html#variation-of-parameters"><i class="fa fa-check"></i><b>4.6</b> Variation of Parameters</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -136,8 +145,21 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="higher-order-differential-equations" class="section level1" number="4">
-<h1><span class="header-section-number">Topic 4</span> Higher Order Differential Equations</h1>
+<div id="header">
+<h1 class="title">Maple for Differential Equations</h1>
+<p class="author"><em>Fei Ye</em></p>
+<p class="date"><em>2021-10-19</em></p>
+</div>
+<div id="preface" class="section level1 unnumbered">
+<h1>Preface</h1>
+<p>This is a book written for Maple labs for differential equations.</p>
+<p>The source of this book can be found at <a href="https://github.com/fyemath/maple4ode">https://github.com/fyemath/maple4ode</a>.</p>
+<p>Comments and suggestions are very welcome.</p>
+<p>This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
+<div class="figure">
+<img src="figs/by-nc-sa.png" alt="" />
+<p class="caption">by-nc-sa license icon</p>
+</div>
 
 </div>
             </section>
@@ -145,8 +167,8 @@
           </div>
         </div>
       </div>
-<a href="first-order-differential-equations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
+<a href="basics-in-maple.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -167,7 +189,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/fyemath/maple4ode/03-HigherOrder-ODE.Rmd",
+"link": "https://github.com/fyemath/maple4ode/index.Rmd",
 "text": "Edit"
 },
 "history": {
