@@ -10,7 +10,7 @@ on:
   schedule:
     - cron:  '0 11 * * 1'
 
-name: bookdown
+name: Build and deploy bookdown
 
 env:
   isExtPR: ${{ github.event.pull_request.head.repo.fork == true }}
@@ -24,11 +24,13 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-11, r: '4.1.1'}
+          - {os: macOS-latest, r: '4.1.1'} 
 
     env:
       LANG: "en_US.UTF-8"
+      TZ: "America/New_York"
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KNITR_OPTIONS: "knitr.chunk.tidy=TRUE"
 
     steps:
       - name: Checkout repo
@@ -43,7 +45,30 @@ jobs:
         uses: r-lib/actions/setup-pandoc@v1
         with:
           pandoc-version: '2.14.1'
+
+      - name: Install ghostscript and Others
+        run: |
+          brew update
+          brew install ghostscript
+          brew install --cask xquartz
+          brew install --cask calibre
+          # brew tap homebrew/cask
+          # brew tap homebrew/cask-fonts
+          # brew install --cask font-noto-sans-cjk-sc
+          # brew install --cask font-noto-serif-cjk-sc 
+          # fc-list :lang=zh | sort
+          # fc-list :lang=en | sort
+          # fc-list : family | sort -f
+          # ## install fonts
+          # curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip
+          # unzip Adobe-Fonts.zip -d ~/Library/Fonts
+          # fc-cache -fsv
   
+      # - name: Install phamtomJS for webshot
+      #   run: |
+      #     webshot::install_phantomjs()
+      #   shell: Rscript {0}
+
       - name: Cache R packages
         uses: actions/cache@v2
         with:
@@ -83,21 +108,27 @@ jobs:
           cat(sprintf("::set-output name=dir::%s", dirname(res)))
         shell: Rscript {0}
 
+      # 先本地创建一个 Github Pages 分支推送上来才行
+      # https://bookdown.org/yihui/bookdown/github.html
+      # - name: Checkout the gh-pages branch
+      #   uses: actions/checkout@v2
+      #   with:
+      #     ref: gh-pages
+      #     path: book-output
+
+      # - name: Deploy to Github Pages
+      #   if: ${{ github.ref == 'refs/heads/master' }}
+      #   run: ./_deploy.sh
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: _book # The folder the action should deploy.
+
       - name: Upload book folder for debug
         if: failure()
         uses: actions/upload-artifact@main
         with:
           name: Upload Book
-          path: book_output
-
-      # 先本地创建一个 Github Pages 分支推送上来才行
-      # https://bookdown.org/yihui/bookdown/github.html
-      - name: Checkout the gh-pages branch
-        uses: actions/checkout@v2
-        with:
-          ref: gh-pages
-          path: book_output
-
-      - name: Deploy to Github Pages
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: ./_deploy.sh
+          path: _book

@@ -101,7 +101,6 @@ upquote
 im
 microtype
 parskip
-xurl
 bookmark
 longtable
 calc
@@ -116,8 +115,4 @@ varwidth
 nameref
 refcount
 gettitlestring
-supp-pdf.mkii
-epstopdf-base
-ltcaption
 footmisc
-blx-case-expl3

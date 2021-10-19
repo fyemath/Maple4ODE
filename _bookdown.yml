@@ -12,4 +12,4 @@ rmd_files: [
   "03-SecondOrder-ODE.Rmd"
 ]
 
-output_dir: book_output
+# output_dir: book_output
