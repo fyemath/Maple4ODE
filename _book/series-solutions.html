@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 3 First Order Differential Equations | Maple for Differential Equations</title>
+  <title>Topic 5 Series Solutions | Maple for Differential Equations</title>
   <meta name="description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 3 First Order Differential Equations | Maple for Differential Equations" />
+  <meta property="og:title" content="Topic 5 Series Solutions | Maple for Differential Equations" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="fyemath/maple4ode" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 3 First Order Differential Equations | Maple for Differential Equations" />
+  <meta name="twitter:title" content="Topic 5 Series Solutions | Maple for Differential Equations" />
   
   <meta name="twitter:description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="introduction-to-differential-equations.html"/>
-<link rel="next" href="linear-second-order-differential-equations.html"/>
+<link rel="prev" href="linear-second-order-differential-equations.html"/>
+
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -150,148 +150,127 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="first-order-differential-equations" class="section level1" number="3">
-<h1><span class="header-section-number">Topic 3</span> First Order Differential Equations</h1>
-<div id="classification" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Classification</h2>
-<p>Knowing the type of a differential equation will be very helpful for solving it. In Maple, we can use the command <code>odeadvisor(ode, y(x))</code> supported by the package <code>DETools</code> to learn what type of equation is it.</p>
+<div id="series-solutions" class="section level1" number="5">
+<h1><span class="header-section-number">Topic 5</span> Series Solutions</h1>
+<div id="power-series-solutions" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Power series solutions</h2>
+<p>Recall that a point <span class="math inline">\(x_0\)</span> is a regular point of the equation <span class="math inline">\(y&#39;&#39;+p(x)y&#39;+q(x)y=0\)</span>, where <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> are rational functions, if <span class="math inline">\(x_0\)</span> is not a discontinuity of both <span class="math inline">\(p(x)\)</span> and <span class="math inline">\(q(x)\)</span>. At a regular point <span class="math inline">\(x_0\)</span>, we can expect a power series solution <span class="math inline">\(y(x)=\sum\limits_{n=0}^\infty a_nx^n\)</span>. The coefficients are be determined recurrence relations that can be obtained by the method of undetermined coefficients. In maple, we can find a power series solution by the method described above, or using the command <code>powsolve</code> supported by the package <code>powerseries</code>, or using <code>dsolve</code> with the option <code>series</code>. The <code>powsolve</code> returns a procedure which can be expressed explicitly but truncated using the command <code>tpsform</code>.</p>
 <div class="example">
-<p><span id="exm:unlabeled-div-36" class="example"><strong>Example 3.1  </strong></span>Determine the primary type of each of the following differential equations.</p>
-<ol style="list-style-type: decimal">
-<li><p><span class="math inline">\(y&#39;=xy\)</span></p></li>
-<li><p><span class="math inline">\(y&#39;=xy+1\)</span></p></li>
-<li><p><span class="math inline">\(y&#39;=xy+y^2\)</span></p></li>
-<li><p><span class="math inline">\(y&#39;=\frac{xy}{x^2+y^2}\)</span></p></li>
-</ol>
+<p><span id="exm:unlabeled-div-71" class="example"><strong>Example 5.1  </strong></span>Find the general solution in power series of the equation
+<span class="math display">\[y&#39;&#39;-xy&#39;-y=0.\]</span></p>
 </div>
 <div class="solution">
-<p><span id="unlabeled-div-37" class="solution"><em>Solution</em>. </span>We first load the package <code>DETools</code> anonymously.</p>
-<pre><code>with(DETools):</code></pre>
-<p>Now we can classify those equations using <code>odeadvisor</code>.</p>
-<pre><code>odeadvisor(diff(y(x),x)=x*y(x));
-odeadvisor(diff(y(x),x)=x*y(x)+1);
-odeadvisor(diff(y(x),x)=x*y(x)+y(x)^2;
-odeadvisor(diff(y(x), x) = (x*y(x))/(x^2 + y(x)^2));</code></pre>
-</div>
-<div class="exercise">
-<p><span id="exr:unlabeled-div-38" class="exercise"><strong>Exercise 3.1  </strong></span>Determine the primary type of each of the following differential equations.</p>
-<ol style="list-style-type: decimal">
-<li><p><span class="math inline">\(y&#39;=x^2y^2+x^2\)</span></p></li>
-<li><p><span class="math inline">\(y&#39;=x^2y+x\)</span></p></li>
-<li><p><span class="math inline">\(y&#39;=xy+y^3\)</span></p></li>
-<li><p><span class="math inline">\(y&#39;=\frac{x-y}{x+y}\)</span></p></li>
-</ol>
-</div>
-</div>
-<div id="solving-differential-equations" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Solving differential equations</h2>
-<p>To solve an ordinary differential equation, or a system of them, or initial value problems, you may use the command <code>dsolve({ODE, InitialConditions}, y(x), options)</code>, where the initial conditions may be omitted to get a general solution. Note that <code>dsolve</code> returns an equation with <span class="math inline">\(y(x)\)</span> on the left.</p>
-<p>Among options, you may choose to use different method to solve the equations, for example, <code>numeric</code>, <code>series</code> or <code>method=laplace</code> are options that can be imposed and will be used later.</p>
-<div class="example">
-<p><span id="exm:unlabeled-div-39" class="example"><strong>Example 3.2  </strong></span>Consider the differential equation
-<span class="math inline">\(y&#39;=2y+x.\)</span></p>
-<ol style="list-style-type: decimal">
-<li><p>Find the general solution.</p></li>
-<li><p>Find the solution that satisfies the initial condition <span class="math inline">\(y(0)=1\)</span>.</p></li>
-<li><p>Plot the solution curve of the initial value problem.</p></li>
-</ol>
-</div>
-<div class="solution">
-<p><span id="unlabeled-div-40" class="solution"><em>Solution</em>. </span>It will be convenient to define the differential equation first.</p>
-<pre><code>ode221:=diff(y(x), x)=2*y(x)+x:</code></pre>
-<p>The general solution can be obtained by the following command.</p>
-<pre><code>dsolve(ode221, y(x));</code></pre>
-<p>The solution of the initial value problem can be obtained by</p>
-<pre><code>sol221:=dsolve({ode221, y(0)=1}, y(x));</code></pre>
-<p>To plot the solution curve, we need to get the function expression instead of the equation. This can be done using the command <code>rhs</code>.</p>
-<pre><code>plot(rhs(sol221), x=-5..5)</code></pre>
+<p><span id="unlabeled-div-72" class="solution"><em>Solution</em>. </span>We first defined the differential equation.</p>
+<pre><code>ode41:=diff(y(x), x, x)-x*diff(y(x), x)-y(x)=0;</code></pre>
+<p><strong>Method 1:</strong> Follow the manual procedure.</p>
+<p>Suppose <span class="math inline">\(y(x)=\sum\limits_{n=0}^\infty a_nx^n\)</span>. In Maple, we define <span class="math inline">\(y\)</span> using the command <code>sum</code>.</p>
+<pre><code>y:=sum(a[n]*x^n, n=0..infinity);</code></pre>
+<p>Now plug <span class="math inline">\(y\)</span> in to the equation and simplify.</p>
+<pre><code>pode41 := combine(subs[eval](y(x) = y, ode41));</code></pre>
+<p>The output is
+<span class="math display">\[{\color{blue}\sum\limits_{n=0}^\infty\left(-n a_{n} x^{n -2}+a_{n} x^{n -2} n^{2}-n a_{n} x^{n}-a_{n} x^{n}\right) = 0}.\]</span></p>
+<p>For polynomials, Maple can combine like terms. Unfortunately, for series, Maple couldn’t do the shifting or combine like terms for us. Since we are interested in the coefficient of the general term in <span class="math inline">\(x^n\)</span>, we can extract the terms that contains <span class="math inline">\(x^n\)</span>. The trick it to substitute <code>n=0..infinity</code> by <code>n=k..k+2</code>. Because, only when <span class="math inline">\(n=k\)</span>, <span class="math inline">\(k+2\)</span>, there are terms in <span class="math inline">\(x^k\)</span>.</p>
+<pre><code>kterms:=simplify(subs((n=0..infinity)=(n=k..k+2), pode41));</code></pre>
+<p>Now we can extract the coefficient of <span class="math inline">\(x^k\)</span> using the command <code>coeff</code>. To keep the equation form, we use <code>map</code> to apply the command <code>coeff</code> to <span class="math inline">\(x^k\)</span> in both sides of the equation.</p>
+<pre><code>coeffk:=map(coeff, kterms, x^k);</code></pre>
+<p>The output is
+<span class="math display">\[{\color{blue}\left(1+k \right) \left(k a_{k +2}-a_{k}+2 a_{k +2}\right) = 0}.\]</span></p>
+<p>We can then get the recurrence relations by isolate <span class="math inline">\(a_{k+2}\)</span> and replace <span class="math inline">\(k\)</span> by <span class="math inline">\(n-2\)</span>.</p>
+<pre><code>recurrence_relations:=subs[eval](k=n-2, isolate(coeffk, a[k+2]));</code></pre>
+<p>The output is
+<span class="math display">\[{\color{blue}a_{n} = \frac{a_{n -2}}{n}}.\]</span></p>
+<p>To get an explicit formula for <span class="math inline">\(a_n\)</span>, we use the Maple command <code>rsolve</code></p>
+<pre><code>coeffn:=rsolve(recurrence_relation, a[n]);</code></pre>
+<p>We can get a polynomial approximation up to <span class="math inline">\(x^{10}\)</span> for the solution <span class="math inline">\(y\)</span>.</p>
+<pre><code>y:=a[0] + a[1]*x + sum(eval(coeffn, n = k)*x^k, k = 2 .. 10);</code></pre>
+<p><strong>Method 2:</strong> Using the command <code>powsolve</code>.</p>
+<p>Load the package <code>powseries</code></p>
+<pre><code>with(powseries):</code></pre>
+<p>Solve the equation using <code>powsolve(equation)</code>. Note that the output is a procedure that that produces in each step the coefficient of the degree <code>_k</code> term.</p>
+<pre><code>ypowsol:=powsolve(ode41);</code></pre>
+<p>The coefficient of the <span class="math inline">\(n\)</span>-th term is given by</p>
+<pre><code>an:= eval(ypowsol(_k), _k=n);</code></pre>
+<p>To get a truncated power series, we use the Maple command <code>tpsform</code>. For example, the truncated power series for <code>ypowsol</code> up to 10th order can be obtained by the following command.</p>
+<pre><code>tpsform(ypowsol, x, 10);</code></pre>
+<p><strong>Method 3:</strong> Using `dsolve(equation, y(x), type=‘series’).</p>
+<p>Using this method, we get a power series solution directly.</p>
+<pre><code>dsolve({ode41, y(0) = a[0], D(y)(0) = a[1]}, y(x), &#39;series&#39;);</code></pre>
+<p>Running this command gives the solution
+<span class="math display">\[y\left(x \right) = a_{0}+a_{1} x +\frac{1}{2} a_{0} x^{2}+\frac{1}{3} a_{1} x^{3}+\frac{1}{8} a_{0} x^{4}+\frac{1}{15} a_{1} x^{5}+\mathrm{O}\left(x^{6}\right)\]</span></p>
 </div>
 <div class="rmdnote">
-<p>By default, the <code>dsolve</code> command only returns a function. To show more detailed information about the computation, you may assign to <code>infolevel[dsolve]</code> an integer 1 through 5 before using the <code>dsolve</code> command. For example, after running the following command <code>infolevel[dsolve]:=3</code>, the output from <code>dsolve</code> will show three pieces of information: methods tried, successful or not, the solution.</p>
-</div>
-<div class="exercise">
-<p><span id="exr:unlabeled-div-41" class="exercise"><strong>Exercise 3.2  </strong></span>Consider the differential equation
-<span class="math inline">\(y&#39;=x+y.\)</span></p>
+<p>Each method has advantages and disadvantages.</p>
 <ol style="list-style-type: decimal">
-<li><p>Find the general solution.</p></li>
-<li><p>Find the solution that satisfies the initial condition <span class="math inline">\(y(0)=1\)</span>.</p></li>
-<li><p>Plot the solution curve of the initial value problem.</p></li>
+<li>The first method works in general, but not efficient.</li>
+<li>The <code>powsolve</code> command can only work with polynomial coefficient equations and the power series solution is always at 0.</li>
+<li>The <code>dsolve</code> command cannot produce recurrence relations.</li>
+</ol>
+<p>In all three methods, initial conditions can be added.</p>
+<ol style="list-style-type: decimal">
+<li>In the first method, initial conditions can be imposed with <code>rsolve({recurrence_relation, a[0]=a0, a[1]=a1})</code>.</li>
+<li>In the second and the third method, initial conditions can be imposed by <code>{equation, y(0)=a0, y'(0)=a1}</code>.</li>
 </ol>
 </div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-73" class="exercise"><strong>Exercise 5.1  </strong></span>Find the general solution in power series form of the equation
+<span class="math display">\[y&#39;&#39;+ xy&#39;+y=0.\]</span></p>
 </div>
-<div id="integrating-factors" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Integrating factors</h2>
-<p>In Maple, you may use <code>intfactor</code> that is supported by the package <code>DETools</code> to find an integrating factor for a given ODE. To test an integrating factor, you may use <code>mutest</code> which is again supported by the package <code>DETools</code>. If the command returns a 0, then the expression being tested is an integrating factor.</p>
+</div>
+<div id="euler-equations" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Euler Equations</h2>
+<p>For differential equations with regular singular point, the first method and the the third method still work. If the equation is an Euler equation, that is, <span class="math inline">\(ax^2y&#39;&#39;+bxy&#39;+c=0\)</span>. The solution is easier to find even by hands. Since once can always use <code>dsolve</code> to solve a differential equation. We will focus on how to solve Euler equations manually. Recall the following theorem.</p>
+<div class="theorem">
+<p><span id="thm:unlabeled-div-74" class="theorem"><strong>Theorem 5.1  </strong></span>Suppose the solutions of the indicial equation
+<span class="math display">\[ar(r-1)+br+c=0\]</span>
+are <span class="math inline">\(r_1\)</span> and <span class="math inline">\(r_2\)</span>. Then the general solution of the Euler equation
+<span class="math display">\[ax^2y&#39;&#39;+bxy&#39;+cy=0\]</span>
+on <span class="math inline">\((0,\infty)\)</span> is</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math display">\[y= c_1x^{r_1}+c_2x^{r_2}\]</span>
+if <span class="math inline">\(r_1\)</span> and <span class="math inline">\(r_2\)</span> are distinct real numbers;</p></li>
+<li><p><span class="math display">\[y= x^{r}(c_1+c_2\ln x)\]</span>
+if <span class="math inline">\(r_1=r_2=r\)</span>;</p></li>
+<li><p><span class="math display">\[y=x^{\lambda}\left[c_1\cos\left(\omega\ln x\right)+ c_2\sin\left(\omega\ln x \right)\right]\]</span>
+if <span class="math inline">\(r_1,r_2=\lambda\pm \mathrm{i}\omega\)</span> with <span class="math inline">\(\omega&gt;0\)</span>.</p></li>
+</ol>
+</div>
+<p>From the theorem, we see that the key to find the general solution is to solve the indicial equation <span class="math inline">\(ar(r-1)+br+c=0\)</span>. This equation can be obtained substituting <span class="math inline">\(y&#39;&#39;\)</span> by <span class="math inline">\(r(r-1)\)</span>, <span class="math inline">\(y&#39;\)</span> by <span class="math inline">\(r\)</span>, and <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> by <span class="math inline">\(1\)</span>. It can also be obtained by the Maple command <code>indicialeq(ode, indepvar, regsp, depvar)</code> supported by <code>DETools</code>.</p>
 <div class="example">
-<p><span id="exm:unlabeled-div-42" class="example"><strong>Example 3.3  </strong></span>Find an integrating factor for the equations <span class="math inline">\(y&#39;=x^2y-x\)</span> and test it using <code>mutest</code>.</p>
+<p><span id="exm:unlabeled-div-75" class="example"><strong>Example 5.2  </strong></span>Find the general solution of the Euler equations
+<span class="math display">\[x^2y&#39;&#39;-xy&#39;+5y=0\]</span></p>
 </div>
 <div class="solution">
-<p><span id="unlabeled-div-43" class="solution"><em>Solution</em>. </span>Let’s first define the differential equation.</p>
-<pre><code>ode231:=diff(y(x), x)=x^2*y(x)-x:</code></pre>
-<p>Now loading the package and find an integrating factor <span class="math inline">\(\mu\)</span>.</p>
-<pre><code>with(DETools):
-mu:=intfactor(ode231);</code></pre>
-<p>To test it, you may run the following command.</p>
-<pre><code>mutest(mu, ode231, y(x));</code></pre>
+<p><span id="unlabeled-div-76" class="solution"><em>Solution</em>. </span>Define the equation</p>
+<pre><code>ode42:=x^2*diff(y(x), x$2)-x*diff(y(x), x)+5*y(x)=0;</code></pre>
+<p>The indicial equation can be obtained using one of the following command</p>
+<pre><code>indeq1:=subs[eval]({diff(y(x), x, x)=r*(r-1), diff(y(x), x)=r, y(x)=1, x=1}, ode42);
+indeq2:=DETools[indicialeq](ode42, x, 0, y(x));</code></pre>
+<p>Solve the indicial equation, we will use the equation <code>indeq1</code>,</p>
+<pre><code>rcomplex:=solve(indeq1, r);</code></pre>
+<p>The solutions are
+<span class="math display">\[{\color{blue}1+2I, 1-2I}\]</span></p>
+<p>Construct the solution using the theorem.
+First find the real and imaginary parts.</p>
+<pre><code>alpha:=Re(rcomplex[1]);
+beta:=Im(rcomplex[2]);</code></pre>
+<p>So the general solution is
+<span class="math display">\[y=e^{alpha x}(c_1\cos(\beta\ln x)+c[2]\sin(\beta\ln x)).\]</span></p>
+<p>You can check that using the Maple command <code>odetest</code>.</p>
+<pre><code>yg := x -&gt; x^alpha*(c[1]*cos(beta*ln(x)) + c[2]*sin(beta*ln(x))):
+odetest(y(x)=yg(x), ode42);</code></pre>
+<p>The output <span class="math inline">\({\color{blue}0}\)</span> means that <code>yg</code> is a solution of the equation <code>ode42</code>.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-44" class="exercise"><strong>Exercise 3.3  </strong></span>Find an integrating factor for the differential equation.
-<span class="math inline">\(xy&#39;=y-x.\)</span></p>
+<p><span id="exr:unlabeled-div-77" class="exercise"><strong>Exercise 5.2  </strong></span>Find the general solution of the Euler equation
+<span class="math display">\[x^2y&#39;&#39;-2y&#39;-4y=0.\]</span></p>
 </div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-78" class="exercise"><strong>Exercise 5.3  </strong></span>Find the general solution of the Euler equation
+<span class="math display">\[x^2y&#39;&#39;-3y&#39;+5y=0.\]</span></p>
 </div>
-<div id="commands-for-specific-type-of-equations" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Commands for specific type of equations</h2>
-<p>The <code>DETools</code> package also provides some commands for solving specific type of equations. The following is an incomplete list.</p>
-<ol style="list-style-type: decimal">
-<li>The command <code>separablesol(ode, dependent variable)</code> determines whether the ode is a separable first order ODE and, if so, returns a solution to the equation.</li>
-</ol>
-<div class="example">
-<p><span id="exm:unlabeled-div-45" class="example"><strong>Example 3.4  </strong></span>Consider the first order differential equation
-<span class="math display">\[y&#39;=\frac{x}{x^2y+y}.\]</span></p>
-<p>Executing The following codes</p>
-<pre><code>with(DEtools):
-sode := diff(y(x), x) = x/(x^2*y(x)+y(x));
-exactsol(sode, y(x));</code></pre>
-<p>will produce a set of solutions
-<span class="math display">\[\color{blue}{\left\{y(x) = \sqrt{\ln(x^{2}+1)-2\_\textit{C1}}, y(x) = -\sqrt{\ln(x^{2}+1)-2\_\textit{C1}}\right\}}.\]</span></p>
-</div>
-<ol start="2" style="list-style-type: decimal">
-<li>The command <code>linearsol(ode, dependent variable)</code> determines whether the ode is a first order linear ODE and, if so, returns a solution to the equation.</li>
-</ol>
-<div class="example">
-<p><span id="exm:unlabeled-div-46" class="example"><strong>Example 3.5  </strong></span>Consider the linear first order differential equation
-<span class="math display">\[y&#39;+p(x)y=q(x).\]</span></p>
-<p>Executing The following codes</p>
-<pre><code>with(DEtools):
-lode := diff(y(x), x) + p(x)*y(x) = q(x);
-linearsol(lode, y(x));</code></pre>
-<p>will produce a set of solutions
-<span class="math display">\[
-\color{blue}{
-\{y(x) = {\color{gray}{\int}}(-p(x) z(x)+q(x)){\color{gray}{d}}x +\_\textit{C1}\}
-}
-\]</span></p>
-</div>
-<ol start="3" style="list-style-type: decimal">
-<li>The command <code>exactsol(ode, dependent variable)</code> determines whether the ode is an exact first order ODE and, if so, returns a solution to the equation. When the equation is not exact, it tries to find an integrating factor that converts the equation into an equivalent exact equation.</li>
-</ol>
-<div class="example">
-<p><span id="exm:unlabeled-div-47" class="example"><strong>Example 3.6  </strong></span>Consider the first order differential equation
-<span class="math display">\[(x^2 - y^2)\mathrm{d} x + 2xy\mathrm{d} y.\]</span></p>
-<p>Executing The following codes</p>
-<pre><code>with(DEtools):
-eode := x^2 - y(x)^2 + 2*x*y(x)*diff(y(x), x) = 0;
-exactsol(eode, y(x));</code></pre>
-<p>will produce a set of solutions
-<span class="math display">\[
-\color{blue}{
-\{y(x) = \sqrt{-\_\textit{C1} x -x^{2}},
-y(x) = -\sqrt{-\_\textit{C1} x -x^{2}}\}
-}
-\]</span></p>
-</div>
-<div class="rmdnote">
-<p>One can also specific the method (type of the equation) in the <code>dsolve</code> command so that the equation will be solve by using the given method.</p>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-79" class="exercise"><strong>Exercise 5.4  </strong></span>Find the general solution of the Euler equation
+<span class="math display">\[x^2y&#39;&#39;+3y&#39;+y=0.\]</span></p>
 </div>
 
 </div>
@@ -301,8 +280,8 @@ y(x) = -\sqrt{-\_\textit{C1} x -x^{2}}\}
           </div>
         </div>
       </div>
-<a href="introduction-to-differential-equations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="linear-second-order-differential-equations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="linear-second-order-differential-equations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -323,7 +302,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/fyemath/maple4ode/02-FirstOrder-ODE.Rmd",
+"link": "https://github.com/fyemath/maple4ode/04-SeriesSolutions.Rmd",
 "text": "Edit"
 },
 "history": {

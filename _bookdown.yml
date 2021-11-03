@@ -9,7 +9,8 @@ rmd_files: [
   "00-Maple-Intro.Rmd",
   "01-ODE-Intro.Rmd",
   "02-FirstOrder-ODE.Rmd",
-  "03-SecondOrder-ODE.Rmd"
+  "03-SecondOrder-ODE.Rmd",
+  "04-SeriesSolutions.Rmd"
 ]
 
 # output_dir: book_output
