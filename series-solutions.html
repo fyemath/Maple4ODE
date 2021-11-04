@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Maple for Differential Equations</title>
+  <title>Topic 5 Series Solutions | Maple for Differential Equations</title>
   <meta name="description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Maple for Differential Equations" />
+  <meta property="og:title" content="Topic 5 Series Solutions | Maple for Differential Equations" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="fyemath/maple4ode" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Maple for Differential Equations" />
+  <meta name="twitter:title" content="Topic 5 Series Solutions | Maple for Differential Equations" />
   
   <meta name="twitter:description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="linear-second-order-differential-equations.html"/>
 
-<link rel="next" href="basics-in-maple.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -150,30 +150,138 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Maple for Differential Equations</h1>
-<p class="author"><em>Fei Ye</em></p>
-<p class="date"><em>2021-11-04</em></p>
+<div id="series-solutions" class="section level1" number="5">
+<h1><span class="header-section-number">Topic 5</span> Series Solutions</h1>
+<div id="power-series-solutions" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Power series solutions</h2>
+<p>Recall that a point <span class="math inline">\(x_0\)</span> is a regular point of the equation <span class="math inline">\(y&#39;&#39;+p(x)y&#39;+q(x)y=0\)</span>, where <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> are rational functions, if <span class="math inline">\(x_0\)</span> is not a discontinuity of both <span class="math inline">\(p(x)\)</span> and <span class="math inline">\(q(x)\)</span>. At a regular point <span class="math inline">\(x_0\)</span>, we can expect a power series solution <span class="math inline">\(y(x)=\sum\limits_{n=0}^\infty a_nx^n\)</span>. The coefficients are be determined recurrence relations that can be obtained by the method of undetermined coefficients. In maple, we can find a power series solution by the method described above, or using the command <code>powsolve</code> supported by the package <code>powerseries</code>, or using <code>dsolve</code> with the option <code>series</code>. The <code>powsolve</code> returns a procedure which can be expressed explicitly but truncated using the command <code>tpsform</code>.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-71" class="example"><strong>Example 5.1  </strong></span>Find the general solution in power series of the equation
+<span class="math display">\[y&#39;&#39;-xy&#39;-y=0.\]</span></p>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>This is a book written for Maple labs for differential equations.</p>
-<p>The source of this book can be found at <a href="https://github.com/fyemath/maple4ode">https://github.com/fyemath/maple4ode</a>.</p>
-<p>Comments and suggestions are very welcome.</p>
-<p>This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
-<div class="figure">
-<img src="figs/by-nc-sa.png" alt="" />
-<p class="caption">by-nc-sa license icon</p>
+<div class="solution">
+<p><span id="unlabeled-div-72" class="solution"><em>Solution</em>. </span>We first defined the differential equation.</p>
+<pre><code>ode41:=diff(y(x), x, x)-x*diff(y(x), x)-y(x)=0;</code></pre>
+<p><strong>Method 1:</strong> Follow the manual procedure.</p>
+<p>Suppose <span class="math inline">\(y(x)=\sum\limits_{n=0}^\infty a_nx^n\)</span>. In Maple, we define <span class="math inline">\(y\)</span> using the command <code>sum</code>.</p>
+<pre><code>y:=sum(a[n]*x^n, n=0..infinity);</code></pre>
+<p>Now plug <span class="math inline">\(y\)</span> in to the equation and simplify.</p>
+<pre><code>pode41 := combine(subs[eval](y(x) = y, ode41));</code></pre>
+<p>The output is
+<span class="math display">\[{\color{blue}\sum\limits_{n=0}^\infty\left(-n a_{n} x^{n -2}+a_{n} x^{n -2} n^{2}-n a_{n} x^{n}-a_{n} x^{n}\right) = 0}.\]</span></p>
+<p>For polynomials, Maple can combine like terms. Unfortunately, for series, Maple couldn’t do the shifting or combine like terms for us. Since we are interested in the coefficient of the general term in <span class="math inline">\(x^n\)</span>, we can extract the terms that contains <span class="math inline">\(x^n\)</span>. The trick it to substitute <code>n=0..infinity</code> by <code>n=k..k+2</code>. Because, only when <span class="math inline">\(n=k\)</span>, <span class="math inline">\(k+2\)</span>, there are terms in <span class="math inline">\(x^k\)</span>.</p>
+<pre><code>kterms:=simplify(subs((n=0..infinity)=(n=k..k+2), pode41));</code></pre>
+<p>Now we can extract the coefficient of <span class="math inline">\(x^k\)</span> using the command <code>coeff</code>. To keep the equation form, we use <code>map</code> to apply the command <code>coeff</code> to <span class="math inline">\(x^k\)</span> in both sides of the equation.</p>
+<pre><code>coeffk:=map(coeff, kterms, x^k);</code></pre>
+<p>The output is
+<span class="math display">\[{\color{blue}\left(1+k \right) \left(k a_{k +2}-a_{k}+2 a_{k +2}\right) = 0}.\]</span></p>
+<p>We can then get the recurrence relations by isolate <span class="math inline">\(a_{k+2}\)</span> and replace <span class="math inline">\(k\)</span> by <span class="math inline">\(n-2\)</span>.</p>
+<pre><code>recurrence_relations:=subs[eval](k=n-2, isolate(coeffk, a[k+2]));</code></pre>
+<p>The output is
+<span class="math display">\[{\color{blue}a_{n} = \frac{a_{n -2}}{n}}.\]</span></p>
+<p>To get an explicit formula for <span class="math inline">\(a_n\)</span>, we use the Maple command <code>rsolve</code></p>
+<pre><code>coeffn:=rsolve(recurrence_relation, a[n]);</code></pre>
+<p>We can get a polynomial approximation up to <span class="math inline">\(x^{10}\)</span> for the solution <span class="math inline">\(y\)</span>.</p>
+<pre><code>y:=a[0] + a[1]*x + sum(eval(coeffn, n = k)*x^k, k = 2 .. 10);</code></pre>
+<p><strong>Method 2:</strong> Using the command <code>powsolve</code>.</p>
+<p>Load the package <code>powseries</code></p>
+<pre><code>with(powseries):</code></pre>
+<p>Solve the equation using <code>powsolve(equation)</code>. Note that the output is a procedure that that produces in each step the coefficient of the degree <code>_k</code> term.</p>
+<pre><code>ypowsol:=powsolve(ode41);</code></pre>
+<p>The coefficient of the <span class="math inline">\(n\)</span>-th term is given by</p>
+<pre><code>an:= eval(ypowsol(_k), _k=n);</code></pre>
+<p>To get a truncated power series, we use the Maple command <code>tpsform</code>. For example, the truncated power series for <code>ypowsol</code> up to 10th order can be obtained by the following command.</p>
+<pre><code>tpsform(ypowsol, x, 10);</code></pre>
+<p><strong>Method 3:</strong> Using `dsolve(equation, y(x), type=‘series’).</p>
+<p>Using this method, we get a power series solution directly.</p>
+<pre><code>dsolve({ode41, y(0) = a[0], D(y)(0) = a[1]}, y(x), &#39;series&#39;);</code></pre>
+<p>Running this command gives the solution
+<span class="math display">\[y\left(x \right) = a_{0}+a_{1} x +\frac{1}{2} a_{0} x^{2}+\frac{1}{3} a_{1} x^{3}+\frac{1}{8} a_{0} x^{4}+\frac{1}{15} a_{1} x^{5}+\mathrm{O}\left(x^{6}\right)\]</span></p>
+</div>
+<div class="rmdnote">
+<p>Each method has advantages and disadvantages.</p>
+<ol style="list-style-type: decimal">
+<li>The first method works in general, but not efficient.</li>
+<li>The <code>powsolve</code> command can only work with polynomial coefficient equations and the power series solution is always at 0.</li>
+<li>The <code>dsolve</code> command cannot produce recurrence relations.</li>
+</ol>
+<p>In all three methods, initial conditions can be added.</p>
+<ol style="list-style-type: decimal">
+<li>In the first method, initial conditions can be imposed with <code>rsolve({recurrence_relation, a[0]=a0, a[1]=a1})</code>.</li>
+<li>In the second and the third method, initial conditions can be imposed by <code>{equation, y(0)=a0, y'(0)=a1}</code>.</li>
+</ol>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-73" class="exercise"><strong>Exercise 5.1  </strong></span>Find the general solution in power series form of the equation
+<span class="math display">\[y&#39;&#39;+ xy&#39;+y=0.\]</span></p>
+</div>
+</div>
+<div id="euler-equations" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Euler Equations</h2>
+<p>For differential equations with regular singular point, the first method and the the third method still work. If the equation is an Euler equation, that is, <span class="math inline">\(ax^2y&#39;&#39;+bxy&#39;+c=0\)</span>. The solution is easier to find even by hands. Since once can always use <code>dsolve</code> to solve a differential equation. We will focus on how to solve Euler equations manually. Recall the following theorem.</p>
+<div class="theorem">
+<p><span id="thm:unlabeled-div-74" class="theorem"><strong>Theorem 5.1  </strong></span>Suppose the solutions of the indicial equation
+<span class="math display">\[ar(r-1)+br+c=0\]</span>
+are <span class="math inline">\(r_1\)</span> and <span class="math inline">\(r_2\)</span>. Then the general solution of the Euler equation
+<span class="math display">\[ax^2y&#39;&#39;+bxy&#39;+cy=0\]</span>
+on <span class="math inline">\((0,\infty)\)</span> is</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math display">\[y= c_1x^{r_1}+c_2x^{r_2}\]</span>
+if <span class="math inline">\(r_1\)</span> and <span class="math inline">\(r_2\)</span> are distinct real numbers;</p></li>
+<li><p><span class="math display">\[y= x^{r}(c_1+c_2\ln x)\]</span>
+if <span class="math inline">\(r_1=r_2=r\)</span>;</p></li>
+<li><p><span class="math display">\[y=x^{\lambda}\left[c_1\cos\left(\omega\ln x\right)+ c_2\sin\left(\omega\ln x \right)\right]\]</span>
+if <span class="math inline">\(r_1,r_2=\lambda\pm \mathrm{i}\omega\)</span> with <span class="math inline">\(\omega&gt;0\)</span>.</p></li>
+</ol>
+</div>
+<p>From the theorem, we see that the key to find the general solution is to solve the indicial equation <span class="math inline">\(ar(r-1)+br+c=0\)</span>. This equation can be obtained substituting <span class="math inline">\(y&#39;&#39;\)</span> by <span class="math inline">\(r(r-1)\)</span>, <span class="math inline">\(y&#39;\)</span> by <span class="math inline">\(r\)</span>, and <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> by <span class="math inline">\(1\)</span>. It can also be obtained by the Maple command <code>indicialeq(ode, indepvar, regsp, depvar)</code> supported by <code>DETools</code>.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-75" class="example"><strong>Example 5.2  </strong></span>Find the general solution of the Euler equations
+<span class="math display">\[x^2y&#39;&#39;-xy&#39;+5y=0\]</span></p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-76" class="solution"><em>Solution</em>. </span>Define the equation</p>
+<pre><code>ode42:=x^2*diff(y(x), x$2)-x*diff(y(x), x)+5*y(x)=0;</code></pre>
+<p>The indicial equation can be obtained using one of the following command</p>
+<pre><code>indeq1:=subs[eval]({diff(y(x), x, x)=r*(r-1), diff(y(x), x)=r, y(x)=1, x=1}, ode42);
+indeq2:=DETools[indicialeq](ode42, x, 0, y(x));</code></pre>
+<p>Solve the indicial equation, we will use the equation <code>indeq1</code>,</p>
+<pre><code>rcomplex:=solve(indeq1, r);</code></pre>
+<p>The solutions are
+<span class="math display">\[{\color{blue}1+2I, 1-2I}\]</span></p>
+<p>Construct the solution using the theorem.
+First find the real and imaginary parts.</p>
+<pre><code>alpha:=Re(rcomplex[1]);
+beta:=Im(rcomplex[2]);</code></pre>
+<p>So the general solution is
+<span class="math display">\[y=e^{alpha x}(c_1\cos(\beta\ln x)+c[2]\sin(\beta\ln x)).\]</span></p>
+<p>You can check that using the Maple command <code>odetest</code>.</p>
+<pre><code>yg := x -&gt; x^alpha*(c[1]*cos(beta*ln(x)) + c[2]*sin(beta*ln(x))):
+odetest(y(x)=yg(x), ode42);</code></pre>
+<p>The output <span class="math inline">\({\color{blue}0}\)</span> means that <code>yg</code> is a solution of the equation <code>ode42</code>.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-77" class="exercise"><strong>Exercise 5.2  </strong></span>Find the general solution of the Euler equation
+<span class="math display">\[x^2y&#39;&#39;-2y&#39;-4y=0.\]</span></p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-78" class="exercise"><strong>Exercise 5.3  </strong></span>Find the general solution of the Euler equation
+<span class="math display">\[x^2y&#39;&#39;-3y&#39;+5y=0.\]</span></p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-79" class="exercise"><strong>Exercise 5.4  </strong></span>Find the general solution of the Euler equation
+<span class="math display">\[x^2y&#39;&#39;+3y&#39;+y=0.\]</span></p>
 </div>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="linear-second-order-differential-equations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="basics-in-maple.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -194,7 +302,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/fyemath/maple4ode/index.Rmd",
+"link": "https://github.com/fyemath/maple4ode/04-SeriesSolutions.Rmd",
 "text": "Edit"
 },
 "history": {

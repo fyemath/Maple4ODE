@@ -138,7 +138,7 @@
 
 \title{Maple for Differential Equations}
 \author{Fei Ye}
-\date{2021-11-01}
+\date{2021-11-04}
 
 \begin{document}
 \maketitle
@@ -1588,6 +1588,240 @@ Find the generals solution for the equation
 \[x^2y'' + 3xy' - 3y=x\]
 using the solutions \(y_1=x\) and \(y_2=\frac{1}{x^3}\) of the complementary equation
 \[x^2y'' + 3xy' - 3y=0.\]
+\end{exercise}
+
+\hypertarget{series-solutions}{%
+\chapter{Series Solutions}\label{series-solutions}}
+
+\hypertarget{power-series-solutions}{%
+\section{Power series solutions}\label{power-series-solutions}}
+
+Recall that a point \(x_0\) is a regular point of the equation \(y''+p(x)y'+q(x)y=0\), where \(p\) and \(q\) are rational functions, if \(x_0\) is not a discontinuity of both \(p(x)\) and \(q(x)\). At a regular point \(x_0\), we can expect a power series solution \(y(x)=\sum\limits_{n=0}^\infty a_nx^n\). The coefficients are be determined recurrence relations that can be obtained by the method of undetermined coefficients. In maple, we can find a power series solution by the method described above, or using the command \texttt{powsolve} supported by the package \texttt{powerseries}, or using \texttt{dsolve} with the option \texttt{series}. The \texttt{powsolve} returns a procedure which can be expressed explicitly but truncated using the command \texttt{tpsform}.
+
+\begin{example}
+Find the general solution in power series of the equation
+\[y''-xy'-y=0.\]
+\end{example}
+
+\begin{solution}
+We first defined the differential equation.
+
+\begin{verbatim}
+ode41:=diff(y(x), x, x)-x*diff(y(x), x)-y(x)=0;
+\end{verbatim}
+
+\textbf{Method 1:} Follow the manual procedure.
+
+Suppose \(y(x)=\sum\limits_{n=0}^\infty a_nx^n\). In Maple, we define \(y\) using the command \texttt{sum}.
+
+\begin{verbatim}
+y:=sum(a[n]*x^n, n=0..infinity);
+\end{verbatim}
+
+Now plug \(y\) in to the equation and simplify.
+
+\begin{verbatim}
+pode41 := combine(subs[eval](y(x) = y, ode41));
+\end{verbatim}
+
+The output is
+\[{\color{blue}\sum\limits_{n=0}^\infty\left(-n a_{n} x^{n -2}+a_{n} x^{n -2} n^{2}-n a_{n} x^{n}-a_{n} x^{n}\right) = 0}.\]
+
+For polynomials, Maple can combine like terms. Unfortunately, for series, Maple couldn't do the shifting or combine like terms for us. Since we are interested in the coefficient of the general term in \(x^n\), we can extract the terms that contains \(x^n\). The trick it to substitute \texttt{n=0..infinity} by \texttt{n=k..k+2}. Because, only when \(n=k\), \(k+2\), there are terms in \(x^k\).
+
+\begin{verbatim}
+kterms:=simplify(subs((n=0..infinity)=(n=k..k+2), pode41));
+\end{verbatim}
+
+Now we can extract the coefficient of \(x^k\) using the command \texttt{coeff}. To keep the equation form, we use \texttt{map} to apply the command \texttt{coeff} to \(x^k\) in both sides of the equation.
+
+\begin{verbatim}
+coeffk:=map(coeff, kterms, x^k);
+\end{verbatim}
+
+The output is
+\[{\color{blue}\left(1+k \right) \left(k a_{k +2}-a_{k}+2 a_{k +2}\right) = 0}.\]
+
+We can then get the recurrence relations by isolate \(a_{k+2}\) and replace \(k\) by \(n-2\).
+
+\begin{verbatim}
+recurrence_relations:=subs[eval](k=n-2, isolate(coeffk, a[k+2]));
+\end{verbatim}
+
+The output is
+\[{\color{blue}a_{n} = \frac{a_{n -2}}{n}}.\]
+
+To get an explicit formula for \(a_n\), we use the Maple command \texttt{rsolve}
+
+\begin{verbatim}
+coeffn:=rsolve(recurrence_relation, a[n]);
+\end{verbatim}
+
+We can get a polynomial approximation up to \(x^{10}\) for the solution \(y\).
+
+\begin{verbatim}
+y:=a[0] + a[1]*x + sum(eval(coeffn, n = k)*x^k, k = 2 .. 10);
+\end{verbatim}
+
+\textbf{Method 2:} Using the command \texttt{powsolve}.
+
+Load the package \texttt{powseries}
+
+\begin{verbatim}
+with(powseries):
+\end{verbatim}
+
+Solve the equation using \texttt{powsolve(equation)}. Note that the output is a procedure that that produces in each step the coefficient of the degree \texttt{\_k} term.
+
+\begin{verbatim}
+ypowsol:=powsolve(ode41);
+\end{verbatim}
+
+The coefficient of the \(n\)-th term is given by
+
+\begin{verbatim}
+an:= eval(ypowsol(_k), _k=n);
+\end{verbatim}
+
+To get a truncated power series, we use the Maple command \texttt{tpsform}. For example, the truncated power series for \texttt{ypowsol} up to 10th order can be obtained by the following command.
+
+\begin{verbatim}
+tpsform(ypowsol, x, 10);
+\end{verbatim}
+
+\textbf{Method 3:} Using `dsolve(equation, y(x), type=`series').
+
+Using this method, we get a power series solution directly.
+
+\begin{verbatim}
+dsolve({ode41, y(0) = a[0], D(y)(0) = a[1]}, y(x), 'series');
+\end{verbatim}
+
+Running this command gives the solution
+\[y\left(x \right) = a_{0}+a_{1} x +\frac{1}{2} a_{0} x^{2}+\frac{1}{3} a_{1} x^{3}+\frac{1}{8} a_{0} x^{4}+\frac{1}{15} a_{1} x^{5}+\mathrm{O}\left(x^{6}\right)\]
+\end{solution}
+
+Each method has advantages and disadvantages.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The first method works in general, but not efficient.
+\item
+  The \texttt{powsolve} command can only work with polynomial coefficient equations and the power series solution is always at 0.
+\item
+  The \texttt{dsolve} command cannot produce recurrence relations.
+\end{enumerate}
+
+In all three methods, initial conditions can be added.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  In the first method, initial conditions can be imposed with \texttt{rsolve(\{recurrence\_relation,\ a{[}0{]}=a0,\ a{[}1{]}=a1\})}.
+\item
+  In the second and the third method, initial conditions can be imposed by \texttt{\{equation,\ y(0)=a0,\ y\textquotesingle{}(0)=a1\}}.
+\end{enumerate}
+
+\begin{exercise}
+Find the general solution in power series form of the equation
+\[y''+ xy'+y=0.\]
+\end{exercise}
+
+\hypertarget{euler-equations}{%
+\section{Euler Equations}\label{euler-equations}}
+
+For differential equations with regular singular point, the first method and the the third method still work. If the equation is an Euler equation, that is, \(ax^2y''+bxy'+c=0\). The solution is easier to find even by hands. Since once can always use \texttt{dsolve} to solve a differential equation. We will focus on how to solve Euler equations manually. Recall the following theorem.
+
+\begin{theorem}
+
+Suppose the solutions of the indicial equation
+\[ar(r-1)+br+c=0\]
+are \(r_1\) and \(r_2\). Then the general solution of the Euler equation
+\[ax^2y''+bxy'+cy=0\]
+on \((0,\infty)\) is
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \[y= c_1x^{r_1}+c_2x^{r_2}\]
+  if \(r_1\) and \(r_2\) are distinct real numbers;
+\item
+  \[y= x^{r}(c_1+c_2\ln x)\]
+  if \(r_1=r_2=r\);
+\item
+  \[y=x^{\lambda}\left[c_1\cos\left(\omega\ln x\right)+ c_2\sin\left(\omega\ln x \right)\right]\]
+  if \(r_1,r_2=\lambda\pm \mathrm{i}\omega\) with \(\omega>0\).
+\end{enumerate}
+
+\end{theorem}
+
+From the theorem, we see that the key to find the general solution is to solve the indicial equation \(ar(r-1)+br+c=0\). This equation can be obtained substituting \(y''\) by \(r(r-1)\), \(y'\) by \(r\), and \(x\) and \(y\) by \(1\). It can also be obtained by the Maple command \texttt{indicialeq(ode,\ indepvar,\ regsp,\ depvar)} supported by \texttt{DETools}.
+
+\begin{example}
+Find the general solution of the Euler equations
+\[x^2y''-xy'+5y=0\]
+\end{example}
+
+\begin{solution}
+Define the equation
+
+\begin{verbatim}
+ode42:=x^2*diff(y(x), x$2)-x*diff(y(x), x)+5*y(x)=0;
+\end{verbatim}
+
+The indicial equation can be obtained using one of the following command
+
+\begin{verbatim}
+indeq1:=subs[eval]({diff(y(x), x, x)=r*(r-1), diff(y(x), x)=r, y(x)=1, x=1}, ode42);
+indeq2:=DETools[indicialeq](ode42, x, 0, y(x));
+\end{verbatim}
+
+Solve the indicial equation, we will use the equation \texttt{indeq1},
+
+\begin{verbatim}
+rcomplex:=solve(indeq1, r);
+\end{verbatim}
+
+The solutions are
+\[{\color{blue}1+2I, 1-2I}\]
+
+Construct the solution using the theorem.
+First find the real and imaginary parts.
+
+\begin{verbatim}
+alpha:=Re(rcomplex[1]);
+beta:=Im(rcomplex[2]);
+\end{verbatim}
+
+So the general solution is
+\[y=e^{alpha x}(c_1\cos(\beta\ln x)+c[2]\sin(\beta\ln x)).\]
+
+You can check that using the Maple command \texttt{odetest}.
+
+\begin{verbatim}
+yg := x -> x^alpha*(c[1]*cos(beta*ln(x)) + c[2]*sin(beta*ln(x))):
+odetest(y(x)=yg(x), ode42);
+\end{verbatim}
+
+The output \({\color{blue}0}\) means that \texttt{yg} is a solution of the equation \texttt{ode42}.
+\end{solution}
+
+\begin{exercise}
+Find the general solution of the Euler equation
+\[x^2y''-2y'-4y=0.\]
+\end{exercise}
+
+\begin{exercise}
+Find the general solution of the Euler equation
+\[x^2y''-3y'+5y=0.\]
+\end{exercise}
+
+\begin{exercise}
+Find the general solution of the Euler equation
+\[x^2y''+3y'+y=0.\]
 \end{exercise}
 
 \end{document}
