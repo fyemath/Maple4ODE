@@ -168,17 +168,17 @@
 <p>Now plug <span class="math inline">\(y\)</span> in to the equation and simplify.</p>
 <pre><code>pode41 := combine(subs[eval](y(x) = y, ode41));</code></pre>
 <p>The output is
-<span class="math display">\[{\color{blue}\sum\limits_{n=0}^\infty\left(-n a_{n} x^{n -2}+a_{n} x^{n -2} n^{2}-n a_{n} x^{n}-a_{n} x^{n}\right) = 0}.\]</span></p>
+<span class="math display">\[\color{blue}{\sum\limits_{n=0}^\infty\left(-n a_{n} x^{n -2}+a_{n} x^{n -2} n^{2}-n a_{n} x^{n}-a_{n} x^{n}\right) = 0}.\]</span></p>
 <p>For polynomials, Maple can combine like terms. Unfortunately, for series, Maple couldn’t do the shifting or combine like terms for us. Since we are interested in the coefficient of the general term in <span class="math inline">\(x^n\)</span>, we can extract the terms that contains <span class="math inline">\(x^n\)</span>. The trick it to substitute <code>n=0..infinity</code> by <code>n=k..k+2</code>. Because, only when <span class="math inline">\(n=k\)</span>, <span class="math inline">\(k+2\)</span>, there are terms in <span class="math inline">\(x^k\)</span>.</p>
 <pre><code>kterms:=simplify(subs((n=0..infinity)=(n=k..k+2), pode41));</code></pre>
 <p>Now we can extract the coefficient of <span class="math inline">\(x^k\)</span> using the command <code>coeff</code>. To keep the equation form, we use <code>map</code> to apply the command <code>coeff</code> to <span class="math inline">\(x^k\)</span> in both sides of the equation.</p>
 <pre><code>coeffk:=map(coeff, kterms, x^k);</code></pre>
 <p>The output is
-<span class="math display">\[{\color{blue}\left(1+k \right) \left(k a_{k +2}-a_{k}+2 a_{k +2}\right) = 0}.\]</span></p>
+<span class="math display">\[\color{blue}{\left(1+k \right) \left(k a_{k +2}-a_{k}+2 a_{k +2}\right) = 0}.\]</span></p>
 <p>We can then get the recurrence relations by isolate <span class="math inline">\(a_{k+2}\)</span> and replace <span class="math inline">\(k\)</span> by <span class="math inline">\(n-2\)</span>.</p>
 <pre><code>recurrence_relations:=subs[eval](k=n-2, isolate(coeffk, a[k+2]));</code></pre>
 <p>The output is
-<span class="math display">\[{\color{blue}a_{n} = \frac{a_{n -2}}{n}}.\]</span></p>
+<span class="math display">\[\color{blue}{a_{n} = \frac{a_{n -2}}{n}}.\]</span></p>
 <p>To get an explicit formula for <span class="math inline">\(a_n\)</span>, we use the Maple command <code>rsolve</code></p>
 <pre><code>coeffn:=rsolve(recurrence_relation, a[n]);</code></pre>
 <p>We can get a polynomial approximation up to <span class="math inline">\(x^{10}\)</span> for the solution <span class="math inline">\(y\)</span>.</p>
@@ -248,7 +248,7 @@ indeq2:=DETools[indicialeq](ode42, x, 0, y(x));</code></pre>
 <p>Solve the indicial equation, we will use the equation <code>indeq1</code>,</p>
 <pre><code>rcomplex:=solve(indeq1, r);</code></pre>
 <p>The solutions are
-<span class="math display">\[{\color{blue}1+2I, 1-2I}\]</span></p>
+<span class="math display">\[\color{blue}{1+2I, 1-2I}\]</span></p>
 <p>Construct the solution using the theorem.
 First find the real and imaginary parts.</p>
 <pre><code>alpha:=Re(rcomplex[1]);
@@ -258,7 +258,7 @@ beta:=Im(rcomplex[2]);</code></pre>
 <p>You can check that using the Maple command <code>odetest</code>.</p>
 <pre><code>yg := x -&gt; x^alpha*(c[1]*cos(beta*ln(x)) + c[2]*sin(beta*ln(x))):
 odetest(y(x)=yg(x), ode42);</code></pre>
-<p>The output <span class="math inline">\({\color{blue}0}\)</span> means that <code>yg</code> is a solution of the equation <code>ode42</code>.</p>
+<p>The output <span class="math inline">\(\color{blue}{0}\)</span> means that <code>yg</code> is a solution of the equation <code>ode42</code>.</p>
 </div>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-77" class="exercise"><strong>Exercise 5.2  </strong></span>Find the general solution of the Euler equation

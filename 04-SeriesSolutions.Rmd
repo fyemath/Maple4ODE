@@ -34,7 +34,7 @@ pode41 := combine(subs[eval](y(x) = y, ode41));
 ```
 
 The output is
-$${\color{blue}\sum\limits_{n=0}^\infty\left(-n a_{n} x^{n -2}+a_{n} x^{n -2} n^{2}-n a_{n} x^{n}-a_{n} x^{n}\right) = 0}.$$
+$$\color{blue}{\sum\limits_{n=0}^\infty\left(-n a_{n} x^{n -2}+a_{n} x^{n -2} n^{2}-n a_{n} x^{n}-a_{n} x^{n}\right) = 0}.$$
 
 For polynomials, Maple can combine like terms. Unfortunately, for series, Maple couldn't do the shifting or combine like terms for us. Since we are interested in the coefficient of the general term in $x^n$, we can extract the terms that contains $x^n$. The trick it to substitute `n=0..infinity` by `n=k..k+2`. Because, only when $n=k$, $k+2$, there are terms in $x^k$.
 
@@ -49,7 +49,7 @@ coeffk:=map(coeff, kterms, x^k);
 ```
 
 The output is
-$${\color{blue}\left(1+k \right) \left(k a_{k +2}-a_{k}+2 a_{k +2}\right) = 0}.$$
+$$\color{blue}{\left(1+k \right) \left(k a_{k +2}-a_{k}+2 a_{k +2}\right) = 0}.$$
 
 We can then get the recurrence relations by isolate $a_{k+2}$ and replace $k$ by $n-2$.
 
@@ -58,7 +58,7 @@ recurrence_relations:=subs[eval](k=n-2, isolate(coeffk, a[k+2]));
 ```
 
 The output is
-$${\color{blue}a_{n} = \frac{a_{n -2}}{n}}.$$
+$$\color{blue}{a_{n} = \frac{a_{n -2}}{n}}.$$
 
 To get an explicit formula for $a_n$, we use the Maple command `rsolve`
 
@@ -187,7 +187,7 @@ rcomplex:=solve(indeq1, r);
 ```
 
 The solutions are
-$${\color{blue}1+2I, 1-2I}$$
+$$\color{blue}{1+2I, 1-2I}$$
 
 Construct the solution using the theorem.
 First find the real and imaginary parts.
@@ -207,7 +207,7 @@ yg := x -> x^alpha*(c[1]*cos(beta*ln(x)) + c[2]*sin(beta*ln(x))):
 odetest(y(x)=yg(x), ode42);
 ```
 
-The output ${\color{blue}0}$ means that `yg` is a solution of the equation `ode42`.
+The output $\color{blue}{0}$ means that `yg` is a solution of the equation `ode42`.
 
 :::
 
