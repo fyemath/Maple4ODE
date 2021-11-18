@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Maple for Differential Equations</title>
+  <title>Topic 6 Laplace Transform Methods | Maple for Differential Equations</title>
   <meta name="description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Maple for Differential Equations" />
+  <meta property="og:title" content="Topic 6 Laplace Transform Methods | Maple for Differential Equations" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="fyemath/maple4ode" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Maple for Differential Equations" />
+  <meta name="twitter:title" content="Topic 6 Laplace Transform Methods | Maple for Differential Equations" />
   
   <meta name="twitter:description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="series-solutions.html"/>
 
-<link rel="next" href="basics-in-maple.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -156,30 +156,110 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Maple for Differential Equations</h1>
-<p class="author"><em>Fei Ye</em></p>
-<p class="date"><em>2021-11-18</em></p>
+<div id="laplace-transform-methods" class="section level1" number="6">
+<h1><span class="header-section-number">Topic 6</span> Laplace Transform Methods</h1>
+<div id="laplace-transforms-and-inverse-transforms" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Laplace Transforms and Inverse Transforms</h2>
+<p>In Maple, in order to calculate Laplace transforms and inverse transforms, the package <code>inttrans</code> need to be loaded first. The command for Laplace transform is <code>laplace(function, input variable, output variable)</code>. The command for inverse Laplace transform is <code>invlaplace(function, input variable, output variable)</code>.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-80" class="example"><strong>Example 6.1  </strong></span>Find the Laplace transform of the function <span class="math inline">\(f(t)=e^{at}(A\cos(bt)+B\sin(bt))\)</span></p>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>This is a book written for Maple labs for differential equations.</p>
-<p>The source of this book can be found at <a href="https://github.com/fyemath/maple4ode">https://github.com/fyemath/maple4ode</a>.</p>
-<p>Comments and suggestions are very welcome.</p>
-<p>This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
-<div class="figure">
-<img src="figs/by-nc-sa.png" alt="" />
-<p class="caption">by-nc-sa license icon</p>
+<div class="solution">
+<p><span id="unlabeled-div-81" class="solution"><em>Solution</em>. </span>We first load the package <code>inttrans</code></p>
+<pre class="maple"><code>with(inttrans);</code></pre>
+<p>Now let’s define the function <span class="math inline">\(f\)</span>:</p>
+<pre class="maple"><code>f(t):=exp(a*t)*(A*cos(b*t)+B*sin(b*t));</code></pre>
+<p>The Laplace transform of the function <span class="math inline">\(f\)</span> can be calculated by the following command</p>
+<pre><code>Lf:=laplace(f(t), t, s);</code></pre>
+<p>The output is
+<span class="math display">\[{\color{blue}{\frac{-A a +A s +B b}{\left(s -a \right)^{2}+b^{2}}}}\]</span></p>
+</div>
+<div class="example">
+<p><span id="exm:unlabeled-div-82" class="example"><strong>Example 6.2  </strong></span>Find the inverse transform of the function <span class="math inline">\(F(s)=\frac{2}{s^2+4}-\frac{1}{(s-3)^2}\)</span>.</p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-83" class="solution"><em>Solution</em>. </span>Load the <code>inttrans</code> package if it was not loaded. Otherwise, this step may be skipped.</p>
+<pre><code>with(inttrans):</code></pre>
+<p>Define the function</p>
+<pre><code>F(s):=2/(s^2+4)-1/((s-3)^2);</code></pre>
+<p>Use <code>invlaplace</code> to calculate the inverse transform.</p>
+<pre><code>invlaplace(F(s), s, t)</code></pre>
+<p>The inverse transform is</p>
+<p><span class="math display">\[{\color{blue}{\sin \left(2 t \right)-t e^{3 t}}}\]</span></p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-84" class="exercise"><strong>Exercise 6.1  </strong></span>Find the Laplace transform of the function <span class="math inline">\(f(t)=At\cos(a t)+Bt\sin(b t)\)</span></p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-85" class="exercise"><strong>Exercise 6.2  </strong></span>Find the inverse Laplace transform of the function <span class="math inline">\(F(s)=\frac{s}{s^2+2s+2}\)</span>.</p>
+</div>
+</div>
+<div id="transforms-of-initial-value-problems" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Transforms of Initial Value Problems</h2>
+<p>Given an initial value problem
+<span class="math display">\[ay&#39;&#39;+by&#39;+c=f(x), \quad y(0)=y_0,\quad y&#39;(0)=y_1,\]</span>
+applying the Laplace transform to the equation translates the equation into an algebraic equation of the Laplace transform <span class="math inline">\(\mathcal{L}(y)\)</span>. In Maple, the command <code>laplace</code> can take an equation as the first argument.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-86" class="example"><strong>Example 6.3  </strong></span>Find the laplace transform <span class="math inline">\(\mathcal{L}(y)\)</span>, where <span class="math inline">\(y\)</span> is the solution of the initial value problem
+<span class="math display">\[y&#39;&#39;-y&#39;y=te^2t, \quad y(0)=0, \quad y&#39;(0)=0.\]</span></p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-87" class="solution"><em>Solution</em>. </span>Load the package <code>inttrans</code> if it was not loaded:</p>
+<pre><code>with(inttrans):</code></pre>
+<p>Define the equation:</p>
+<pre><code>ode51:=diff(y(t), t$2)+2*diff(y(t), t)+2*y(t)=t*exp(2*t);</code></pre>
+<p>Apply the Laplace transform to the equation:</p>
+<pre><code>Lode51:=laplace(ode51, t, s);</code></pre>
+<p>Solve for <span class="math inline">\(\mathcal{L}(y)\)</span> (<code>laplace(y(t), t, s)</code>):</p>
+<pre><code>Ly:=eval(solve(Lode51, laplace(y(t), t, s)), y(0)=0, D(y)(0)=0);</code></pre>
+<p>The output shows
+<span class="math display">\[\mathcal{L}(y)={\color{blue}{\frac{1}{\left(s -1\right)^{2} \left(s^{2}+2 s +2\right)}}}\]</span></p>
+<p>So <span class="math inline">\(y\)</span> is the inverse transform of this function. It can be calculated using <code>invlaplace</code>.</p>
+<pre><code>y:=invlaplace(Ly, s, t);</code></pre>
+<p>The output shows that the solution is
+<span class="math display">\[{\color{blue}{\frac{{\mathrm e}^{t} \left(5 t -4\right)}{25}+\frac{{\mathrm e}^{-t} \left(4 \cos \left(t \right)+3 \sin \left(t \right)\right)}{25}}}.\]</span></p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-88" class="exercise"><strong>Exercise 6.3  </strong></span>Convert the initial value problems
+<span class="math display">\[3y&#39;&#39;+6y&#39;+24y=\cos(2t), \quad y(0)=1, \quad y&#39;(0)=-1.\]</span>
+into an algebraic equation of the inverse transform <span class="math inline">\(\mathcal{L}(y)\)</span> and solve for <span class="math inline">\(\mathcal{L}(y)\)</span>.</p>
+</div>
+</div>
+<div id="partial-fractional-decomposition-method" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Partial Fractional Decomposition Method</h2>
+<p>When using Laplace transform to solve linear second order differential equations with constant coefficients, the Laplace transform <span class="math inline">\(\mathcal{L}(y)\)</span> is usually a rational function. By the fundamental theorem of algebra, a rational function can be written as the sum of fractions whose denominators are powers of linear or quadratic functions and whose numerators are constants or linear functions respectively. This sum is called the partial fractional decomposition. In Maple, the command <code>convert(rational function, parfrac, independent variable)</code> can be used to find the partial fractional decomposition of a rational function.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-89" class="example"><strong>Example 6.4  </strong></span>Find the partial fractional decomposition of the rational function
+<span class="math display">\[F(s)=\frac{1}{(s-1)^2(s^2+2s+2)}\]</span>
+and find the inverse transform of the decomposition.</p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-90" class="solution"><em>Solution</em>. </span>Define the function:</p>
+<pre><code>F(s):=1/((s-1)^2*(s^2+2*s+2));</code></pre>
+<p>Convert the function into a partial fractional decomposition:</p>
+<pre><code>pF:=convert(F(s), parfrac, s);</code></pre>
+<p>The output shows the partial fractional decomposition is
+<span class="math display">\[{\color{blue}{\frac{1}{5 \left(s -1\right)^{2}}+\frac{4 s +7}{25 s^{2}+50 s +50}-\frac{4}{25 \left(s -1\right)}}}\]</span></p>
+<p>Apply <code>invlaplace</code></p>
+<pre><code>invF:=invlaplace(pF, s, t);</code></pre>
+<p>The answer is
+<span class="math display">\[{\color{blue}{\frac{{\mathrm e}^{t} \left(5 t -4\right)}{25}+\frac{{\mathrm e}^{-t} \left(4 \cos \left(t \right)+3 \sin \left(t \right)\right)}{25}}}.\]</span></p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-91" class="exercise"><strong>Exercise 6.4  </strong></span>Find the partial fractional decomposition of the rational function
+<span class="math display">\[F(s)=\frac{3 s^{3}+3 s^{2}+13 s +12}{3 \left(s^{2}+4\right) \left(s^{2}+2 s +8\right)}\]</span>
+and find the inverse transform of the decomposition.</p>
 </div>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="series-solutions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="basics-in-maple.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -200,7 +280,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/fyemath/maple4ode/index.Rmd",
+"link": "https://github.com/fyemath/maple4ode/05-LaplaceTransform.Rmd",
 "text": "Edit"
 },
 "history": {
