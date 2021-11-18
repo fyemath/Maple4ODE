@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 3 First Order Differential Equations | Maple for Differential Equations</title>
+  <title>Topic 6 Laplace Transform Methods | Maple for Differential Equations</title>
   <meta name="description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 3 First Order Differential Equations | Maple for Differential Equations" />
+  <meta property="og:title" content="Topic 6 Laplace Transform Methods | Maple for Differential Equations" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="fyemath/maple4ode" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 3 First Order Differential Equations | Maple for Differential Equations" />
+  <meta name="twitter:title" content="Topic 6 Laplace Transform Methods | Maple for Differential Equations" />
   
   <meta name="twitter:description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="introduction-to-differential-equations.html"/>
-<link rel="next" href="linear-second-order-differential-equations.html"/>
+<link rel="prev" href="series-solutions.html"/>
+
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -156,148 +156,99 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="first-order-differential-equations" class="section level1" number="3">
-<h1><span class="header-section-number">Topic 3</span> First Order Differential Equations</h1>
-<div id="classification" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Classification</h2>
-<p>Knowing the type of a differential equation will be very helpful for solving it. In Maple, we can use the command <code>odeadvisor(ode, y(x))</code> supported by the package <code>DETools</code> to learn what type of equation is it.</p>
+<div id="laplace-transform-methods" class="section level1" number="6">
+<h1><span class="header-section-number">Topic 6</span> Laplace Transform Methods</h1>
+<div id="laplace-transforms-and-inverse-transforms" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Laplace Transforms and Inverse Transforms</h2>
+<p>In Maple, in order to calculate Laplace transforms and inverse transforms, the package <code>inttrans</code> need to be loaded first. The command for Laplace transform is <code>laplace(function, input variable, output variable)</code>. The command for inverse Laplace transform is <code>invlaplace(function, input variable, output variable)</code>.</p>
 <div class="example">
-<p><span id="exm:unlabeled-div-36" class="example"><strong>Example 3.1  </strong></span>Determine the primary type of each of the following differential equations.</p>
-<ol style="list-style-type: decimal">
-<li><p><span class="math inline">\(y&#39;=xy\)</span></p></li>
-<li><p><span class="math inline">\(y&#39;=xy+1\)</span></p></li>
-<li><p><span class="math inline">\(y&#39;=xy+y^2\)</span></p></li>
-<li><p><span class="math inline">\(y&#39;=\frac{xy}{x^2+y^2}\)</span></p></li>
-</ol>
+<p><span id="exm:unlabeled-div-80" class="example"><strong>Example 6.1  </strong></span>Find the Laplace transform of the function <span class="math inline">\(f(t)=e^{at}(A\cos(bt)+B\sin(bt))\)</span></p>
 </div>
 <div class="solution">
-<p><span id="unlabeled-div-37" class="solution"><em>Solution</em>. </span>We first load the package <code>DETools</code> anonymously.</p>
-<pre><code>with(DETools):</code></pre>
-<p>Now we can classify those equations using <code>odeadvisor</code>.</p>
-<pre><code>odeadvisor(diff(y(x),x)=x*y(x));
-odeadvisor(diff(y(x),x)=x*y(x)+1);
-odeadvisor(diff(y(x),x)=x*y(x)+y(x)^2;
-odeadvisor(diff(y(x), x) = (x*y(x))/(x^2 + y(x)^2));</code></pre>
+<p><span id="unlabeled-div-81" class="solution"><em>Solution</em>. </span>We first load the package <code>inttrans</code></p>
+<pre class="maple"><code>with(inttrans);</code></pre>
+<p>Now let’s define the function <span class="math inline">\(f\)</span>:</p>
+<pre class="maple"><code>f(t):=exp(a*t)*(A*cos(b*t)+B*sin(b*t));</code></pre>
+<p>The Laplace transform of the function <span class="math inline">\(f\)</span> can be calculated by the following command</p>
+<pre><code>Lf:=laplace(f(t), t, s);</code></pre>
+<p>The output is
+<span class="math display">\[{\color{blue}{\frac{-A a +A s +B b}{\left(s -a \right)^{2}+b^{2}}}}\]</span></p>
 </div>
-<div class="exercise">
-<p><span id="exr:unlabeled-div-38" class="exercise"><strong>Exercise 3.1  </strong></span>Determine the primary type of each of the following differential equations.</p>
-<ol style="list-style-type: decimal">
-<li><p><span class="math inline">\(y&#39;=x^2y^2+x^2\)</span></p></li>
-<li><p><span class="math inline">\(y&#39;=x^2y+x\)</span></p></li>
-<li><p><span class="math inline">\(y&#39;=xy+y^3\)</span></p></li>
-<li><p><span class="math inline">\(y&#39;=\frac{x-y}{x+y}\)</span></p></li>
-</ol>
-</div>
-</div>
-<div id="solving-differential-equations" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Solving differential equations</h2>
-<p>To solve an ordinary differential equation, or a system of them, or initial value problems, you may use the command <code>dsolve({ODE, InitialConditions}, y(x), options)</code>, where the initial conditions may be omitted to get a general solution. Note that <code>dsolve</code> returns an equation with <span class="math inline">\(y(x)\)</span> on the left.</p>
-<p>Among options, you may choose to use different method to solve the equations, for example, <code>numeric</code>, <code>series</code> or <code>method=laplace</code> are options that can be imposed and will be used later.</p>
 <div class="example">
-<p><span id="exm:unlabeled-div-39" class="example"><strong>Example 3.2  </strong></span>Consider the differential equation
-<span class="math inline">\(y&#39;=2y+x.\)</span></p>
-<ol style="list-style-type: decimal">
-<li><p>Find the general solution.</p></li>
-<li><p>Find the solution that satisfies the initial condition <span class="math inline">\(y(0)=1\)</span>.</p></li>
-<li><p>Plot the solution curve of the initial value problem.</p></li>
-</ol>
+<p><span id="exm:unlabeled-div-82" class="example"><strong>Example 6.2  </strong></span>Find the inverse transform of the function <span class="math inline">\(F(s)=\frac{2}{s^2+4}-\frac{1}{(s-3)^2}\)</span>.</p>
 </div>
 <div class="solution">
-<p><span id="unlabeled-div-40" class="solution"><em>Solution</em>. </span>It will be convenient to define the differential equation first.</p>
-<pre><code>ode221:=diff(y(x), x)=2*y(x)+x:</code></pre>
-<p>The general solution can be obtained by the following command.</p>
-<pre><code>dsolve(ode221, y(x));</code></pre>
-<p>The solution of the initial value problem can be obtained by</p>
-<pre><code>sol221:=dsolve({ode221, y(0)=1}, y(x));</code></pre>
-<p>To plot the solution curve, we need to get the function expression instead of the equation. This can be done using the command <code>rhs</code>.</p>
-<pre><code>plot(rhs(sol221), x=-5..5)</code></pre>
-</div>
-<div class="rmdnote">
-<p>By default, the <code>dsolve</code> command only returns a function. To show more detailed information about the computation, you may assign to <code>infolevel[dsolve]</code> an integer 1 through 5 before using the <code>dsolve</code> command. For example, after running the following command <code>infolevel[dsolve]:=3</code>, the output from <code>dsolve</code> will show three pieces of information: methods tried, successful or not, the solution.</p>
+<p><span id="unlabeled-div-83" class="solution"><em>Solution</em>. </span>Load the <code>inttrans</code> package if it was not loaded. Otherwise, this step may be skipped.</p>
+<pre><code>with(inttrans):</code></pre>
+<p>Define the function</p>
+<pre><code>F(s):=2/(s^2+4)-1/((s-3)^2);</code></pre>
+<p>Use <code>invlaplace</code> to calculate the inverse transform.</p>
+<pre><code>invlaplace(F(s), s, t)</code></pre>
+<p>The inverse transform is</p>
+<p><span class="math display">\[{\color{blue}{\sin \left(2 t \right)-t e^{3 t}}}\]</span></p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-41" class="exercise"><strong>Exercise 3.2  </strong></span>Consider the differential equation
-<span class="math inline">\(y&#39;=x+y.\)</span></p>
-<ol style="list-style-type: decimal">
-<li><p>Find the general solution.</p></li>
-<li><p>Find the solution that satisfies the initial condition <span class="math inline">\(y(0)=1\)</span>.</p></li>
-<li><p>Plot the solution curve of the initial value problem.</p></li>
-</ol>
+<p><span id="exr:unlabeled-div-84" class="exercise"><strong>Exercise 6.1  </strong></span>Find the Laplace transform of the function <span class="math inline">\(f(t)=At\cos(a t)+Bt\sin(b t)\)</span></p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-85" class="exercise"><strong>Exercise 6.2  </strong></span>Find the inverse Laplace transform of the function <span class="math inline">\(F(s)=\frac{s}{s^2+2s+2}\)</span>.</p>
 </div>
 </div>
-<div id="integrating-factors" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Integrating factors</h2>
-<p>In Maple, you may use <code>intfactor</code> that is supported by the package <code>DETools</code> to find an integrating factor for a given ODE. To test an integrating factor, you may use <code>mutest</code> which is again supported by the package <code>DETools</code>. If the command returns a 0, then the expression being tested is an integrating factor.</p>
+<div id="transforms-of-initial-value-problems" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Transforms of Initial Value Problems</h2>
+<p>Given an initial value problem
+<span class="math display">\[ay&#39;&#39;+by&#39;+c=f(x), \quad y(0)=y_0,\quad y&#39;(0)=y_1,\]</span>
+applying the Laplace transform to the equation translates the equation into an algebraic equation of the Laplace transform <span class="math inline">\(\mathcal{L}(y)\)</span>. In Maple, the command <code>laplace</code> can take an equation as the first argument.</p>
 <div class="example">
-<p><span id="exm:unlabeled-div-42" class="example"><strong>Example 3.3  </strong></span>Find an integrating factor for the equations <span class="math inline">\(y&#39;=x^2y-x\)</span> and test it using <code>mutest</code>.</p>
+<p><span id="exm:unlabeled-div-86" class="example"><strong>Example 6.3  </strong></span>Find the laplace transform <span class="math inline">\(\mathcal{L}(y)\)</span>, where <span class="math inline">\(y\)</span> is the solution of the initial value problem
+<span class="math display">\[y&#39;&#39;-y&#39;y=te^2t, \quad y(0)=0, \quad y&#39;(0)=0.\]</span></p>
 </div>
 <div class="solution">
-<p><span id="unlabeled-div-43" class="solution"><em>Solution</em>. </span>Let’s first define the differential equation.</p>
-<pre><code>ode231:=diff(y(x), x)=x^2*y(x)-x:</code></pre>
-<p>Now loading the package and find an integrating factor <span class="math inline">\(\mu\)</span>.</p>
-<pre><code>with(DETools):
-mu:=intfactor(ode231);</code></pre>
-<p>To test it, you may run the following command.</p>
-<pre><code>mutest(mu, ode231, y(x));</code></pre>
+<p><span id="unlabeled-div-87" class="solution"><em>Solution</em>. </span>Load the package <code>inttrans</code> if it was not loaded:</p>
+<pre><code>with(inttrans):</code></pre>
+<p>Define the equation:</p>
+<pre><code>ode51:=diff(y(t), t$2)+2*diff(y(t), t)+2*y(t)=t*exp(2*t);</code></pre>
+<p>Apply the Laplace transform to the equation:</p>
+<pre><code>Lode51:=laplace(ode51, t, s);</code></pre>
+<p>Solve for <span class="math inline">\(\mathcal{L}(y)\)</span> (<code>laplace(y(t), t, s)</code>):</p>
+<pre><code>Ly:=eval(solve(Lode51, laplace(y(t), t, s)), y(0)=0, D(y)(0)=0);</code></pre>
+<p>The output shows
+<span class="math display">\[\mathcal{L}(y)={\color{blue}{\frac{1}{\left(s -1\right)^{2} \left(s^{2}+2 s +2\right)}}}\]</span></p>
+<p>So <span class="math inline">\(y\)</span> is the inverse transform of this function. It can be calculated using <code>invlaplace</code>.</p>
+<pre><code>y:=invlaplace(Ly, s, t);</code></pre>
+<p>The output shows that the solution is
+<span class="math display">\[{\color{blue}{\frac{{\mathrm e}^{t} \left(5 t -4\right)}{25}+\frac{{\mathrm e}^{-t} \left(4 \cos \left(t \right)+3 \sin \left(t \right)\right)}{25}}}.\]</span></p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-44" class="exercise"><strong>Exercise 3.3  </strong></span>Find an integrating factor for the differential equation.
-<span class="math inline">\(xy&#39;=y-x.\)</span></p>
+<p><span id="exr:unlabeled-div-88" class="exercise"><strong>Exercise 6.3  </strong></span>Convert the initial value problems
+<span class="math display">\[3y&#39;&#39;+6y&#39;+24y=\cos(2t), \quad y(0)=1, \quad y&#39;(0)=-1.\]</span>
+into an algebraic equation of the inverse transform <span class="math inline">\(\mathcal{L}(y)\)</span> and solve for <span class="math inline">\(\mathcal{L}(y)\)</span>.</p>
 </div>
 </div>
-<div id="commands-for-specific-type-of-equations" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Commands for specific type of equations</h2>
-<p>The <code>DETools</code> package also provides some commands for solving specific type of equations. The following is an incomplete list.</p>
-<ol style="list-style-type: decimal">
-<li>The command <code>separablesol(ode, dependent variable)</code> determines whether the ode is a separable first order ODE and, if so, returns a solution to the equation.</li>
-</ol>
+<div id="partial-fractional-decomposition-method" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Partial Fractional Decomposition Method</h2>
+<p>When using Laplace transform to solve linear second order differential equations with constant coefficients, the Laplace transform <span class="math inline">\(\mathcal{L}(y)\)</span> is usually a rational function. By the fundamental theorem of algebra, a rational function can be written as the sum of fractions whose denominators are powers of linear or quadratic functions and whose numerators are constants or linear functions respectively. This sum is called the partial fractional decomposition. In Maple, the command <code>convert(rational function, parfrac, independent variable)</code> can be used to find the partial fractional decomposition of a rational function.</p>
 <div class="example">
-<p><span id="exm:unlabeled-div-45" class="example"><strong>Example 3.4  </strong></span>Consider the first order differential equation
-<span class="math display">\[y&#39;=\frac{x}{x^2y+y}.\]</span></p>
-<p>Executing The following codes</p>
-<pre><code>with(DEtools):
-sode := diff(y(x), x) = x/(x^2*y(x)+y(x));
-exactsol(sode, y(x));</code></pre>
-<p>will produce a set of solutions
-<span class="math display">\[\color{blue}{\left\{y(x) = \sqrt{\ln(x^{2}+1)-2\_\textit{C1}}, y(x) = -\sqrt{\ln(x^{2}+1)-2\_\textit{C1}}\right\}}.\]</span></p>
+<p><span id="exm:unlabeled-div-89" class="example"><strong>Example 6.4  </strong></span>Find the partial fractional decomposition of the rational function
+<span class="math display">\[F(s)=\frac{1}{(s-1)^2(s^2+2s+2)}\]</span>
+and find the inverse transform of the decomposition.</p>
 </div>
-<ol start="2" style="list-style-type: decimal">
-<li>The command <code>linearsol(ode, dependent variable)</code> determines whether the ode is a first order linear ODE and, if so, returns a solution to the equation.</li>
-</ol>
-<div class="example">
-<p><span id="exm:unlabeled-div-46" class="example"><strong>Example 3.5  </strong></span>Consider the linear first order differential equation
-<span class="math display">\[y&#39;+p(x)y=q(x).\]</span></p>
-<p>Executing The following codes</p>
-<pre><code>with(DEtools):
-lode := diff(y(x), x) + p(x)*y(x) = q(x);
-linearsol(lode, y(x));</code></pre>
-<p>will produce a set of solutions
-<span class="math display">\[
-\color{blue}{
-\{y(x) = {\color{gray}{\int}}(-p(x) z(x)+q(x)){\color{gray}{d}}x +\_\textit{C1}\}
-}
-\]</span></p>
+<div class="solution">
+<p><span id="unlabeled-div-90" class="solution"><em>Solution</em>. </span>Define the function:</p>
+<pre><code>F(s):=1/((s-1)^2*(s^2+2*s+2));</code></pre>
+<p>Convert the function into a partial fractional decomposition:</p>
+<pre><code>pF:=convert(F(s), parfrac, s);</code></pre>
+<p>The output shows the partial fractional decomposition is
+<span class="math display">\[{\color{blue}{\frac{1}{5 \left(s -1\right)^{2}}+\frac{4 s +7}{25 s^{2}+50 s +50}-\frac{4}{25 \left(s -1\right)}}}\]</span></p>
+<p>Apply <code>invlaplace</code></p>
+<pre><code>invF:=invlaplace(pF, s, t);</code></pre>
+<p>The answer is
+<span class="math display">\[{\color{blue}{\frac{{\mathrm e}^{t} \left(5 t -4\right)}{25}+\frac{{\mathrm e}^{-t} \left(4 \cos \left(t \right)+3 \sin \left(t \right)\right)}{25}}}.\]</span></p>
 </div>
-<ol start="3" style="list-style-type: decimal">
-<li>The command <code>exactsol(ode, dependent variable)</code> determines whether the ode is an exact first order ODE and, if so, returns a solution to the equation. When the equation is not exact, it tries to find an integrating factor that converts the equation into an equivalent exact equation.</li>
-</ol>
-<div class="example">
-<p><span id="exm:unlabeled-div-47" class="example"><strong>Example 3.6  </strong></span>Consider the first order differential equation
-<span class="math display">\[(x^2 - y^2)\mathrm{d} x + 2xy\mathrm{d} y.\]</span></p>
-<p>Executing The following codes</p>
-<pre><code>with(DEtools):
-eode := x^2 - y(x)^2 + 2*x*y(x)*diff(y(x), x) = 0;
-exactsol(eode, y(x));</code></pre>
-<p>will produce a set of solutions
-<span class="math display">\[
-\color{blue}{
-\{y(x) = \sqrt{-\_\textit{C1} x -x^{2}},
-y(x) = -\sqrt{-\_\textit{C1} x -x^{2}}\}
-}
-\]</span></p>
-</div>
-<div class="rmdnote">
-<p>One can also specific the method (type of the equation) in the <code>dsolve</code> command so that the equation will be solve by using the given method.</p>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-91" class="exercise"><strong>Exercise 6.4  </strong></span>Find the partial fractional decomposition of the rational function
+<span class="math display">\[F(s)=\frac{3 s^{3}+3 s^{2}+13 s +12}{3 \left(s^{2}+4\right) \left(s^{2}+2 s +8\right)}\]</span>
+and find the inverse transform of the decomposition.</p>
 </div>
 
 </div>
@@ -307,8 +258,8 @@ y(x) = -\sqrt{-\_\textit{C1} x -x^{2}}\}
           </div>
         </div>
       </div>
-<a href="introduction-to-differential-equations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="linear-second-order-differential-equations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="series-solutions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -329,7 +280,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/fyemath/maple4ode/02-FirstOrder-ODE.Rmd",
+"link": "https://github.com/fyemath/maple4ode/05-LaplaceTransform.Rmd",
 "text": "Edit"
 },
 "history": {

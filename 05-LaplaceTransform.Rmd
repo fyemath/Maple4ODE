@@ -31,7 +31,7 @@ Lf:=laplace(f(t), t, s);
 ```
 
 The output is
-$${\color{blue}\frac{-A a +A s +B b}{\left(s -a \right)^{2}+b^{2}}}$$
+$${\color{blue}{\frac{-A a +A s +B b}{\left(s -a \right)^{2}+b^{2}}}}$$
 
 :::
 
@@ -63,7 +63,7 @@ invlaplace(F(s), s, t)
 
 The inverse transform is
 
-$${\color{blue}\sin \left(2 t \right)-t e^{3 t}}$$
+$${\color{blue}{\sin \left(2 t \right)-t e^{3 t}}}$$
 
 :::
 
@@ -119,7 +119,7 @@ Ly:=eval(solve(Lode51, laplace(y(t), t, s)), y(0)=0, D(y)(0)=0);
 ```
 
 The output shows
-$$\mathcal{L}(y){\color{blue} \frac{1}{\left(s -1\right)^{2} \left(s^{2}+2 s +2\right)}}$$
+$$\mathcal{L}(y)={\color{blue}{\frac{1}{\left(s -1\right)^{2} \left(s^{2}+2 s +2\right)}}}$$
 
 So $y$ is the inverse transform of this function. It can be calculated using `invlaplace`.
 
@@ -128,7 +128,7 @@ y:=invlaplace(Ly, s, t);
 ```
 
 The output shows that the solution is
-$${\color{blue} \frac{{\mathrm e}^{t} \left(5 t -4\right)}{25}+\frac{{\mathrm e}^{-t} \left(4 \cos \! \left(t \right)+3 \sin \! \left(t \right)\right)}{25}}.$$
+$${\color{blue}{\frac{{\mathrm e}^{t} \left(5 t -4\right)}{25}+\frac{{\mathrm e}^{-t} \left(4 \cos \left(t \right)+3 \sin \left(t \right)\right)}{25}}}.$$
 
 :::
 
@@ -167,7 +167,7 @@ pF:=convert(F(s), parfrac, s);
 ```
 
 The output shows the partial fractional decomposition is 
-$${\color{blue} \frac{1}{5 \left(s -1\right)^{2}}+\frac{4 s +7}{25 s^{2}+50 s +50}-\frac{4}{25 \left(s -1\right)}}$$
+$${\color{blue}{\frac{1}{5 \left(s -1\right)^{2}}+\frac{4 s +7}{25 s^{2}+50 s +50}-\frac{4}{25 \left(s -1\right)}}}$$
 
 Apply `invlaplace`
 
@@ -176,7 +176,7 @@ invF:=invlaplace(pF, s, t);
 ```
 
 The answer is
-$${\color{blue} \frac{{\mathrm e}^{t} \left(5 t -4\right)}{25}+\frac{{\mathrm e}^{-t} \left(4 \cos \! \left(t \right)+3 \sin \! \left(t \right)\right)}{25}}.$$
+$${\color{blue}{\frac{{\mathrm e}^{t} \left(5 t -4\right)}{25}+\frac{{\mathrm e}^{-t} \left(4 \cos \left(t \right)+3 \sin \left(t \right)\right)}{25}}}.$$
 
 :::
 

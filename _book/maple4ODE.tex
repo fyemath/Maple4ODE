@@ -41,6 +41,46 @@
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
@@ -138,7 +178,7 @@
 
 \title{Maple for Differential Equations}
 \author{Fei Ye}
-\date{2021-11-03}
+\date{2021-11-17}
 
 \begin{document}
 \maketitle
@@ -1822,6 +1862,180 @@ Find the general solution of the Euler equation
 \begin{exercise}
 Find the general solution of the Euler equation
 \[x^2y''+3y'+y=0.\]
+\end{exercise}
+
+\hypertarget{laplace-transform-methods}{%
+\chapter{Laplace Transform Methods}\label{laplace-transform-methods}}
+
+\hypertarget{laplace-transforms-and-inverse-transforms}{%
+\section{Laplace Transforms and Inverse Transforms}\label{laplace-transforms-and-inverse-transforms}}
+
+In Maple, in order to calculate Laplace transforms and inverse transforms, the package \texttt{inttrans} need to be loaded first. The command for Laplace transform is \texttt{laplace(function,\ input\ variable,\ output\ variable)}. The command for inverse Laplace transform is \texttt{invlaplace(function,\ input\ variable,\ output\ variable)}.
+
+\begin{example}
+Find the Laplace transform of the function \(f(t)=e^{at}(A\cos(bt)+B\sin(bt))\)
+\end{example}
+
+\begin{solution}
+We first load the package \texttt{inttrans}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{with(inttrans);}
+\end{Highlighting}
+\end{Shaded}
+
+Now let's define the function \(f\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f(t):=exp(a*t)*(A*cos(b*t)+B*sin(b*t));}
+\end{Highlighting}
+\end{Shaded}
+
+The Laplace transform of the function \(f\) can be calculated by the following command
+
+\begin{verbatim}
+Lf:=laplace(f(t), t, s);
+\end{verbatim}
+
+The output is
+\[{\color{blue}{\frac{-A a +A s +B b}{\left(s -a \right)^{2}+b^{2}}}}\]
+\end{solution}
+
+\begin{example}
+Find the inverse transform of the function \(F(s)=\frac{2}{s^2+4}-\frac{1}{(s-3)^2}\).
+\end{example}
+
+\begin{solution}
+Load the \texttt{inttrans} package if it was not loaded. Otherwise, this step may be skipped.
+
+\begin{verbatim}
+with(inttrans):
+\end{verbatim}
+
+Define the function
+
+\begin{verbatim}
+F(s):=2/(s^2+4)-1/((s-3)^2);
+\end{verbatim}
+
+Use \texttt{invlaplace} to calculate the inverse transform.
+
+\begin{verbatim}
+invlaplace(F(s), s, t)
+\end{verbatim}
+
+The inverse transform is
+
+\[{\color{blue}{\sin \left(2 t \right)-t e^{3 t}}}\]
+\end{solution}
+
+\begin{exercise}
+Find the Laplace transform of the function \(f(t)=At\cos(a t)+Bt\sin(b t)\)
+\end{exercise}
+
+\begin{exercise}
+Find the inverse Laplace transform of the function \(F(s)=\frac{s}{s^2+2s+2}\).
+\end{exercise}
+
+\hypertarget{transforms-of-initial-value-problems}{%
+\section{Transforms of Initial Value Problems}\label{transforms-of-initial-value-problems}}
+
+Given an initial value problem
+\[ay''+by'+c=f(x), \quad y(0)=y_0,\quad y'(0)=y_1,\]
+applying the Laplace transform to the equation translates the equation into an algebraic equation of the Laplace transform \(\mathcal{L}(y)\). In Maple, the command \texttt{laplace} can take an equation as the first argument.
+
+\begin{example}
+Find the laplace transform \(\mathcal{L}(y)\), where \(y\) is the solution of the initial value problem
+\[y''-y'y=te^2t, \quad y(0)=0, \quad y'(0)=0.\]
+\end{example}
+
+\begin{solution}
+Load the package \texttt{inttrans} if it was not loaded:
+
+\begin{verbatim}
+with(inttrans):
+\end{verbatim}
+
+Define the equation:
+
+\begin{verbatim}
+ode51:=diff(y(t), t$2)+2*diff(y(t), t)+2*y(t)=t*exp(2*t);
+\end{verbatim}
+
+Apply the Laplace transform to the equation:
+
+\begin{verbatim}
+Lode51:=laplace(ode51, t, s);
+\end{verbatim}
+
+Solve for \(\mathcal{L}(y)\) (\texttt{laplace(y(t),\ t,\ s)}):
+
+\begin{verbatim}
+Ly:=eval(solve(Lode51, laplace(y(t), t, s)), y(0)=0, D(y)(0)=0);
+\end{verbatim}
+
+The output shows
+\[\mathcal{L}(y)={\color{blue}{\frac{1}{\left(s -1\right)^{2} \left(s^{2}+2 s +2\right)}}}\]
+
+So \(y\) is the inverse transform of this function. It can be calculated using \texttt{invlaplace}.
+
+\begin{verbatim}
+y:=invlaplace(Ly, s, t);
+\end{verbatim}
+
+The output shows that the solution is
+\[{\color{blue}{\frac{{\mathrm e}^{t} \left(5 t -4\right)}{25}+\frac{{\mathrm e}^{-t} \left(4 \cos \left(t \right)+3 \sin \left(t \right)\right)}{25}}}.\]
+\end{solution}
+
+\begin{exercise}
+Convert the initial value problems
+\[3y''+6y'+24y=\cos(2t), \quad y(0)=1, \quad y'(0)=-1.\]
+into an algebraic equation of the inverse transform \(\mathcal{L}(y)\) and solve for \(\mathcal{L}(y)\).
+\end{exercise}
+
+\hypertarget{partial-fractional-decomposition-method}{%
+\section{Partial Fractional Decomposition Method}\label{partial-fractional-decomposition-method}}
+
+When using Laplace transform to solve linear second order differential equations with constant coefficients, the Laplace transform \(\mathcal{L}(y)\) is usually a rational function. By the fundamental theorem of algebra, a rational function can be written as the sum of fractions whose denominators are powers of linear or quadratic functions and whose numerators are constants or linear functions respectively. This sum is called the partial fractional decomposition. In Maple, the command \texttt{convert(rational\ function,\ parfrac,\ independent\ variable)} can be used to find the partial fractional decomposition of a rational function.
+
+\begin{example}
+Find the partial fractional decomposition of the rational function
+\[F(s)=\frac{1}{(s-1)^2(s^2+2s+2)}\]
+and find the inverse transform of the decomposition.
+\end{example}
+
+\begin{solution}
+Define the function:
+
+\begin{verbatim}
+F(s):=1/((s-1)^2*(s^2+2*s+2));
+\end{verbatim}
+
+Convert the function into a partial fractional decomposition:
+
+\begin{verbatim}
+pF:=convert(F(s), parfrac, s);
+\end{verbatim}
+
+The output shows the partial fractional decomposition is
+\[{\color{blue}{\frac{1}{5 \left(s -1\right)^{2}}+\frac{4 s +7}{25 s^{2}+50 s +50}-\frac{4}{25 \left(s -1\right)}}}\]
+
+Apply \texttt{invlaplace}
+
+\begin{verbatim}
+invF:=invlaplace(pF, s, t);
+\end{verbatim}
+
+The answer is
+\[{\color{blue}{\frac{{\mathrm e}^{t} \left(5 t -4\right)}{25}+\frac{{\mathrm e}^{-t} \left(4 \cos \left(t \right)+3 \sin \left(t \right)\right)}{25}}}.\]
+\end{solution}
+
+\begin{exercise}
+Find the partial fractional decomposition of the rational function
+\[F(s)=\frac{3 s^{3}+3 s^{2}+13 s +12}{3 \left(s^{2}+4\right) \left(s^{2}+2 s +8\right)}\]
+and find the inverse transform of the decomposition.
 \end{exercise}
 
 \end{document}

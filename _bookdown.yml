@@ -10,7 +10,8 @@ rmd_files: [
   "01-ODE-Intro.Rmd",
   "02-FirstOrder-ODE.Rmd",
   "03-SecondOrder-ODE.Rmd",
-  "04-SeriesSolutions.Rmd"
+  "04-SeriesSolutions.Rmd",
+  "05-LaplaceTransform.Rmd"
 ]
 
 # output_dir: book_output
