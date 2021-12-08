@@ -178,7 +178,7 @@
 
 \title{Maple for Differential Equations}
 \author{Fei Ye}
-\date{2021-11-17}
+\date{2021-12-08}
 
 \begin{document}
 \maketitle
@@ -2036,6 +2036,202 @@ The answer is
 Find the partial fractional decomposition of the rational function
 \[F(s)=\frac{3 s^{3}+3 s^{2}+13 s +12}{3 \left(s^{2}+4\right) \left(s^{2}+2 s +8\right)}\]
 and find the inverse transform of the decomposition.
+\end{exercise}
+
+\hypertarget{linear-systems}{%
+\chapter{Linear systems}\label{linear-systems}}
+
+Given a linear system of first order differential equation with constant coefficients
+\[
+\vec{y}'=A\vec{y},
+\]
+the general solution is in the form
+\[
+\vec{y}=e^{At}\vec{c},
+\]
+where
+\[e^{At}=\sum\limits_{n=0}^\infty \frac{A^nt^n}{n!}.\]
+
+It it known that for a matrix \(A\), there is a matrix \(P\) consists of eigenvectors and generalized eigenvectors such that \(PAP^{-1}\) is in the form
+\[
+\begin{pmatrix}
+  J_1 & & \\
+      &\ddots & \\
+      & & J_r
+\end{pmatrix},
+\]
+where \(J_k\) are the Jordan blocks.
+
+For a \(2\times 2\) matrix \(A\), if it has two distinct eigenvalues \(\lambda_1\) and \(\lambda_2\), then
+\[
+e^{At}=\begin{pmatrix}
+  e^{\lambda_1 t}\vec{u} & e^{\lambda_1 t}\vec{v}
+\end{pmatrix}P^{-1},
+\]
+where \(\vec{u}\) and \(\vec{v}\) are eigenvectors associated to \(\lambda_1\) and \(\lambda_2\) respectively, and \(P=\begin{pmatrix}\vec{u} & \vec{v}\end{pmatrix}\).
+
+If it has a repeated eigenvalue \(\lambda\), let \(\vec{u}\) be a eigenvector and \(\vec{v}\) a generalized eigenvector such that \((A-\lambda I)\vec{v}=\vec{u}\), then
+\[
+e^{At}=\begin{pmatrix}
+  e^{\lambda t}\vec{u} & te^{\lambda t}\vec{u} + e^{\lambda t}\vec{v}
+\end{pmatrix}P^{-1},
+\]
+where \(P=\begin{pmatrix}  \vec{u} & \vec{v} \end{pmatrix}\).
+
+So to solve a linear system of first-order differential equations, we need to find eigenvalues and associated eigenvectors or generalized eigenvectors.
+
+\hypertarget{eigenvalues-and-eigenvectors}{%
+\section{Eigenvalues and Eigenvectors}\label{eigenvalues-and-eigenvectors}}
+
+In Maple, eigenvalues, eigenvectors can be found using the command \texttt{Eigenvectors} which is supported by the package \texttt{LinearAlgebra}.
+
+To construct a matrix or vector in Maple, one can use the \texttt{Matrix()} or \texttt{Vector()} command, or the shortcut notation \texttt{\textless{}...\textgreater{}}.
+
+\begin{example}
+Find the eigenvalues and associated generalized eigenvectors of the matrix
+\[
+A:=\begin{pmatrix}
+  -1&3\\-3&5
+\end{pmatrix}
+\]
+\end{example}
+
+\begin{solution}
+Define the matrix using the shortcut notation.
+
+\begin{verbatim}
+A:=< <-1, -3> | <3, 5> > # or A:=Matrix(2,2, [-1,3,-3,5])
+\end{verbatim}
+
+Load the package \texttt{LinearAlgebra}.
+
+\begin{verbatim}
+with(LinearAlgebra)
+\end{verbatim}
+
+Find eigenvalues and eigenvectors of \(A\).
+
+\begin{verbatim}
+Eigen:=Eigenvectors(A)
+\end{verbatim}
+
+The output is
+\[
+{\color{blue}
+{\begin{bmatrix}
+  2\\2
+\end{bmatrix},\begin{bmatrix}
+  1 & 0
+\\
+ 1 & 0
+\end{bmatrix}
+}}.
+\]
+
+From the output, we see that \(1\) is a repeated eigenvalue. The first colum in the square matrix is an eigenvector of the eigenvalue. Since the eigenvalue is repeated, there will be a generalized eigenvector. The following Maple codes shows how to find it.
+
+\begin{verbatim}
+IdM:=IdentityMatrix(2): # define a 2-by-2 identity matrix
+u:=Column(Eigen[2],1): # extract the eigenvector
+v:=LinearSolve(A-2*IdM, u); # solve for a generalized eigenvector
+\end{verbatim}
+
+The output shows
+\[
+{\color{blue}{
+\begin{bmatrix}
+  -\frac{1}{3}+\_t_{2}
+\\
+ \_t_{2}
+\end{bmatrix}
+}},
+\]
+where \(\_t_{2}\) is a free variable that can take any value. For example, taking \(\_t_{2}=\frac13\) and then multiply it by 3 yields an eigenvector
+\[
+\begin{pmatrix}
+  0
+\\
+ 1
+\end{pmatrix}.
+\]
+\end{solution}
+
+\begin{exercise}
+Find the eigenvalues and associated eigenvectors of the matrix
+\[
+A:=\begin{pmatrix}
+  5&-3\\6&-4
+\end{pmatrix}
+\]
+\end{exercise}
+
+\hypertarget{solving-linear-system-of-ode}{%
+\section{Solving Linear System of ODE}\label{solving-linear-system-of-ode}}
+
+In Maple, to solve a linear system of first-order differential equations, one can use the command \texttt{dsolve}. Note that in Maple, the matrix multiplication operator is the \texttt{.} symbol instead of the \texttt{*} symbol. The \texttt{*} symbol is to be used for scalar multiplication.
+
+\begin{example}
+Solve the linear system
+\[
+\begin{pmatrix}
+y_1' \\ y_2'
+\end{pmatrix}
+=
+\begin{pmatrix}
+-1&3\\-3&5
+\end{pmatrix}\begin{pmatrix}
+y_1 \\ y_2
+\end{pmatrix}.
+\]
+\end{example}
+
+\begin{solution}
+Define the linear system in matrix form.
+
+\begin{verbatim}
+M := Matrix(2, 2, [-1, 3, -3, 5]):
+Y := <y[1](x), y[2](x)>:
+LinSys := diff(Y, x) = M . Y;
+\end{verbatim}
+
+Solve the linear system
+
+\begin{verbatim}
+dsolve(LinSys, Y);
+\end{verbatim}
+
+The output shows the general solution as
+
+\[
+{\color{blue}
+{\begin{pmatrix}
+y_1(x
+\\
+y_2(x)  
+\end{pmatrix}
+=
+\begin{pmatrix}
+\frac{e^{2 x}(3 \_C2 x +3 \_C1 -\_C2 )}{3}
+\\
+e^{2 x}(\_C2 x +\_C1 )
+\end{pmatrix}
+}}.
+\]
+\end{solution}
+
+\begin{exercise}
+Solve the linear system
+\[
+\begin{pmatrix}
+y_1' \\ y_2'
+\end{pmatrix}
+=
+\begin{pmatrix}
+5&-3\\4&-2
+\end{pmatrix}\begin{pmatrix}
+y_1 \\ y_2
+\end{pmatrix}.
+\]
 \end{exercise}
 
 \end{document}
