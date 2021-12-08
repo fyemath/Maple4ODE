@@ -11,7 +11,9 @@ rmd_files: [
   "02-FirstOrder-ODE.Rmd",
   "03-SecondOrder-ODE.Rmd",
   "04-SeriesSolutions.Rmd",
-  "05-LaplaceTransform.Rmd"
+  "05-LaplaceTransform.Rmd",
+  "06-LinearSystems.Rmd",
 ]
 
 # output_dir: book_output
+ 

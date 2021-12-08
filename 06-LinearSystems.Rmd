@@ -1,0 +1,69 @@
+# Linear systems
+
+Given a linear system of first order differential equation with constant coefficients
+$$
+\vec{y}'=A\vec{y},
+$$
+the general solution is in the form
+$$
+\vec{y}=e^{At}\vec{c},
+$$
+where
+$$e^{At}=\sum\limits_{n=0}^\infty \frac{A^nt^n}{n!}.$$
+
+It it known that for a matrix $A$, there is a matrix $P$ consists of eigenvectors and generalized eigenvectors such that $PAP^{-1}$ is in the form
+$$
+\begin{pmatrix}
+  J_1 & & \\
+      &\ddots & \\
+      & & J_r
+\end{pmatrix},
+$$
+where $J_k$ are the Jordan blocks.
+
+For a $2\times 2$ matrix $A$, if it has two distinct eigenvalues $\lambda_1$ and $\lambda_2$, then
+$$
+e^{At}=\begin{pmatrix}
+  e^{\lambda_1 t}\vec{u} & e^{\lambda_1 t}\vec{v}
+\end{pmatrix}P^{-1},
+$$
+where $\vec{u}$ and $\vec{v}$ are eigenvectors associated to $\lambda_1$ and $\lambda_2$ respectively, and $P=\begin{pmatrix}\vec{u} & \vec{v}\end{pmatrix}$.
+
+If it has a repeated eigenvalue $\lambda$, let $\vec{u}$ be a eigenvector and $\vec{v}$ a generalized eigenvector such that $(A-\lambdaI)\vec{v}=\vec{u}$, then
+$$
+e^{At}=\begin{pmatrix}
+  e^{\lambda t}\vec{u} & te^{\lambda t}\vec{u} + e^{\lambda t}\vec{v}
+\end{pmatrix}P^{-1},
+$$
+where $P=\begin{pmatrix}
+  \vec{u} & \vec{v}
+\end{pmatrix}$.
+
+So to solve a linear system of first-order differential equations, we need to find eigenvalues and associated eigenvectors or generalized eigenvectors.
+
+## Eigenvalues and Eigenvectors
+
+In Maple, eigenvalues, eigenvectors (including generalized eigenvectors) can be found using the command `Eigenvectors` which is supported by the package `LinearAlgebra`.
+
+To construct a matrix or vector in Maple, one can use the `Matrix()` or `Vector()` command, or the shortcut notation `<...>`.
+
+::: {.example}
+
+Find the eigenvalues and associated generalized eigenvectors of the matrix
+$$
+A:=\begin{pmatrix}
+  -1&3&-3\\-3&5&-3\\-6&6&-4
+\end{pmatrix}
+$$
+
+:::
+
+::: {.solution}
+
+Define the matrix using the shortcut notation.
+
+```
+A:=<<-1, -3, -6> | <3, 5, 6> | <-3, -3, -4>>
+```
+
+:::
