@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Maple for Differential Equations</title>
+  <title>Topic 7 Linear systems | Maple for Differential Equations</title>
   <meta name="description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Maple for Differential Equations" />
+  <meta property="og:title" content="Topic 7 Linear systems | Maple for Differential Equations" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="fyemath/maple4ode" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Maple for Differential Equations" />
+  <meta name="twitter:title" content="Topic 7 Linear systems | Maple for Differential Equations" />
   
   <meta name="twitter:description" content="This is a notebook in progress on Maple for differential equations. This notebook was created using bookdown" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="laplace-transform-methods.html"/>
 
-<link rel="next" href="basics-in-maple.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -161,30 +161,170 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Maple for Differential Equations</h1>
-<p class="author"><em>Fei Ye</em></p>
-<p class="date"><em>2021-12-08</em></p>
+<div id="linear-systems" class="section level1" number="7">
+<h1><span class="header-section-number">Topic 7</span> Linear systems</h1>
+<p>Given a linear system of first order differential equation with constant coefficients
+<span class="math display">\[
+\vec{y}&#39;=A\vec{y},
+\]</span>
+the general solution is in the form
+<span class="math display">\[
+\vec{y}=e^{At}\vec{c},
+\]</span>
+where
+<span class="math display">\[e^{At}=\sum\limits_{n=0}^\infty \frac{A^nt^n}{n!}.\]</span></p>
+<p>It it known that for a matrix <span class="math inline">\(A\)</span>, there is a matrix <span class="math inline">\(P\)</span> consists of eigenvectors and generalized eigenvectors such that <span class="math inline">\(PAP^{-1}\)</span> is in the form
+<span class="math display">\[
+\begin{pmatrix}
+  J_1 &amp; &amp; \\
+      &amp;\ddots &amp; \\
+      &amp; &amp; J_r
+\end{pmatrix},
+\]</span>
+where <span class="math inline">\(J_k\)</span> are the Jordan blocks.</p>
+<p>For a <span class="math inline">\(2\times 2\)</span> matrix <span class="math inline">\(A\)</span>, if it has two distinct eigenvalues <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span>, then
+<span class="math display">\[
+e^{At}=\begin{pmatrix}
+  e^{\lambda_1 t}\vec{u} &amp; e^{\lambda_1 t}\vec{v}
+\end{pmatrix}P^{-1},
+\]</span>
+where <span class="math inline">\(\vec{u}\)</span> and <span class="math inline">\(\vec{v}\)</span> are eigenvectors associated to <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span> respectively, and <span class="math inline">\(P=\begin{pmatrix}\vec{u} &amp; \vec{v}\end{pmatrix}\)</span>.</p>
+<p>If it has a repeated eigenvalue <span class="math inline">\(\lambda\)</span>, let <span class="math inline">\(\vec{u}\)</span> be a eigenvector and <span class="math inline">\(\vec{v}\)</span> a generalized eigenvector such that <span class="math inline">\((A-\lambda I)\vec{v}=\vec{u}\)</span>, then
+<span class="math display">\[
+e^{At}=\begin{pmatrix}
+  e^{\lambda t}\vec{u} &amp; te^{\lambda t}\vec{u} + e^{\lambda t}\vec{v}
+\end{pmatrix}P^{-1},
+\]</span>
+where <span class="math inline">\(P=\begin{pmatrix}  \vec{u} &amp; \vec{v} \end{pmatrix}\)</span>.</p>
+<p>So to solve a linear system of first-order differential equations, we need to find eigenvalues and associated eigenvectors or generalized eigenvectors.</p>
+<div id="eigenvalues-and-eigenvectors" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Eigenvalues and Eigenvectors</h2>
+<p>In Maple, eigenvalues, eigenvectors can be found using the command <code>Eigenvectors</code> which is supported by the package <code>LinearAlgebra</code>.</p>
+<p>To construct a matrix or vector in Maple, one can use the <code>Matrix()</code> or <code>Vector()</code> command, or the shortcut notation <code>&lt;...&gt;</code>.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-92" class="example"><strong>Example 7.1  </strong></span>Find the eigenvalues and associated generalized eigenvectors of the matrix
+<span class="math display">\[
+A:=\begin{pmatrix}
+  -1&amp;3\\-3&amp;5
+\end{pmatrix}
+\]</span></p>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>This is a book written for Maple labs for differential equations.</p>
-<p>The source of this book can be found at <a href="https://github.com/fyemath/maple4ode">https://github.com/fyemath/maple4ode</a>.</p>
-<p>Comments and suggestions are very welcome.</p>
-<p>This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
-<div class="figure">
-<img src="figs/by-nc-sa.png" alt="" />
-<p class="caption">by-nc-sa license icon</p>
+<div class="solution">
+<p><span id="unlabeled-div-93" class="solution"><em>Solution</em>. </span>Define the matrix using the shortcut notation.</p>
+<pre><code>A:=&lt; &lt;-1, -3&gt; | &lt;3, 5&gt; &gt; # or A:=Matrix(2,2, [-1,3,-3,5])</code></pre>
+<p>Load the package <code>LinearAlgebra</code>.</p>
+<pre><code>with(LinearAlgebra)</code></pre>
+<p>Find eigenvalues and eigenvectors of <span class="math inline">\(A\)</span>.</p>
+<pre><code>Eigen:=Eigenvectors(A)</code></pre>
+<p>The output is
+<span class="math display">\[
+{\color{blue}
+{\begin{bmatrix}
+  2\\2
+\end{bmatrix},\begin{bmatrix}
+  1 &amp; 0
+\\
+ 1 &amp; 0
+\end{bmatrix}
+}}.
+\]</span></p>
+<p>From the output, we see that <span class="math inline">\(1\)</span> is a repeated eigenvalue. The first colum in the square matrix is an eigenvector of the eigenvalue. Since the eigenvalue is repeated, there will be a generalized eigenvector. The following Maple codes shows how to find it.</p>
+<pre><code>IdM:=IdentityMatrix(2): # define a 2-by-2 identity matrix
+u:=Column(Eigen[2],1): # extract the eigenvector
+v:=LinearSolve(A-2*IdM, u); # solve for a generalized eigenvector</code></pre>
+<p>The output shows
+<span class="math display">\[
+{\color{blue}{
+\begin{bmatrix}
+  -\frac{1}{3}+\_t_{2}
+\\
+ \_t_{2}
+\end{bmatrix}
+}},
+\]</span>
+where <span class="math inline">\(\_t_{2}\)</span> is a free variable that can take any value. For example, taking <span class="math inline">\(\_t_{2}=\frac13\)</span> and then multiply it by 3 yields an eigenvector
+<span class="math display">\[
+\begin{pmatrix}
+  0
+\\
+ 1
+\end{pmatrix}.
+\]</span></p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-94" class="exercise"><strong>Exercise 7.1  </strong></span>Find the eigenvalues and associated eigenvectors of the matrix
+<span class="math display">\[
+A:=\begin{pmatrix}
+  5&amp;-3\\6&amp;-4
+\end{pmatrix}
+\]</span></p>
+</div>
+</div>
+<div id="solving-linear-system-of-ode" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Solving Linear System of ODE</h2>
+<p>In Maple, to solve a linear system of first-order differential equations, one can use the command <code>dsolve</code>. Note that in Maple, the matrix multiplication operator is the <code>.</code> symbol instead of the <code>*</code> symbol. The <code>*</code> symbol is to be used for scalar multiplication.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-95" class="example"><strong>Example 7.2  </strong></span>Solve the linear system
+<span class="math display">\[
+\begin{pmatrix}
+y_1&#39; \\ y_2&#39;
+\end{pmatrix}
+=
+\begin{pmatrix}
+-1&amp;3\\-3&amp;5
+\end{pmatrix}\begin{pmatrix}
+y_1 \\ y_2
+\end{pmatrix}.
+\]</span></p>
+</div>
+<div class="solution">
+<p><span id="unlabeled-div-96" class="solution"><em>Solution</em>. </span>Define the linear system in matrix form.</p>
+<pre><code>M := Matrix(2, 2, [-1, 3, -3, 5]):
+Y := &lt;y[1](x), y[2](x)&gt;:
+LinSys := diff(Y, x) = M . Y;</code></pre>
+<p>Solve the linear system</p>
+<pre><code>dsolve(LinSys, Y);</code></pre>
+<p>The output shows the general solution as</p>
+<p><span class="math display">\[
+{\color{blue}
+{\begin{pmatrix}
+y_1(x
+\\
+y_2(x)  
+\end{pmatrix}
+=
+\begin{pmatrix}
+\frac{e^{2 x}(3 \_C2 x +3 \_C1 -\_C2 )}{3}
+\\
+e^{2 x}(\_C2 x +\_C1 )
+\end{pmatrix}
+}}.
+\]</span></p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-97" class="exercise"><strong>Exercise 7.2  </strong></span>Solve the linear system
+<span class="math display">\[
+\begin{pmatrix}
+y_1&#39; \\ y_2&#39;
+\end{pmatrix}
+=
+\begin{pmatrix}
+5&amp;-3\\4&amp;-2
+\end{pmatrix}\begin{pmatrix}
+y_1 \\ y_2
+\end{pmatrix}.
+\]</span></p>
 </div>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="laplace-transform-methods.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="basics-in-maple.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -205,7 +345,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/fyemath/maple4ode/index.Rmd",
+"link": "https://github.com/fyemath/maple4ode/06-LinearSystems.Rmd",
 "text": "Edit"
 },
 "history": {
